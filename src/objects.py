@@ -22,18 +22,18 @@ class HangerManager:
                 'rotationSpeed': random.uniform(-1, 1)
             })
     
-    def update(self):
-        for hanger in self.hangers:
-            # Update position
-            hanger['x'] += hanger['speed'] * cos(hanger['angle'])
-            hanger['y'] += hanger['speed'] * sin(hanger['angle'])
-            hanger['rotation'] += hanger['rotationSpeed']
+    # def update(self):
+    #     for hanger in self.hangers:
+    #         # Update position
+    #         hanger['x'] += hanger['speed'] * cos(hanger['angle'])
+    #         hanger['y'] += hanger['speed'] * sin(hanger['angle'])
+    #         hanger['rotation'] += hanger['rotationSpeed']
             
-            # Bounce off edges
-            if hanger['x'] <= 0 or hanger['x'] >= self.app.width:
-                hanger['angle'] = 180 - hanger['angle']
-            if hanger['y'] <= 0 or hanger['y'] >= self.app.height:
-                hanger['angle'] = -hanger['angle']
+    #         # Bounce off edges
+    #         if hanger['x'] <= 0 or hanger['x'] >= self.app.width:
+    #             hanger['angle'] = 180 - hanger['angle']
+    #         if hanger['y'] <= 0 or hanger['y'] >= self.app.height:
+    #             hanger['angle'] = -hanger['angle']
 
 class OutfitManager:
     def __init__(self, app):
