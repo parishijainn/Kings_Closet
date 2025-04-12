@@ -1,4 +1,5 @@
 from cmu_graphics import *
+from PIL import Image
 
 def onAppStart(app):
     app.color = 'purple'
@@ -12,3 +13,7 @@ def redrawAll(app):
     drawRect(app.x, app.y, 20, 20, fill=app.color)
 
 runApp()
+
+
+img = Image.new("RGB", (100, 100), color="lavender")
+img.show()
