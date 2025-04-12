@@ -12,3 +12,5 @@ def redrawAll(app):
     drawRect(app.x, app.y, 20, 20, fill=app.color)
 
 runApp()
+
+hello world !!!!!
