@@ -1,7 +1,8 @@
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
 from ui import * 
-#from gameMode import drawGameMode
+from gameMode import drawGameMode
+from clothesClasses import *
 import os
 
 def onAppStart(app):
@@ -11,10 +12,33 @@ def onAppStart(app):
     #gameMode
     app.isSelectionMode = True
     app.isDressingMode = False
+
     app.currTopIndex = 0
     app.currBottomIndex = 0
+    app.tops = [Tops("images/jacket1.png"), Tops("images/jacket2.png")]
+    app.bottoms = [Bottoms("images/yellowskirt.png"), Bottoms("images/pinktop.png")]
+    
     app.modeButtonWidth, app.modeButtonHeight = 160, 80
-    app.blackBarHeight = 80
+
+    app.blackBarHeight = 50
+
+    app.whiteBoxWidth = app.width/3
+    app.whiteBoxHeight = app.height - 2*app.blackBarHeight
+    app.whiteBoxX = app.width/3
+
+    app.backwardButtonX = app.width - app.whiteBoxWidth - app.forwardButtonWidth - 2*app.buttonAllowance - 35
+    app.buttonAllowance = 10
+
+    app.forwardButtonWidth = app.whiteBoxWidth*0.33
+    app.forwardButtonHeight = app.blackBarHeight - app.blackBarHeight*0.2
+    app.forwardButtonX = app.whiteBoxWidth+app.buttonAllowance
+    app.forwardButtonY = ((app.height/2) - app.blackBarHeight +
+                      (app.blackBarHeight-app.forwardButtonHeight)/2)
+
+    app.playButtonWidth = app.forwardButtonWidth*0.66
+    app.playButtonHeight = app.forwardButtonHeight
+    app.playButtonX = app.width/2 - app.playButtonWidth/2
+    app.playButtonY = app.forwardButtonY
     # Initialize managers
     # app.hangerManager = HangerManager(app)
     # app.outfitManager = OutfitManager(app)
