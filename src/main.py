@@ -22,6 +22,8 @@ def onMousePress(app, mouseX, mouseY):
 def redrawAll(app):
     if app.state == "welcome":
         drawWelcomeScreen(app)
+    # elif app.state == "instructions":
+    #     drawInstructionsScreen(app)
     elif app.state == "main":
         drawMainGame(app)
 
