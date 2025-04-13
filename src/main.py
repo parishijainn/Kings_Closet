@@ -99,6 +99,9 @@ def onMousePress(app, mouseX, mouseY):
             app.state = "gameMode"
 
     elif app.state == 'gameMode':
+        if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
+            (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
+                app.state = "gradeMode"
         # Mode selection buttons
         if ((2 * (app.width / 3) <= mouseX <= 2 * (app.width / 3) + app.modeButtonWidth) and
                 (app.height - app.blackBarHeight - app.modeButtonHeight <= mouseY <= app.height - app.blackBarHeight)):
@@ -150,32 +153,34 @@ def onMousePress(app, mouseX, mouseY):
             app.currBottomIndex%=len(app.bottoms)
 
 
-        if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
-            (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
+        
 
-            topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
-            bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            
-            message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
-            
-            app.feedbackText = f"{message} ({score}%)"
-            app.outfitRating = rating
-            app.outfitScore = score
-
-            app.state = "gradeMode"
-
-    if app.state == "gameMode":
+    
         if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
             app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
             app.currTopIndex = random.randint(0, len(app.tops) - 1)
 
-        elif (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
             app.playButtonY + 
             app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
             app.whiteBoxHeight / 2 + app.playButtonHeight):
             app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
+
+        
+
+            
+
+            
     
     if app.state == "gradeMode":
+        topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
+        bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+            
+        message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
+            
+        app.feedbackText = f"{message} ({score}%)"
+        app.outfitRating = rating
+        app.outfitScore = score
         if ((app.backButtonX <= mouseX <= app.backButtonX + app.backButtonWidth) and
             (app.backButtonY <= mouseY <= app.backButtonY + app.backButtonHeight)):
             app.state = "gameMode"
