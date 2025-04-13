@@ -11,10 +11,35 @@ def onAppStart(app):
     #gameMode
     app.isSelectionMode = True
     app.isDressingMode = False
+
     app.currTopIndex = 0
     app.currBottomIndex = 0
+    app.tops = []
+    app.bottoms = [Bottoms("images/yellowskirt.png")]
+    
     app.modeButtonWidth, app.modeButtonHeight = 160, 80
-    app.blackBarHeight = 80
+
+    app.blackBarHeight = 50
+
+    app.whiteBoxWidth = app.width/3
+    app.whiteBowHeight = app.height - 2*app.blackBarHeight
+    app.whiteBoxX = app.width/3
+
+    app.distanceBetweenButtons = (app.whiteBoxWidth - app.forwardButtonWidth - 
+                              2*app.buttonAllowance)
+    app.buttonAllowance = 10
+
+    app.forwardButtonWidth = app.whiteBoxWidth*0.33
+    app.forwardButtonHeight = app.blackBarHeight - app.blackBarHeight*0.2
+    app.forwardButtonX = app.whiteBoxWidth+app.buttonAllowance
+    app.forwardButtonY = ((app.height/2) - app.blackBarHeight +
+                      (app.blackBarHeight-app.forwardButtomHeight)/2)
+
+    app.playButtonWidth = app.forwardButtonWidth*0.66
+    app.playButtonHeight = app.forwardButtonHeight
+    app.playButtonX = app.width/2 - app.playButtonWidth/2
+    app.playButtonY = app.forwardButtonY
+    
     # Initialize managers
     # app.hangerManager = HangerManager(app)
     # app.outfitManager = OutfitManager(app)
