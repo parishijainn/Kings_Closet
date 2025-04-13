@@ -1,12 +1,20 @@
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
 from ui import drawWelcomeScreen, drawMainGame, drawInstructionsScreen 
+from gameMode import drawGameMode
 import os
 
 def onAppStart(app):
     app.width = 800
     app.height = 600
     app.state = "welcome"
+    #gameMode
+    app.isSelectionMode = True
+    app.isDressingMode = False
+    app.currTopIndex = 0
+    app.currBottomIndex = 0
+    app.modeButtonWidth, app.modeButtonHeight = 160, 80
+    app.blackBarHeight = 80
     
     # Initialize managers
     # app.hangerManager = HangerManager(app)
@@ -37,6 +45,20 @@ def onMousePress(app, mouseX, mouseY):
         if (app.instructionsButtonX <= mouseX <= app.instructionsButtonX + app.instructionsButtonWidth and
             app.instructionsButtonY <= mouseY <= app.instructionsButtonY + app.instructionsButtonHeight):
             app.state = "gameMode"   
+
+    if app.state == 'gameMode':    
+        if ((2*(app.width/3) <= mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
+            ((app.height-app.blackBarHeight-app.modeButtonHeight <= mouseY <= app.height-app.blackBarHeight))):
+            #dressme mode
+            app.isDressingMode = True
+            app.isSelectionMode = False
+        if ((app.width-app.modeButtonWidth <= mouseX <= app.width-app.modeButtonWidth + app.modeButtonWidth) and
+            (app.height-app.blackBarHeight-app.modeButtonHeight <= mouseY <= app.height-app.blackBarHeight-app.modeButtonHeight + app.modeButtonHeight)):
+            #browse mode
+            app.isDressingMode = False
+            app.isSelectionMode = True
+
+    
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
@@ -50,5 +72,7 @@ def redrawAll(app):
     #     drawGameMode(app)
     elif app.state == "main":
         drawMainGame(app)
+    elif app.state == 'gameMode':
+        drawGameMode(app)
 
 runApp(width=800, height=600)
