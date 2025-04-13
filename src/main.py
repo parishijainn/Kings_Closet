@@ -1,11 +1,6 @@
 from cmu_graphics import *
-<<<<<<< HEAD
-from PIL import Image
-=======
 from objects import HangerManager, OutfitManager
 from ui import drawWelcomeScreen, drawMainGame
-import os
->>>>>>> 626fdb8dbb8dc365309111c343058df60be87cd8
 
 def onAppStart(app):
     # Setup game dimensions
@@ -37,12 +32,4 @@ def redrawAll(app):
     elif app.state == "main":
         drawMainGame(app)
 
-<<<<<<< HEAD
-runApp()
-
-
-img = Image.new("RGB", (100, 100), color="lavender")
-img.show()
-=======
 runApp(width=800, height=600)
->>>>>>> 626fdb8dbb8dc365309111c343058df60be87cd8
