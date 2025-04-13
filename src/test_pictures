@@ -1,4 +1,7 @@
-from PIL import Image
+from cmu_graphics import *
 
-img = Image.new("RGB", (100, 100), color="lavender")
-img.show()
+def drawskirt(app):
+    drawImage("images/yellowskirt.png", 
+                    20, 30,
+                    width=60, height=80,
+                    )
