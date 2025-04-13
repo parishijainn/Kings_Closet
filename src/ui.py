@@ -1,10 +1,7 @@
 from cmu_graphics import *
 
 def drawWelcomeScreen(app):
-    # Draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    
-    # Draw start button (placeholder)
     drawStartButton(app)
 
 def drawStartButton(app):
@@ -29,11 +26,13 @@ def drawStartButton(app):
     
 
 def drawMainGame(app):
+<<<<<<< Updated upstream
     #draw background image
-    drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
 
 def drawInstructionsScreen(app):
-    drawRect(0, 0, app.width, app.height, fill='lavenderblush')
+    drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
+             height = app.height)
 #placeholder for background
     drawLabel("How to Play", app.width // 2, 100, size=36, bold=True, fill='darkmagenta')
     drawLabel("🧥 Drag clothes from the closet onto the mannequin.", app.width // 2, 180, size=20)
@@ -85,3 +84,13 @@ def drawInstructionsScreen(app):
 #     drawLabel("MAIN GAME SCREEN", 
 #              app.width/2, app.height/2,
 #              size=24, bold=True)
+=======
+def drawUploadDialog(app):
+    if app.show_upload_dialog:
+        drawRect(100, 100, 600, 400, fill='white', border='black')
+        drawLabel("UPLOAD YOUR CLOTHING", app.width/2, 130, size=24)
+        drawRect(app.width/2 - 100, 200, 200, 200, fill='lightGray')
+        drawLabel("Click to select photo", app.width/2, 300, size=18)
+        drawRect(app.width/2 - 50, 450, 100, 40, fill='pink')
+        drawLabel("UPLOAD", app.width/2, 470, size=18)
+>>>>>>> Stashed changes
