@@ -94,7 +94,7 @@ def onMousePress(app, mouseX, mouseY):
             app.isDressingMode = True
             app.isSelectionMode = False
 
-        if ((app.width - app.modeButtonWidth <= mouseX <= app.width) and
+        if ((app.whiteBoxWidth - app.modeButtonWidth <= mouseX <= app.whiteBoxWidth) and
                 (app.height - app.blackBarHeight - app.modeButtonHeight <= mouseY <= app.height - app.blackBarHeight)):
             app.isDressingMode = False
             app.isSelectionMode = True
