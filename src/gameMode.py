@@ -118,23 +118,75 @@ def drawGameMode(app):
         drawRect(app.width/3, app.height-app.blackBarHeight*2, app.width/3, 
                  app.blackBarHeight, fill='black')
 
-        # Navigation and selection buttons
+        #navigation and selection buttons
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,
-                 app.playButtonHeight, fill='gray')
-        drawRect(app.playButtonX, app.playButtonY+app.whiteBoxHeight/2,
-                 app.playButtonWidth, app.playButtonHeight, fill='gray')
+                app.playButtonHeight, fill='gray')
+        drawRect(app.playButtonX, app.playButtonY + app.whiteBoxHeight / 2,
+                app.playButtonWidth, app.playButtonHeight, fill='gray')
 
-        drawRect(app.forwardButtonX, app.forwardButtonY, app.forwardButtonWidth,
-                 app.forwardButtonHeight, fill='gray')
-        drawRect(app.forwardButtonX, app.forwardButtonY+app.whiteBoxHeight/2, 
-                 app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
+        drawRect(app.backwardButtonX, app.forwardButtonY,  # Swapped X coordinates for backwardButton
+                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
+        drawRect(app.backwardButtonX, app.forwardButtonY + app.whiteBoxHeight / 2,
+                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
 
-        drawRect(app.backwardButtonX, app.forwardButtonY , 
-                 app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
-        drawRect(app.backwardButtonX, app.forwardButtonY+app.whiteBoxHeight/2, 
-                 app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
+        drawRect(app.forwardButtonX, app.forwardButtonY,  # Swapped X coordinates for forwardButton
+                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
+        drawRect(app.forwardButtonX, app.forwardButtonY + app.whiteBoxHeight / 2,
+                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
 
-        # Draw outfit images (fixed positioning)
+
+    #nav for entire top row of buttons
+#top buttons
+        drawPolygon(app.backwardButtonX + 20, app.forwardButtonY + 10,
+                    app.backwardButtonX + 20, app.forwardButtonY + app.forwardButtonHeight - 10,
+                    app.backwardButtonX + 35, app.forwardButtonY + app.forwardButtonHeight / 2,
+                    fill='white')
+        drawPolygon(app.backwardButtonX + 40, app.forwardButtonY + 10,
+                    app.backwardButtonX + 40, app.forwardButtonY + app.forwardButtonHeight - 10,
+                    app.backwardButtonX + 55, app.forwardButtonY + app.forwardButtonHeight / 2,
+                    fill='white')
+
+        drawPolygon(app.playButtonX + 20, app.playButtonY + 10,
+                    app.playButtonX + 20, app.playButtonY + app.playButtonHeight - 10,
+                    app.playButtonX + app.playButtonWidth - 20, app.playButtonY + app.playButtonHeight / 2,
+                    fill='white')
+
+        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + app.forwardButtonHeight - 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 35, app.forwardButtonY + app.forwardButtonHeight / 2,
+                    fill='white')
+        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + app.forwardButtonHeight - 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 55, app.forwardButtonY + app.forwardButtonHeight / 2,
+                    fill='white')
+
+
+#bottom buttons
+        drawPolygon(app.backwardButtonX + 20, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.backwardButtonX + 20, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
+                    app.backwardButtonX + 35, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+                    fill='white')
+        drawPolygon(app.backwardButtonX + 40, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.backwardButtonX + 40, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
+                    app.backwardButtonX + 55, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+                    fill='white')
+
+        drawPolygon(app.playButtonX + 20, app.playButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.playButtonX + 20, app.playButtonY + app.whiteBoxHeight / 2 + app.playButtonHeight - 10,
+                    app.playButtonX + app.playButtonWidth - 20, app.playButtonY + app.whiteBoxHeight / 2 + app.playButtonHeight / 2,
+                    fill='white')
+
+        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 35, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+                    fill='white')
+        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
+                    app.forwardButtonX + app.forwardButtonWidth - 55, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+                    fill='white')
+
+        
+        #draw outfit images 
         topY = 140
         bottomY = 395
         imgWidth = 180
@@ -144,11 +196,11 @@ def drawGameMode(app):
         drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY,
                   width=imgWidth, height=imgHeight, align='center')
 
-        # Feedback text
+        #feedback text
         drawLabel(app.feedbackText, app.width//2, app.height - 100,
                   size=22, fill='darkmagenta')
 
-        # Grade button
+        #grade button
         drawRect(app.width/2 - 50, app.height - app.blackBarHeight - 60,
                  100, 40, fill='plum', border='black')
         drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40,
