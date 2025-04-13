@@ -23,90 +23,84 @@ class OutfitManager:
             'skirt3': 'images/skirt3.png'
         }
         
-        # color matching
-        self.color_rules = {
-            'yellow': ['blue', 'black', 'white', 'gray'],
+        # Fashion rules- determining which colors go together
+        # '*' means that any color can be worn with that color
+        self.colorRules = {
+            'yellow': ['blue', 'black', 'white', 'gray', 'yellow'],
             'black': ['*'],  
             'white': ['*'],
-            'blue': ['white', 'yellow', 'gray'],
-            'red': ['black', 'white', 'blue'],
-            'plaid': ['solid', 'denim']  
+            'blue': ['white', 'yellow', 'gray', 'black'],
+            'red': ['black', 'white']
         }
         
-        self.current_outfit = {'top': None, 'bottom': None}
-        self.color_cache = {}  
+        self.currentOutfit = {'top': None, 'bottom': None}
+        self.colorCache = {}
 
-    def analyze_colors(self, image_path):
-        """AI-powered color analysis using K-means clustering"""
-        if image_path in self.color_cache:
-            return self.color_cache[image_path]
-            
+    # This function uses KMeans clustering to analyze the colors in the image
+    # It determines the main color in the clothing and the secondary colors
+    # It also extracts the RGB values of the colors
+    # It returns a dictionary with the main color, secondary colors, and whether the outfit is solid
+    # The function also caches the results to avoid reprocessing the same image
+    def analyzeColors(self, imagePath):
+        if imagePath in self.colorCache:
+            return self.colorCache[imagePath]
+        
         try:
-            img = cv2.imread(image_path)
+            img = cv2.imread(imagePath)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             pixels = img.reshape(-1, 3)
-            
-            # Use K-means to find dominant colors
+
+            # Identify the 3 main color clusters
             kmeans = KMeans(n_clusters=3)
             kmeans.fit(pixels)
             colors = kmeans.cluster_centers_
-            
-            # Convert to color names
-            color_names = [self.rgb_to_color_name(color) for color in colors]
-            
-            # Determine if plaid pattern exists
-            is_plaid = self.detect_plaid_pattern(img)
-            
+
+            colorNames = [self.rgbToColorName(color) for color in colors]
+
             result = {
-                'main_color': color_names[0],
-                'secondary_colors': color_names[1:],
-                'is_plaid': is_plaid,
-                'is_solid': len(set(color_names)) == 1
+                'mainColor': colorNames[0],
+                'secondaryColors': colorNames[1:],
+                'isSolid': len(set(colorNames)) == 1
             }
-            
-            self.color_cache[image_path] = result
+
+            self.colorCache[imagePath] = result
             return result
-            
+
         except Exception as e:
             print(f"Color analysis error: {e}")
             return {
-                'main_color': 'unknown',
-                'secondary_colors': [],
-                'is_plaid': False,
-                'is_solid': False
-           }
+                'mainColor': 'unknown',
+                'secondaryColors': [],
+                'isSolid': False
+            }
 
-
-    def rgb_to_color_name(self, rgb):
-        """Convert RGB to color names with your specific palette"""
+    def rgbToColorName(self, rgb):
         r, g, b = rgb
-        color_thresholds = {
+        colorThresholds = {
             'yellow': ((200, 150, 0), (255, 255, 150)),
             'black': ((0, 0, 0), (50, 50, 50)),
             'white': ((200, 200, 200), (255, 255, 255)),
             'blue': ((0, 0, 150), (100, 100, 255)),
             'red': ((150, 0, 0), (255, 100, 100))
         }
-        
-        for name, ((r_min, g_min, b_min), (r_max, g_max, b_max)) in color_thresholds.items():
-            if (r_min <= r <= r_max and g_min <= g <= g_max and b_min <= b <= b_max):
+
+        for name, ((rMin, gMin, bMin), (rMax, gMax, bMax)) in colorThresholds.items():
+            if rMin <= r <= rMax and gMin <= g <= gMax and bMin <= b <= bMax:
                 return name
         return 'unknown'
 
-    def grade_outfit(self, top_id, bottom_id):
-        """Grade the outfit combination with AI analysis"""
-        top_path = self.tops.get(top_id)
-        bottom_path = self.bottoms.get(bottom_id)
-        
-        if not top_path or not bottom_path:
+    # Grades based on the AI color analysis
+    def gradeOutfit(self, topId, bottomId):
+        topPath = self.tops.get(topId)
+        bottomPath = self.bottoms.get(bottomId)
+
+        if not topPath or not bottomPath:
             return ("Missing items!", "fail", 0)
-        
-        # Analyze both pieces
-        top_info = self.analyze_colors(top_path)
-        bottom_info = self.analyze_colors(bottom_path)
-        score = self.calculate_match_score(top_info, bottom_info)
-        
-        # feedback
+
+        topInfo = self.analyzeColors(topPath)
+        bottomInfo = self.analyzeColors(bottomPath)
+        score = self.calculateMatchScore(topInfo, bottomInfo)
+
         if score >= 90:
             return ("Perfect match! As if!", "perfect", score)
         elif score >= 70:
@@ -116,24 +110,21 @@ class OutfitManager:
         else:
             return ("Fashion disaster!", "fail", score)
 
-    def calculate_match_score(self, top, bottom):
-        """Advanced scoring considering colors and patterns"""
+    def calculateMatchScore(self, top, bottom):
         score = 0
-        
-        if bottom['main_color'] in self.color_rules.get(top['main_color'], []):
+
+        if bottom['mainColor'] in self.colorRules.get(top['mainColor'], []):
             score += 60
-        elif '*' in self.color_rules.get(top['main_color'], []):
+        elif '*' in self.colorRules.get(top['mainColor'], []):
             score += 50
-        elif top['main_color'] == bottom['main_color']:
+        elif top['mainColor'] == bottom['mainColor']:
             score += 40
-            
-        if top['is_plaid'] and bottom['is_solid']:
-            score += 30  
-        elif not top['is_plaid'] and not bottom['is_plaid']:
-            score += 20  
-            
-        common_secondaries = set(top['secondary_colors']) & set(bottom['secondary_colors'])
-        if common_secondaries:
-            score += min(10, len(common_secondaries) * 5)
-            
-        return min(100, score) 
+
+        if top['isSolid'] and bottom['isSolid']:
+            score += 20
+
+        commonSecondaries = set(top['secondaryColors']) & set(bottom['secondaryColors'])
+        if commonSecondaries:
+            score += min(10, len(commonSecondaries) * 5)
+
+        return min(100, score)

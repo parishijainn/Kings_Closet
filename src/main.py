@@ -169,7 +169,7 @@ def onMousePress(app, mouseX, mouseY):
             topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
             bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
             
-            message, rating, score = app.outfitManager.grade_outfit(topKey, bottomKey)
+            message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
             
             app.feedbackText = f"{message} ({score}%)"
             app.outfitRating = rating
