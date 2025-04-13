@@ -128,13 +128,6 @@ def onMousePress(app, mouseX, mouseY):
             app.currTopIndex-=1
             app.currTopIndex %= len(app.tops)
 
-        #tops play button press
-        if (((app.playButtonX <= app.mouseX) and 
-            (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
-            ((app.playButtonY <= app.mouseY) and 
-            (app.mouseY <= app.playButtonY + app.playButtonHeight))):
-
-            pass
 
         #bottoms forward button press
         if (((app.backwardButtonX <= app.mouseX) and 
@@ -155,13 +148,6 @@ def onMousePress(app, mouseX, mouseY):
             app.currBottomIndex-=1
             app.currBottomIndex%=len(app.bottoms)
 
-        # #bottoms play button press
-        # if (((app.playButtonX <= app.mouseX) and 
-        #     (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
-        #     ((app.playButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
-        #     (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
-
-        #     pass
 
         if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
             (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
