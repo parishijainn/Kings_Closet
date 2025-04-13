@@ -32,10 +32,14 @@ app.playButtonX = app.width/2 - app.playButtonWidth/2
 app.playButtonY = app.forwardButtonY
 app.feedbackText = ""
 
-app.gradeButtonX = app.width/2 - 50
-app.gradeButtonY = app.height - app.blackBarHeight - 60
+app.gradeButtonX = app.width-200
+app.gradeButtonY = 100
 app.gradeButtonWidth = 100
 app.gradeButtonHeight = 40
+app.backButtonX = app.width/2 - 60
+app.backButtonY = app.height - 60
+app.backButtonWidth = 120
+app.backButtonHeight = 40
 
 def drawGameMode(app):
     drawImage("images/cheetahBackground.png", 0, 0,
@@ -149,10 +153,9 @@ def drawGameMode(app):
                   size=22, fill='darkmagenta')
 
         #grade button
-        drawRect(app.width/2 - 50, app.height - app.blackBarHeight - 60,
-                 100, 40, fill='plum', border='black')
-        drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40,
-                  size=18, bold=True)
+        drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill='plum', border='black')
+        drawLabel("Grade", app.gradeButtonX + 25, app.gradeButtonY +20,
+                  size=18, bold=True, align='left')
 
     if app.isDressingMode:
         topY = 180
