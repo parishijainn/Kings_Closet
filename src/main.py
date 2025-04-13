@@ -42,6 +42,11 @@ def onAppStart(app):
     # Initialize managers
     # app.hangerManager = HangerManager(app)
     # app.outfitManager = OutfitManager(app)
+
+    app.gradeButtonX = app.width/2 - 50
+    app.gradeButtonY = app.height - app.blackBarHeight - 60
+    app.gradeButtonWidth = 100
+    app.gradeButtonHeight = 40
     
     app.backgroundImage = "images/kingclosetbackgrounds.png"
     app.buttonWidth = 310
@@ -151,6 +156,12 @@ def onMousePress(app, mouseX, mouseY):
             (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
 
             pass
+
+        if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
+            (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
+            app.state = "gradeMode"
+
+
     if (app.soundButtonX <= mouseX <= app.soundButtonX + app.soundButtonSize and
             app.soundButtonY <= mouseY <= app.soundButtonY + app.soundButtonSize):
         if app.soundIsPlaying:

@@ -32,6 +32,12 @@ app.playButtonX = app.width/2 - app.playButtonWidth/2
 app.playButtonY = app.forwardButtonY
 app.feedbackText = ""
 
+app.gradeButtonX = app.width/2 - 50
+app.gradeButtonY = app.height - app.blackBarHeight - 60
+app.gradeButtonWidth = 100
+app.gradeButtonHeight = 40
+
+
 # def drawGameMode(app):
 #     #app.modeButtonWidth, app.modeButtonHeight = 160, 80
 #     #app.blackBarHeight = 50
