@@ -86,7 +86,6 @@ def onAppStart(app):
     app.mouseX = None
     app.mouseY = None
 
-
 def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
         if (app.buttonX <= mouseX <= app.buttonX + app.buttonWidth and
@@ -248,7 +247,7 @@ def redrawAll(app):
 runApp(width=800, height=600)
 
 def drawGameScreen(app):
-    drawRect(0, 0, app.width, app.height, fill='lightyellow')
+    drawRect(0, 0, app.width, app.height, fill='pink')
     drawLabel("King's Closet: Outfit Grader", app.width // 2, 30, size=28, bold=True)
 
     topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
