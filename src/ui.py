@@ -24,8 +24,6 @@ def drawStartButton(app):
               app.buttonY + app.buttonHeight // 2, 
               size=35, bold=True, fill=textColor, font='monospace')
 
-    
-
 def drawMainGame(app):
     #draw background image
     drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
@@ -121,8 +119,6 @@ def drawInstructionsScreen(app):
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
     
-
-
 def drawSoundButton(app):
     drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
              fill='white', border='gray', borderWidth=1)
@@ -144,21 +140,37 @@ def drawSoundButton(app):
                     centerX + 10, centerY,
                     fill='pink')
 
+# def drawGameScreen(app):
+#     drawRect(0, 0, app.width, app.height, fill='lightyellow')
+#     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
+
+#     # Display selected outfit
+#     topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
+#     bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]]
+    
+#     drawImage(topImg, app.width//2, 150, width=180, height=180, align='center')
+#     drawImage(bottomImg, app.width//2, 340, width=180, height=180, align='center')
+    
+#     drawLabel(app.feedbackText, app.width//2, app.height - 100,
+#               size=24, fill='darkmagenta', bold=True)
+    
+#     drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill='plum', border='black')
+#     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
+
 def drawGameScreen(app):
-    drawRect(0, 0, app.width, app.height, fill='lightyellow')
+    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
-    # Display selected outfit
     topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
     bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]]
-    
+
     drawImage(topImg, app.width//2, 150, width=180, height=180, align='center')
     drawImage(bottomImg, app.width//2, 340, width=180, height=180, align='center')
-    
-    # Feedback message
-    drawLabel(app.feedbackText, app.width//2, app.height - 100,
-              size=24, fill='darkmagenta', bold=True)
-    
-    # Optional: Back to game button
+
+    # More vivid result text
+    drawLabel("Match Result:", app.width//2, app.height - 140, size=22, fill='black')
+    drawLabel(app.feedbackText, app.width//2, app.height - 110,
+              size=26, fill='darkmagenta', bold=True)
+
     drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill='plum', border='black')
     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
