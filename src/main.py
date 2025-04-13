@@ -161,10 +161,12 @@ def onMousePress(app, mouseX, mouseY):
             app.feedbackText = f"{message} ({score}%)"
             app.outfitRating = rating
             app.outfitScore = score
+            app.isGrading = True
+            app.state = "gradeMode"
 
             app.state = "gradeMode"
 
-    if app.state == "gameMode":
+    if app.state == "gameMode" and not app.isGrading:
         if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
             app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
             app.currTopIndex = random.randint(0, len(app.tops) - 1)
@@ -175,7 +177,7 @@ def onMousePress(app, mouseX, mouseY):
             app.whiteBoxHeight / 2 + app.playButtonHeight):
             app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
     
-    if app.state == "gradeMode":
+    elif app.state == "gradeMode":
         if ((app.backButtonX <= mouseX <= app.backButtonX + app.backButtonWidth) and
             (app.backButtonY <= mouseY <= app.backButtonY + app.backButtonHeight)):
             app.state = "gameMode"
@@ -245,6 +247,7 @@ def redrawAll(app):
         drawGameScreen(app)
 
     drawSoundButton(app)
+
 
 runApp(width=800, height=600)
 
