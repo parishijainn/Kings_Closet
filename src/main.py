@@ -1,7 +1,10 @@
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
 from ui import drawWelcomeScreen, drawMainGame
+<<<<<<< HEAD
+=======
 import os
+>>>>>>> a000bf385b97a688ebbcda8e68bd40baccc2907c
 
 def onAppStart(app):
     app.width = 800
@@ -40,8 +43,4 @@ def redrawAll(app):
     elif app.state == "main":
         drawMainGame(app)
 
-runApp()
-
-
-img = Image.new("RGB", (100, 100), color="lavender")
-img.show()
+runApp(width=800, height=600)
