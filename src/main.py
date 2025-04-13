@@ -108,6 +108,7 @@ def onMousePress(app, mouseX, mouseY):
                 (app.height - app.blackBarHeight - app.modeButtonHeight <= mouseY <= app.height - app.blackBarHeight)):
             app.isDressingMode = False
             app.isSelectionMode = True
+        
         #tops forward button press
         if (((app.backwardButtonX <= app.mouseX) and 
              (app.mouseX <= (app.backwardButtonX+
@@ -164,6 +165,16 @@ def onMousePress(app, mouseX, mouseY):
 
         if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
             (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
+
+            topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
+            bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+            
+            message, rating, score = app.outfitManager.grade_outfit(topKey, bottomKey)
+            
+            app.feedbackText = f"{message} ({score}%)"
+            app.outfitRating = rating
+            app.outfitScore = score
+
             app.state = "gradeMode"
     
     if app.state == "gradeMode":
