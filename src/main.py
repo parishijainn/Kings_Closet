@@ -48,6 +48,11 @@ def onAppStart(app):
     app.gradeButtonY = app.height - app.blackBarHeight - 60
     app.gradeButtonWidth = 100
     app.gradeButtonHeight = 40
+    app.backButtonX = app.width/2 - 60
+    app.backButtonY = app.height - 60
+    app.backButtonWidth = 120
+    app.backButtonHeight = 40
+    
     
     app.backgroundImage = "images/kingclosetbackgrounds.png"
     app.buttonWidth = 310
@@ -171,6 +176,11 @@ def onMousePress(app, mouseX, mouseY):
             app.outfitScore = score
 
             app.state = "gradeMode"
+    
+    if app.state == "gradeMode":
+        if ((app.backButtonX <= mouseX <= app.backButtonX + app.backButtonWidth) and
+            (app.backButtonY <= mouseY <= app.backButtonY + app.backButtonHeight)):
+            app.state = "gameMode"
 
 
     if (app.soundButtonX <= mouseX <= app.soundButtonX + app.soundButtonSize and
