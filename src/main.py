@@ -98,8 +98,61 @@ def onMousePress(app, mouseX, mouseY):
                 (app.height - app.blackBarHeight - app.modeButtonHeight <= mouseY <= app.height - app.blackBarHeight)):
             app.isDressingMode = False
             app.isSelectionMode = True
+        #tops forward button press
+        if (((app.backwardButtonX <= app.mouseX) and 
+             (app.mouseX <= (app.backwardButtonX+
+                         app.forwardButtonWidth))) and
+            ((app.forwardButtonY <= app.mouseY) and 
+             (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
+        
+            app.currTopIndex+=1
+            app.currTopIndex %= len(app.tops)
+
+        #tops backward button press
+        if (((app.forwardButtonX <= app.mouseX) and 
+            (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
+            ((app.forwardButtonY <= app.mouseY) and 
+            (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
+
+            app.currTopIndex-=1
+            app.currTopIndex %= len(app.tops)
+
+        #tops play button press
+        if (((app.playButtonX <= app.mouseX) and 
+            (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
+            ((app.playButtonY <= app.mouseY) and 
+            (app.mouseY <= app.playButtonY + app.playButtonHeight))):
+
+            pass
+
+        #bottoms forward button press
+        if (((app.backwardButtonX <= app.mouseX) and 
+            (app.mouseX <= (app.backwardButtonX +
+                         app.forwardButtonWidth))) and
+            ((app.forwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
+            (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
+
+            app.currBottomIndex+=1
+            app.currBottomIndex%=len(app.bottoms)
+
+        #bottoms backward button press
+        if (((app.forwardButtonX <= app.mouseX) and 
+            (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
+            ((app.forwardButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
+            (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
+
+            app.currBottomIndex-=1
+            app.currBottomIndex%=len(app.bottoms)
+
+        #bottoms play button press
+        if (((app.playButtonX <= app.mouseX) and 
+            (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
+            ((app.playButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
+            (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
+
+            pass
     if (app.soundButtonX <= mouseX <= app.soundButtonX + app.soundButtonSize and
-        app.soundButtonY <= mouseY <= app.soundButtonY + app.soundButtonSize):
+            app.soundButtonY <= mouseY <= app.soundButtonY + app.soundButtonSize):
         if app.soundIsPlaying:
             app.sound.pause()
             app.soundIsPlaying = False
