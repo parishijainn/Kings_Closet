@@ -1,100 +1,35 @@
-# from cmu_graphics import *
-# from objects import HangerManager, OutfitManager
-# from ui import drawWelcomeScreen, drawMainGame, drawInstructionsScreen 
-# import os
-
-# def onAppStart(app):
-#     app.width = 800
-#     app.height = 600
-#     app.state = "welcome"
-    
-#     # Initialize managers
-#     # app.hangerManager = HangerManager(app)
-#     # app.outfitManager = OutfitManager(app)
-    
-#     app.backgroundImage = "images/kingclosetbackgrounds.png"
-#     app.buttonWidth = 310
-#     app.buttonHeight = 80
-#     app.buttonX = app.width // 2 - app.buttonWidth // 2
-#     app.buttonY = app.height // 2 + 45
-
-    
-#     app.mouseX = None
-#     app.mouseY = None
-
-# def onMousePress(app, mouseX, mouseY):
-#     if app.state == "welcome":
-#         if (app.buttonX <= mouseX <= app.buttonX + app.buttonWidth and
-#             app.buttonY <= mouseY <= app.buttonY + app.buttonHeight):
-#             app.state = "instructions"
-# def onMouseMove(app, mouseX, mouseY):
-#     app.mouseX = mouseX
-#     app.mouseY = mouseY
-
-# def redrawAll(app):
-#     if app.state == "welcome":
-#         drawWelcomeScreen(app)
-#     elif app.state == "instructions":
-#         drawInstructionsScreen(app)
-#     elif app.state == "main":
-#         drawMainGame(app)
-
-# runApp(width=800, height=600)
-
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
 from ui import * 
-from gameMode import drawGameMode
+#from gameMode import drawGameMode
 import os
 
 def onAppStart(app):
     app.width = 800
     app.height = 600
     app.state = "welcome"
-
     #gameMode
     app.isSelectionMode = True
     app.isDressingMode = False
-
     app.currTopIndex = 0
     app.currBottomIndex = 0
-    app.tops = []
-    app.bottoms = [Bottoms("images/yellowskirt.png")]
-    
     app.modeButtonWidth, app.modeButtonHeight = 160, 80
-
-    app.blackBarHeight = 50
-
-    app.whiteBoxWidth = app.width/3
-    app.whiteBowHeight = app.height - 2*app.blackBarHeight
-    app.whiteBoxX = app.width/3
-
-    app.distanceBetweenButtons = (app.whiteBoxWidth - app.forwardButtonWidth - 
-                              2*app.buttonAllowance)
-    app.buttonAllowance = 10
-
-    app.forwardButtonWidth = app.whiteBoxWidth*0.33
-    app.forwardButtonHeight = app.blackBarHeight - app.blackBarHeight*0.2
-    app.forwardButtonX = app.whiteBoxWidth+app.buttonAllowance
-    app.forwardButtonY = ((app.height/2) - app.blackBarHeight +
-                      (app.blackBarHeight-app.forwardButtomHeight)/2)
-
-    app.playButtonWidth = app.forwardButtonWidth*0.66
-    app.playButtonHeight = app.forwardButtonHeight
-    app.playButtonX = app.width/2 - app.playButtonWidth/2
-    app.playButtonY = app.forwardButtonY
-    
+    app.blackBarHeight = 80
     # Initialize managers
-    app.outfitManager = OutfitManager()
+    # app.hangerManager = HangerManager(app)
+    # app.outfitManager = OutfitManager(app)
     
-    # UI elements
+    app.backgroundImage = "images/kingclosetbackgrounds.png"
     app.buttonWidth = 310
     app.buttonHeight = 80
     app.buttonX = app.width // 2 - app.buttonWidth // 2
     app.buttonY = app.height // 2 + 45
-
     app.mouseX = None
     app.mouseY = None
+
+    app.scrollY = 0
+    app.maxScrollUp = 0
+    app.maxScrollDown = 200
 
     app.instructionsBackgroundImage = "images/instructions.png"
     app.instructionsButtonWidth = 250
@@ -108,40 +43,29 @@ def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
         if (app.buttonX <= mouseX <= app.buttonX + app.buttonWidth and
             app.buttonY <= mouseY <= app.buttonY + app.buttonHeight):
-            app.state = "main"
-    
-    elif app.state == "main":
-        # Check jacket selection
-        for i, jacket in enumerate(app.outfitManager.jackets.keys()):
-            x = 100 + (i * 90)
-            if x <= mouseX <= x + 80 and 160 <= mouseY <= 160 + 80:
-                app.outfitManager.current_outfit['top'] = f"images/jackets/{jacket}"
-                grade_outfit(app)
-        
-        # Check upload button
-        if (app.width/2 - 150 <= mouseX <= app.width/2 + 150 and
-            300 <= mouseY <= 350):
-            app.show_upload_dialog = True
-        
-        # Handle upload dialog
-        if app.show_upload_dialog:
-            if (app.width/2 - 100 <= mouseX <= app.width/2 + 100 and
-                200 <= mouseY <= 400):
-                # In a real app, this would open a file dialog
-                app.uploaded_image = "user_uploads/photo.jpg"  # Placeholder
-                app.outfitManager.current_outfit['top'] = app.uploaded_image
-                grade_outfit(app, is_real_photo=True)
-                app.show_upload_dialog = False
+            app.state = "instructions"
 
-def grade_outfit(app, is_real_photo=False):
-    """Grade the current outfit"""
-    if app.outfitManager.current_outfit['top']:
-        feedback, status, score = app.outfitManager.grade_outfit(
-            app.outfitManager.current_outfit['top'],
-            "jeans.png",  # Placeholder for bottoms
-            is_real_photo
-        )
-        app.outfit_grade = (feedback, status, score)
+    if app.state == "instructions":
+        if (app.instructionsButtonX <= mouseX <= app.instructionsButtonX + app.instructionsButtonWidth and
+            app.instructionsButtonY <= mouseY <= app.instructionsButtonY + app.instructionsButtonHeight):
+            app.state = "gameMode"   
+
+    if app.state == 'gameMode':    
+        if ((2*(app.width/3) <= mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
+            ((app.height-app.blackBarHeight-app.modeButtonHeight <= mouseY <= app.height-app.blackBarHeight))):
+            #dressme mode
+            app.isDressingMode = True
+            app.isSelectionMode = False
+        if ((app.width-app.modeButtonWidth <= mouseX <= app.width-app.modeButtonWidth + app.modeButtonWidth) and
+            (app.height-app.blackBarHeight-app.modeButtonHeight <= mouseY <= app.height-app.blackBarHeight-app.modeButtonHeight + app.modeButtonHeight)):
+            #browse mode
+            app.isDressingMode = False
+            app.isSelectionMode = True
+
+    
+def onMouseMove(app, mouseX, mouseY):
+    app.mouseX = mouseX
+    app.mouseY = mouseY
 
 def onKeyPress(app, key):
     if app.state == "instructions":
@@ -159,12 +83,7 @@ def redrawAll(app):
     #     drawGameMode(app)
     elif app.state == "main":
         drawMainGame(app)
-<<<<<<< Updated upstream
     elif app.state == 'gameMode':
         drawGameMode(app)
-=======
-        if app.show_upload_dialog:
-            drawUploadDialog(app)
->>>>>>> Stashed changes
 
 runApp(width=800, height=600)
