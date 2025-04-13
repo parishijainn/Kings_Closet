@@ -38,6 +38,11 @@ def onAppStart(app):
     app.instructionsButtonY = app.height - 120
     app.instructionsButtonText = "Start Styling"    
     
+    app.sound = Sound('kidsInAmerica.mp3')
+    app.soundIsPlaying = False
+    app.soundButtonX = app.width - 40
+    app.soundButtonY = 10
+    app.soundButtonSize = 30
     
 def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
@@ -61,7 +66,14 @@ def onMousePress(app, mouseX, mouseY):
             #browse mode
             app.isDressingMode = False
             app.isSelectionMode = True
-
+    if (app.soundButtonX <= mouseX <= app.soundButtonX + app.soundButtonSize and
+        app.soundButtonY <= mouseY <= app.soundButtonY + app.soundButtonSize):
+        if app.soundIsPlaying:
+            app.sound.pause()
+            app.soundIsPlaying = False
+        else:
+            app.sound.play(restart=False)
+            app.soundIsPlaying = True
     
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
@@ -73,6 +85,8 @@ def onKeyPress(app, key):
             app.scrollY += 20
         elif key == "down" and app.scrollY > -app.maxScrollDown:
             app.scrollY -= 20
+    if key == 'p':
+        app.sound.play(restart=True)
 
 def redrawAll(app):
     if app.state == "welcome":
@@ -85,5 +99,7 @@ def redrawAll(app):
         drawMainGame(app)
     elif app.state == 'gameMode':
         drawGameMode(app)
+
+    drawSoundButton(app)
 
 runApp(width=800, height=600)

@@ -1,10 +1,8 @@
 from cmu_graphics import *
 
 def drawWelcomeScreen(app):
-    # Draw background image
+    #draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    
-    # Draw start button (placeholder)
     drawStartButton(app)
 
 def drawStartButton(app):
@@ -35,20 +33,7 @@ def drawMainGame(app):
 def drawInstructionsScreen(app):
     drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
              height = app.height)
-    # drawLabel("How to Play", app.width // 2, 100, size=36, bold=True, fill='darkmagenta')
-    # drawLabel("🧥 Drag clothes from the closet onto the mannequin.", app.width // 2, 180, size=20)
-    # drawLabel("🎨 Mix and match to style your best look!", app.width // 2, 220, size=20)
-    # drawLabel("💾 Press keys to save or shuffle outfits.", app.width // 2, 260, size=20)
-    # drawLabel("Click anywhere to begin!", app.width // 2, 350, size=18, italic=True, fill='gray')
-
-    # centerX = app.width // 2
-    # drawLabel("Welcome to King’s Closet!", centerX, 60 + app.scrollY, size=24, fill='rosyBrown', bold=True)
-    # drawLabel("1. Use the arrow keys to scroll through items.", centerX, 120 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("2. Click on clothing pieces to try them on.", centerX, 180 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("3. Mix and match tops and bottoms.", centerX, 240 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("4. Press the mode switch buttons to toggle views.", centerX, 300 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("5. Finalize your outfit and admire your creation!", centerX, 360 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("Have fun styling!", centerX, 420 + app.scrollY, size=20, fill='rosyBrown', italic=True)
+    #draw instructions box to fit the png box
     boxWidth = 587
     boxHeight = 310
     boxX = (app.width - boxWidth) // 2
@@ -68,47 +53,47 @@ def drawInstructionsScreen(app):
                  size=24, fill='rosyBrown', bold=True)
     currentY += 60
     
-    # Instruction 1
+    #instruction 1
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("1. Use the up and down arrows to navigate through the instructions.", 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
     
-    # Instruction 2
+    #instruction 2
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("2. Click on the arrows to try articles of clothing on.", 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
     
-    # Instruction 3
+    #instruction 3
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("3. Mix and match tops and bottoms.", 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
 
-    #Instruction 4
+    #instruction 4
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("4. Get feedback if your outfit matches or not",
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
 
-   #Instruction 5
+   #instruction 5
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("5. Press the button on the top right to play music",
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
-    #Instruction 6
+    #instruction 6
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("6. Generate a random outfit by pressing the shuffle button",
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
-    # Instruction 7
+    #instruction 7
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("7. See how the outfit looks on you!", 
                  app.width // 2, currentY, 
@@ -120,7 +105,7 @@ def drawInstructionsScreen(app):
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
-    # Final message
+    #final message
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel("Have fun styling!", 
                  app.width // 2, currentY, 
@@ -135,6 +120,29 @@ def drawInstructionsScreen(app):
               app.instructionsButtonX + app.instructionsButtonWidth // 2,
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
+    
+
+
+def drawSoundButton(app):
+    drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
+             fill='white', border='gray', borderWidth=1)
+
+    centerX = app.soundButtonX + app.soundButtonSize // 2
+    centerY = app.soundButtonY + app.soundButtonSize // 2
+
+    if app.soundIsPlaying:
+        barWidth = 5
+        barHeight = 15
+        spacing = 5
+        drawRect(centerX - spacing - barWidth, centerY - barHeight // 2,
+                 barWidth, barHeight, fill='pink')
+        drawRect(centerX + spacing, centerY - barHeight // 2,
+                 barWidth, barHeight, fill='pink')
+    else:
+        drawPolygon(centerX - 5, centerY - 10,
+                    centerX - 5, centerY + 10,
+                    centerX + 10, centerY,
+                    fill='pink')
 # from cmu_graphics import *
 # import numpy as np
 
