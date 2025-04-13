@@ -1,10 +1,7 @@
 from cmu_graphics import *
 
 def drawWelcomeScreen(app):
-    # Draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    
-    # Draw start button (placeholder)
     drawStartButton(app)
 
 def drawStartButton(app):
@@ -29,12 +26,56 @@ def drawStartButton(app):
     
 
 def drawMainGame(app):
+<<<<<<< Updated upstream
     #draw background image
     drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
 
 def drawInstructionsScreen(app):
     drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
              height = app.height)
+=======
+    drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
+    
+    # Draw jacket selection area
+    drawRect(50, 100, 700, 150, fill='white', opacity=30)
+    drawLabel("SELECT YOUR JACKET", app.width/2, 130, size=24, bold=True)
+    
+    # Draw jacket thumbnails in a row
+    jacket_size = 80
+    for i, jacket in enumerate(app.outfitManager.jackets.keys()):
+        x = 100 + (i * 90)
+        if x + jacket_size < app.width - 50:
+            drawImage(f"images/jackets/{jacket}", x, 160, 
+                     width=jacket_size, height=jacket_size)
+    
+    # Draw real photo upload option
+    drawRect(app.width/2 - 150, 300, 300, 50, fill='lavender')
+    drawLabel("UPLOAD REAL CLOTHES", app.width/2, 325, size=18)
+    
+    # Display current selection
+    if app.outfitManager.current_outfit['top']:
+        drawImage(app.outfitManager.current_outfit['top'], 
+                 app.width/3, 400, width=150, height=200)
+    
+    if app.outfitManager.current_outfit['bottom']:
+        drawImage(app.outfitManager.current_outfit['bottom'],
+                 2*app.width/3, 400, width=150, height=200)
+    
+    # Display grading result
+    if hasattr(app, 'outfit_grade'):
+        grade_color = {
+            'perfect': 'green',
+            'good': 'lightGreen',
+            'fail': 'red'
+        }.get(app.outfit_grade[1], 'black')
+        
+        drawLabel(app.outfit_grade[0], app.width/2, 380, 
+                 size=24, fill=grade_color, bold=True)
+        
+def drawInstructionsScreen(app):
+    drawRect(0, 0, app.width, app.height, fill='lavenderblush')
+
+>>>>>>> Stashed changes
 #placeholder for background
     drawLabel("How to Play", app.width // 2, 100, size=36, bold=True, fill='darkmagenta')
     drawLabel("🧥 Drag clothes from the closet onto the mannequin.", app.width // 2, 180, size=20)
@@ -42,6 +83,7 @@ def drawInstructionsScreen(app):
     drawLabel("💾 Press keys to save or shuffle outfits.", app.width // 2, 260, size=20)
     drawLabel("Click anywhere to begin!", app.width // 2, 350, size=18, italic=True, fill='gray')
 
+<<<<<<< Updated upstream
     drawRect(app.instructionsButtonX, app.instructionsButtonY,
              app.instructionsButtonWidth, app.instructionsButtonHeight,
              fill='pink', border='maroon', borderWidth=3)
@@ -86,3 +128,13 @@ def drawInstructionsScreen(app):
 #     drawLabel("MAIN GAME SCREEN", 
 #              app.width/2, app.height/2,
 #              size=24, bold=True)
+=======
+def drawUploadDialog(app):
+    if app.show_upload_dialog:
+        drawRect(100, 100, 600, 400, fill='white', border='black')
+        drawLabel("UPLOAD YOUR CLOTHING", app.width/2, 130, size=24)
+        drawRect(app.width/2 - 100, 200, 200, 200, fill='lightGray')
+        drawLabel("Click to select photo", app.width/2, 300, size=18)
+        drawRect(app.width/2 - 50, 450, 100, 40, fill='pink')
+        drawLabel("UPLOAD", app.width/2, 470, size=18)
+>>>>>>> Stashed changes
