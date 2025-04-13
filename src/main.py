@@ -51,17 +51,7 @@ def onAppStart(app):
     
     app.backgroundImage = "images/kingclosetbackgrounds.png"
     
-    
 
-    app.buttonX = app.width // 2 - 100
-    app.buttonY = app.height // 2 
-    app.buttonWidth = 200
-    app.buttonHeight = 50
-    app.buttonText = "START"
-    app.buttonColor = "lightblue"
-    app.buttonHoverColor = "blue"
-    app.buttonTextColor = "white"
-    app.buttonHoverTextColor = "white"
 def onMousePress(app, mouseX, mouseY):
     # something like if app.state == welcome and they clicked within where the button is then app.state = main
     pass
