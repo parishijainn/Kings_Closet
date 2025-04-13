@@ -155,7 +155,20 @@ def onMousePress(app, mouseX, mouseY):
 
         
 
-    
+            topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
+            bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+            
+            message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
+            
+            app.feedbackText = f"{message} ({score}%)"
+            app.outfitRating = rating
+            app.outfitScore = score
+            app.isGrading = True
+            app.state = "gradeMode"
+
+            app.state = "gradeMode"
+
+    if app.state == "gameMode" and not app.isGrading:
         if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
             app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
             app.currTopIndex = random.randint(0, len(app.tops) - 1)
@@ -172,15 +185,7 @@ def onMousePress(app, mouseX, mouseY):
 
             
     
-    if app.state == "gradeMode":
-        topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
-        bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            
-        message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
-            
-        app.feedbackText = f"{message} ({score}%)"
-        app.outfitRating = rating
-        app.outfitScore = score
+    elif app.state == "gradeMode":
         if ((app.backButtonX <= mouseX <= app.backButtonX + app.backButtonWidth) and
             (app.backButtonY <= mouseY <= app.backButtonY + app.backButtonHeight)):
             app.state = "gameMode"
@@ -250,6 +255,7 @@ def redrawAll(app):
         drawGameScreen(app)
 
     drawSoundButton(app)
+
 
 runApp(width=800, height=600)
 
