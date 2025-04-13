@@ -1,6 +1,10 @@
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
 from ui import drawWelcomeScreen, drawMainGame
+<<<<<<< HEAD
+=======
+import os
+>>>>>>> a000bf385b97a688ebbcda8e68bd40baccc2907c
 
 def onAppStart(app):
     # Setup game dimensions
