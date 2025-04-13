@@ -1,6 +1,6 @@
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
-from ui import drawWelcomeScreen, drawMainGame, drawInstructionsScreen 
+from ui import * 
 from gameMode import drawGameMode
 import os
 
@@ -15,7 +15,6 @@ def onAppStart(app):
     app.currBottomIndex = 0
     app.modeButtonWidth, app.modeButtonHeight = 160, 80
     app.blackBarHeight = 80
-    
     # Initialize managers
     # app.hangerManager = HangerManager(app)
     # app.outfitManager = OutfitManager(app)
@@ -28,12 +27,17 @@ def onAppStart(app):
     app.mouseX = None
     app.mouseY = None
 
+    app.scrollY = 0
+    app.maxScrollUp = 0
+    app.maxScrollDown = 200
+
     app.instructionsBackgroundImage = "images/instructions.png"
     app.instructionsButtonWidth = 250
     app.instructionsButtonHeight = 60
     app.instructionsButtonX = app.width // 2 - app.instructionsButtonWidth // 2
     app.instructionsButtonY = app.height - 120
     app.instructionsButtonText = "Start Styling"    
+    
     
 def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
@@ -62,6 +66,13 @@ def onMousePress(app, mouseX, mouseY):
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
+
+def onKeyPress(app, key):
+    if app.state == "instructions":
+        if key == "up" and app.scrollY < app.maxScrollUp:
+            app.scrollY += 20
+        elif key == "down" and app.scrollY > -app.maxScrollDown:
+            app.scrollY -= 20
 
 def redrawAll(app):
     if app.state == "welcome":
