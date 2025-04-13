@@ -6,15 +6,15 @@ app.isDressingMode = False
 
 app.currTopIndex = 0
 app.currBottomIndex = 0
-app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png")]
-app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png")]
+app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png"), Tops("images/shirt3.png"), Tops("images/shirt4.png"), Tops("images/shirt5.png"), Tops("images/shirt6.png")]
+app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), Bottoms("images/skirt3.png")]
     
 app.modeButtonWidth, app.modeButtonHeight = 160, 80
 
 app.blackBarHeight = 50
 
 app.whiteBoxWidth = app.width/3
-app.whiteBowHeight = app.height - 2*app.blackBarHeight
+app.whiteBoxHeight = app.height - 2*app.blackBarHeight
 app.whiteBoxX = app.width/3
 
 
@@ -86,6 +86,12 @@ def drawGameMode(app):
                  app.width/2, app.height/2-10,
                  width=app.width/3, height=app.height-3*app.blackBarHeight,
                  align='center')
+         drawImage(app.tops[app.currTopIndex].image, app.width/2, 
+                  ((app.height/2)-app.blackBarHeight*2), width=app.width/3, 
+                  height=((app.height/2)-app.blackBarHeight*2)/2, align='center')
+         drawImage(app.bottoms[app.currBottomIndex].image, app.width/2, 
+                  (app.height-app.blackBarHeight)/2, width=app.width/3, 
+                  height=((app.height/2)-app.blackBarHeight*2), align='center')
     
 #def onMousePress(app, mouseX, mouseY):
     #if app.state == 'gameMode':    
@@ -102,8 +108,8 @@ def drawGameMode(app):
                 #app.isSelectionMode == True
 
     # #tops forward button press
-    # if (((app.forwardButtonX + app.distanceBetweenButtons <= app.mouseX) and 
-    #     (app.mouseX <= (app.forwardButtonX + app.distanceBetweenButtons +
+    # if (((app.backwardButtonX <= app.mouseX) and 
+    #     (app.mouseX <= (app.backwardButtonX+
     #                     app.forwardButtonWidth))) and
     #     ((app.forwardButtonY <= app.mouseY) and 
     #     (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
@@ -129,8 +135,8 @@ def drawGameMode(app):
     #     pass
 
     # #bottoms forward button press
-    # if (((app.forwardButtonX + app.distanceBetweenButtons <= app.mouseX) and 
-    #     (app.mouseX <= (app.forwardButtonX + app.distanceBetweenButtons +
+    # if (((app.backwardButtonX <= app.mouseX) and 
+    #     (app.mouseX <= (app.backwardButtonX +
     #                     app.forwardButtonWidth))) and
     #     ((app.forwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
     #     (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
