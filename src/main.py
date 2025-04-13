@@ -207,6 +207,8 @@ def redrawAll(app):
         drawInstructionsScreen(app)
     elif app.state == "gameMode":
         drawGameMode(app)
+    elif app.state == "gradeMode":
+        drawGameScreen(app)
 
     drawSoundButton(app)
 
