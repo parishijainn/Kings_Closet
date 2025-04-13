@@ -41,7 +41,13 @@ def drawGameMode(app):
              app.blackBarHeight, fill='black')
     drawRect(app.width/3, app.blackBarHeight, app.width/3, 
              app.height-app.blackBarHeight*2, fill='white')
-    
+    #browse mode and dress me mode buttons
+    drawRect(2*(app.width/3), 
+             app.height-app.blackBarHeight-app.modeButtonHeight, 
+             app.modeButtonWidth, app.modeButtonHeight, fill='gray')
+    drawRect((app.width/3)-app.modeButtonWidth, 
+             app.height-app.blackBarHeight-app.modeButtonHeight, 
+             app.modeButtonWidth, app.modeButtonHeight, fill='gray')
     
     
     if app.isSelectionMode:
@@ -49,13 +55,7 @@ def drawGameMode(app):
                  app.width/3, app.blackBarHeight, fill='black')
         drawRect(app.width/3, app.height-app.blackBarHeight*2, app.width/3, 
                  app.blackBarHeight, fill='black')
-        #browse mode and dress me mode buttons
-        drawRect(2*(app.width/3), 
-                 app.height-app.blackBarHeight-app.modeButtonHeight, 
-                 app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-        drawRect((app.width/3)-app.modeButtonWidth, 
-                 app.height-app.blackBarHeight-app.modeButtonHeight, 
-                 app.modeButtonWidth, app.modeButtonHeight, fill='gray')
+        
         #shirts and pants play buttons
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,
                  app.playButtonHeight, fill='gray')
