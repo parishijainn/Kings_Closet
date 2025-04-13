@@ -144,40 +144,21 @@ def drawSoundButton(app):
                     centerX + 10, centerY,
                     fill='pink')
 
-# from cmu_graphics import *
-# import numpy as np
+def drawGameScreen(app):
+    drawRect(0, 0, app.width, app.height, fill='lightyellow')
+    drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
-# def drawWelcomeScreen(app):
-#     # Draw video frame if available
-#     if app.videoManager.currentFrame is not None:
-#         frame = app.videoManager.currentFrame
-#         # Convert numpy array to CMU Graphics image
-#         drawImage(frame, 0, 0, width=app.width, height=app.height)
+    # Display selected outfit
+    topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
+    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]]
     
-#     # Dark overlay for better button visibility
-#     drawRect(0, 0, app.width, app.height, fill='black', opacity=30)
+    drawImage(topImg, app.width//2, 150, width=180, height=180, align='center')
+    drawImage(bottomImg, app.width//2, 340, width=180, height=180, align='center')
     
-#     # Draw start button
-#     drawStartButton(app)
-
-# def drawStartButton(app):
-#     # Button background
-#     drawRect(app.startButton['x'] - app.startButton['width']/2,
-#              app.startButton['y'] - app.startButton['height']/2,
-#              app.startButton['width'],
-#              app.startButton['height'],
-#              fill='gold', border='black', borderWidth=2)
+    # Feedback message
+    drawLabel(app.feedbackText, app.width//2, app.height - 100,
+              size=24, fill='darkmagenta', bold=True)
     
-#     # Button text
-#     drawLabel("START GAME", 
-#              app.startButton['x'], 
-#              app.startButton['y'],
-#              size=20, bold=True, fill='black')
-
-# def drawMainGame(app):
-#     # Placeholder for main game
-#     drawRect(0, 0, app.width, app.height, fill='pink')
-#     drawLabel("MAIN GAME SCREEN", 
-#              app.width/2, app.height/2,
-#              size=24, bold=True)
-
+    # Optional: Back to game button
+    drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill='plum', border='black')
+    drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
