@@ -6,8 +6,8 @@ app.isDressingMode = False
 
 app.currTopIndex = 0
 app.currBottomIndex = 0
-app.tops = []
-app.bottoms = [Bottoms("images/yellowskirt.png")]
+app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png")]
+app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png")]
     
 app.modeButtonWidth, app.modeButtonHeight = 160, 80
 
@@ -17,16 +17,15 @@ app.whiteBoxWidth = app.width/3
 app.whiteBowHeight = app.height - 2*app.blackBarHeight
 app.whiteBoxX = app.width/3
 
-app.distanceBetweenButtons = (app.whiteBoxWidth - app.forwardButtonWidth - 
-                              2*app.buttonAllowance)
-app.buttonAllowance = 10
 
+app.buttonAllowance = 10
 app.forwardButtonWidth = app.whiteBoxWidth*0.33
 app.forwardButtonHeight = app.blackBarHeight - app.blackBarHeight*0.2
 app.forwardButtonX = app.whiteBoxWidth+app.buttonAllowance
 app.forwardButtonY = ((app.height/2) - app.blackBarHeight +
-                      (app.blackBarHeight-app.forwardButtomHeight)/2)
+                      (app.blackBarHeight-app.forwardButtonHeight)/2)
 
+app.backwardButtonX = app.width - app.whiteBoxWidth - app.forwardButtonWidth - 2*app.buttonAllowance
 app.playButtonWidth = app.forwardButtonWidth*0.66
 app.playButtonHeight = app.forwardButtonHeight
 app.playButtonX = app.width/2 - app.playButtonWidth/2
@@ -64,28 +63,28 @@ def drawGameMode(app):
                  app.playButtonWidth, app.playButtonHeight, fill='gray')
         #pants and shirts backwards buttons
         drawRect(app.forwardButtonX, app.forwardButtonY, app.forwardButtonWidth,
-                 app.forwardButtonY, fill='gray')
+                 app.forwardButtonHeight, fill='gray')
         drawRect(app.forwardButtonX, app.forwardButtonY+app.whiteBoxHeight/2, 
-                 app.forwardButtonWidth, app.forwardButtonY, fill='gray')
+                 app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
         #pants and shirts forward buttons
-        drawRect(app.forwardButtonX+app.distanceBetweenButtons, 
+        drawRect(app.backwardButtonX, 
                  app.forwardButtonY , app.forwardButtonWidth, 
-                 app.forwardButtonY, fill='gray')
-        drawRect(app.forwardButtonX+app.distanceBetweenButtons,
+                 app.forwardButtonHeight, fill='gray')
+        drawRect(app.backwardButtonX,
                  app.forwardButtonY+app.whiteBoxHeight/2, 
-                 app.forwardButtonWidth, app.forwardButtonY, fill='gray')
+                 app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
         #images of tops and bottoms
-        drawImage(app.bottoms[app.currBottomIndex].image, app.width/2, 
-                  ((app.height/2)-app.blackBarIndex*2)/2, app.width/3, 
-                  ((app.height/2)-app.blackBarIndex*2))
         drawImage(app.tops[app.currTopIndex].image, app.width/2, 
-                  (app.height-app.blackBarIndex)/2, app.width/3, 
-                  ((app.height/2)-app.blackBarHeight*2))
+                  ((app.height/2)-app.blackBarHeight*2), width=app.width/3, 
+                  height=((app.height/2)-app.blackBarHeight*2)/2, align='center')
+        drawImage(app.bottoms[app.currBottomIndex].image, app.width/2, 
+                  (app.height-app.blackBarHeight)/2, width=app.width/3, 
+                  height=((app.height/2)-app.blackBarHeight*2), align='center')
 
     if app.isDressingMode:
          drawImage("images/mannequin.png", 
                  app.width/2, app.height/2-10,
-                 width=app.width/3, height=app.height-3*blackBarHeight,
+                 width=app.width/3, height=app.height-3*app.blackBarHeight,
                  align='center')
     
 #def onMousePress(app, mouseX, mouseY):
@@ -102,59 +101,59 @@ def drawGameMode(app):
                 #app.isDressingMode == False
                 #app.isSelectionMode == True
 
-    #tops forward button press
-    if (((app.forwardButtonX + app.differenceBetweenButtons <= app.mouseX) and 
-        (app.mouseX <= (app.forwardButtonX + app.differenceBetweenButtons +
-                        app.forwardButtonWidth))) and
-        ((app.forwardButtonY <= app.mouseY) and 
-        (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
+    # #tops forward button press
+    # if (((app.forwardButtonX + app.distanceBetweenButtons <= app.mouseX) and 
+    #     (app.mouseX <= (app.forwardButtonX + app.distanceBetweenButtons +
+    #                     app.forwardButtonWidth))) and
+    #     ((app.forwardButtonY <= app.mouseY) and 
+    #     (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
         
-        app.currTopIndex+=1
-        app.currTopIndex %= len(app.tops)
+    #     app.currTopIndex+=1
+    #     app.currTopIndex %= len(app.tops)
 
-    #tops backward button press
-    if (((app.forwardButtonX <= app.mouseX) and 
-        (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
-        ((app.forwardButtonY <= app.mouseY) and 
-        (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
+    # #tops backward button press
+    # if (((app.forwardButtonX <= app.mouseX) and 
+    #     (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
+    #     ((app.forwardButtonY <= app.mouseY) and 
+    #     (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
 
-        app.currTopIndex-=1
-        app.currTopIndex %= len(app.tops)
+    #     app.currTopIndex-=1
+    #     app.currTopIndex %= len(app.tops)
 
-    #tops play button press
-    if (((app.playButtonX <= app.mouseX) and 
-        (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
-        ((app.playButtonY <= app.mouseY) and 
-        (app.mouseY <= app.playButtonY + app.playButtonHeight))):
+    # #tops play button press
+    # if (((app.playButtonX <= app.mouseX) and 
+    #     (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
+    #     ((app.playButtonY <= app.mouseY) and 
+    #     (app.mouseY <= app.playButtonY + app.playButtonHeight))):
 
-        pass
+    #     pass
 
-    #bottoms forward button press
-    if (((app.forwardButtonX + app.differenceBetweenButtons <= app.mouseX) and 
-        (app.mouseX <= (app.forwardButtonX + app.differenceBetweenButtons +
-                        app.forwardButtonWidth))) and
-        ((app.forwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
-        (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
+    # #bottoms forward button press
+    # if (((app.forwardButtonX + app.distanceBetweenButtons <= app.mouseX) and 
+    #     (app.mouseX <= (app.forwardButtonX + app.distanceBetweenButtons +
+    #                     app.forwardButtonWidth))) and
+    #     ((app.forwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
+    #     (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
 
-        app.currBottomIndex+=1
-        app.currBottomIndex%=len(app.bottoms)
+    #     app.currBottomIndex+=1
+    #     app.currBottomIndex%=len(app.bottoms)
 
-    #bottoms backward button press
-    if (((app.forwardButtonX <= app.mouseX) and 
-        (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
-        ((app.forwardButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
-        (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
+    # #bottoms backward button press
+    # if (((app.forwardButtonX <= app.mouseX) and 
+    #     (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
+    #     ((app.forwardButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
+    #     (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
 
-        app.currBottomIndex-=1
-        app.currBottomIndex%=len(app.bottoms)
+    #     app.currBottomIndex-=1
+    #     app.currBottomIndex%=len(app.bottoms)
 
-    #bottoms play button press
-    if (((app.playButtonX <= app.mouseX) and 
-        (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
-        ((app.playButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
-        (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
+    # #bottoms play button press
+    # if (((app.playButtonX <= app.mouseX) and 
+    #     (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
+    #     ((app.playButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
+    #     (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
 
-        pass
+    #     pass
 
 
 
