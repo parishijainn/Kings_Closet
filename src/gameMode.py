@@ -155,14 +155,18 @@ def drawGameMode(app):
                   size=18, bold=True)
 
     if app.isDressingMode:
+        topY = 200
+        bottomY = 320
+        imgWidth = 100
+        imgHeight = 100
         drawImage("images/mannequin.png", 
                   app.width/2, app.height/2-10,
                   width=app.width/3, height=app.height-3*app.blackBarHeight,
                   align='center')
-        drawImage(app.tops[app.currTopIndex].image, app.width/2, 140,
-                  width=180, height=180, align='center')
-        drawImage(app.bottoms[app.currBottomIndex].image, app.width/2, 320,
-                  width=180, height=180, align='center')
+        drawImage(app.tops[app.currTopIndex].image, app.width//2, topY,
+                  width=imgWidth, height=imgHeight, align='center')
+        drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY,
+                  width=imgWidth, height=imgHeight, align='center')
 
 
     
