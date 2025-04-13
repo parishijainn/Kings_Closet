@@ -1,6 +1,6 @@
 from cmu_graphics import *
 from objects import HangerManager, OutfitManager
-from ui import drawWelcomeScreen, drawMainGame
+from ui import drawWelcomeScreen, drawMainGame, drawInstructionsScreen 
 import os
 
 def onAppStart(app):
@@ -13,17 +13,29 @@ def onAppStart(app):
     # app.outfitManager = OutfitManager(app)
     
     app.backgroundImage = "images/kingclosetbackgrounds.png"
+    app.buttonWidth = 310
+    app.buttonHeight = 80
+    app.buttonX = app.width // 2 - app.buttonWidth // 2
+    app.buttonY = app.height // 2 + 45
+
     
+    app.mouseX = None
+    app.mouseY = None
 
 def onMousePress(app, mouseX, mouseY):
-    # something like if app.state == welcome and they clicked within where the button is then app.state = main
-    pass
+    if app.state == "welcome":
+        if (app.buttonX <= mouseX <= app.buttonX + app.buttonWidth and
+            app.buttonY <= mouseY <= app.buttonY + app.buttonHeight):
+            app.state = "instructions"
+def onMouseMove(app, mouseX, mouseY):
+    app.mouseX = mouseX
+    app.mouseY = mouseY
 
 def redrawAll(app):
     if app.state == "welcome":
         drawWelcomeScreen(app)
-    # elif app.state == "instructions":
-    #     drawInstructionsScreen(app)
+    elif app.state == "instructions":
+        drawInstructionsScreen(app)
     elif app.state == "main":
         drawMainGame(app)
 
