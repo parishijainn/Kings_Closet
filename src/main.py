@@ -44,8 +44,8 @@ def onAppStart(app):
     # app.hangerManager = HangerManager(app)
     # app.outfitManager = OutfitManager(app)
 
-    app.gradeButtonX = app.width/2 - 50
-    app.gradeButtonY = app.height - app.blackBarHeight - 60
+    app.gradeButtonX = app.width-200
+    app.gradeButtonY = 100
     app.gradeButtonWidth = 100
     app.gradeButtonHeight = 40
     app.backButtonX = app.width/2 - 60
@@ -268,7 +268,7 @@ def drawGameScreen(app):
     drawImage(bottomImg, app.width//2, 320, width=180, height=180, align='center')
 
     drawLabel(app.feedbackText, app.width//2, app.height - 100, size=22, fill='darkmagenta')
-    drawRect(app.width/2 - 50, app.height - app.blackBarHeight - 60, 100, 40, fill='plum', border='black')
+    drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonY, fill='plum', border='black')
     drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
 
 
