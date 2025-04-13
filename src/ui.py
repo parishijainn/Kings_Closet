@@ -158,7 +158,7 @@ def drawSoundButton(app):
 #     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
 
 def drawGameScreen(app):
-    # drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
     topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]

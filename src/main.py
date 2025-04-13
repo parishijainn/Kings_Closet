@@ -1,13 +1,10 @@
 from cmu_graphics import *
 from ui import * 
-import random
-from random import randint
 from gameMode import drawGameMode
 from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
-# from handtracking import processCameraFeed, getFingerPosition
-
+import random
 
 def onAppStart(app):
     app.width = 800
@@ -43,6 +40,9 @@ def onAppStart(app):
     app.playButtonHeight = app.forwardButtonHeight
     app.playButtonX = app.width/2 - app.playButtonWidth/2
     app.playButtonY = app.forwardButtonY
+    # Initialize managers
+    # app.hangerManager = HangerManager(app)
+    # app.outfitManager = OutfitManager(app)
 
     app.gradeButtonX = app.width-200
     app.gradeButtonY = 100
@@ -52,6 +52,7 @@ def onAppStart(app):
     app.backButtonY = app.height - 60
     app.backButtonWidth = 120
     app.backButtonHeight = 40
+    
     
     app.backgroundImage = "images/kingclosetbackgrounds.png"
     app.buttonWidth = 310
@@ -84,12 +85,7 @@ def onAppStart(app):
 
     app.mouseX = None
     app.mouseY = None
-
-    # Handtracking
-    # app.fingerHistory = []      
-    # app.maxHistory = 10
-    # app.swipeCooldown = 15      
-    # app.lastSwipeTime = 0
+    app.isGrading = False
 
 def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
@@ -156,11 +152,29 @@ def onMousePress(app, mouseX, mouseY):
             app.currBottomIndex-=1
             app.currBottomIndex%=len(app.bottoms)
 
-        if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
-            (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
 
-            topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
-            bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+        
+
+    
+        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+            app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
+            app.currTopIndex = random.randint(0, len(app.tops) - 1)
+
+        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+            app.playButtonY + 
+            app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
+            app.whiteBoxHeight / 2 + app.playButtonHeight):
+            app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
+
+        
+
+            
+
+            
+    
+    if app.state == "gradeMode":
+        topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
+        bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
             
         message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
             
@@ -189,7 +203,7 @@ def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
 
-    # Evaluate outfit
+        # Evaluate outfit
     if app.isSelectionMode:
         playButtonX = app.width / 2 - 50
         playButtonY = app.height - app.blackBarHeight - 60
@@ -253,39 +267,5 @@ def drawGameScreen(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonY, fill='plum', border='black')
     drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
 
-# def onStep(app):
-#     frame = processCameraFeed()  
-#     finger = getFingerPosition()
 
-#     if finger is not None:
-#         app.fingerHistory.append(finger)
-#         if len(app.fingerHistory) > app.maxHistory:
-#             app.fingerHistory.pop(0)
-
-#         if app.lastSwipeTime <= 0 and len(app.fingerHistory) == app.maxHistory:
-#             x0, y0 = app.fingerHistory[0]
-#             xN, yN = app.fingerHistory[-1]
-
-#             dx = xN - x0
-#             dy = yN - y0
-#             threshold = 0.15
-
-#             if abs(dx) > abs(dy) and abs(dx) > threshold:
-#                 if dx > 0:
-#                     app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottoms)
-#                 else:
-#                     app.currBottomIndex = (app.currBottomIndex - 1) % len(app.bottoms)
-#                 app.lastSwipeTime = app.swipeCooldown
-
-#             elif abs(dy) > abs(dx) and abs(dy) > threshold:
-#                 # vertical swipe -> switch tops
-#                 if dy > 0:
-#                     app.currTopIndex = (app.currTopIndex + 1) % len(app.tops)
-#                 else:
-#                     app.currTopIndex = (app.currTopIndex - 1) % len(app.tops)
-#                 app.lastSwipeTime = app.swipeCooldown
-
-#     if app.lastSwipeTime > 0:
-#         app.lastSwipeTime -= 1
-
-runApp(width=800, height=600)
+runApp()
