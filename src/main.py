@@ -42,21 +42,16 @@
 # runApp(width=800, height=600)
 
 from cmu_graphics import *
-<<<<<<< Updated upstream
 from objects import HangerManager, OutfitManager
 from ui import * 
 from gameMode import drawGameMode
-=======
-from objects import OutfitManager
-from ui import *
->>>>>>> Stashed changes
 import os
 
 def onAppStart(app):
     app.width = 800
     app.height = 600
     app.state = "welcome"
-<<<<<<< Updated upstream
+
     #gameMode
     app.isSelectionMode = True
     app.isDressingMode = False
@@ -97,7 +92,7 @@ def onAppStart(app):
     app.buttonHeight = 80
     app.buttonX = app.width // 2 - app.buttonWidth // 2
     app.buttonY = app.height // 2 + 45
-<<<<<<< Updated upstream
+
     app.mouseX = None
     app.mouseY = None
 
@@ -113,31 +108,6 @@ def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
         if (app.buttonX <= mouseX <= app.buttonX + app.buttonWidth and
             app.buttonY <= mouseY <= app.buttonY + app.buttonHeight):
-<<<<<<< Updated upstream
-            app.state = "instructions"
-
-    if app.state == "instructions":
-        if (app.instructionsButtonX <= mouseX <= app.instructionsButtonX + app.instructionsButtonWidth and
-            app.instructionsButtonY <= mouseY <= app.instructionsButtonY + app.instructionsButtonHeight):
-            app.state = "gameMode"   
-
-    if app.state == 'gameMode':    
-        if ((2*(app.width/3) <= mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
-            ((app.height-app.blackBarHeight-app.modeButtonHeight <= mouseY <= app.height-app.blackBarHeight))):
-            #dressme mode
-            app.isDressingMode = True
-            app.isSelectionMode = False
-        if ((app.width-app.modeButtonWidth <= mouseX <= app.width-app.modeButtonWidth + app.modeButtonWidth) and
-            (app.height-app.blackBarHeight-app.modeButtonHeight <= mouseY <= app.height-app.blackBarHeight-app.modeButtonHeight + app.modeButtonHeight)):
-            #browse mode
-            app.isDressingMode = False
-            app.isSelectionMode = True
-
-    
-def onMouseMove(app, mouseX, mouseY):
-    app.mouseX = mouseX
-    app.mouseY = mouseY
-=======
             app.state = "main"
     
     elif app.state == "main":
@@ -172,7 +142,6 @@ def grade_outfit(app, is_real_photo=False):
             is_real_photo
         )
         app.outfit_grade = (feedback, status, score)
->>>>>>> Stashed changes
 
 def onKeyPress(app, key):
     if app.state == "instructions":
