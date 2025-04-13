@@ -41,7 +41,14 @@ def drawInstructionsScreen(app):
     drawLabel("💾 Press keys to save or shuffle outfits.", app.width // 2, 260, size=20)
     drawLabel("Click anywhere to begin!", app.width // 2, 350, size=18, italic=True, fill='gray')
 
+    drawRect(app.instructionsButtonX, app.instructionsButtonY,
+             app.instructionsButtonWidth, app.instructionsButtonHeight,
+             fill='pink', border='maroon', borderWidth=3)
     
+    drawLabel(app.instructionsButtonText,
+              app.instructionsButtonX + app.instructionsButtonWidth // 2,
+              app.instructionsButtonY + app.instructionsButtonHeight // 2,
+              size=24, bold=True, fill='maroon')
 # from cmu_graphics import *
 # import numpy as np
 
