@@ -30,10 +30,11 @@ def drawStartButton(app):
 
 def drawMainGame(app):
     #draw background image
-    drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
 
 def drawInstructionsScreen(app):
-    drawRect(0, 0, app.width, app.height, fill='lavenderblush')
+    drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
+             height = app.height)
 #placeholder for background
     drawLabel("How to Play", app.width // 2, 100, size=36, bold=True, fill='darkmagenta')
     drawLabel("🧥 Drag clothes from the closet onto the mannequin.", app.width // 2, 180, size=20)
