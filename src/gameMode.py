@@ -46,13 +46,19 @@ def drawGameMode(app):
     drawRect(app.width/3, app.blackBarHeight, app.width/3,
              app.height-app.blackBarHeight*2, fill='white')
 
-    # Mode switch buttons
+    #mode switch buttons
     drawRect(2*(app.width/3), 
              app.height-app.blackBarHeight-app.modeButtonHeight, 
              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
+    drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
+          app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
+          size=30, fill='white', bold=True, font = 'monospace')
     drawRect((app.width/3)-app.modeButtonWidth, 
              app.height-app.blackBarHeight-app.modeButtonHeight, 
              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
+    drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
+          app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
+          size=30, fill='white', bold=True, font = 'monospace')
 
     if app.isSelectionMode:
         drawRect(app.width/3, (app.height/2)-app.blackBarHeight, 
