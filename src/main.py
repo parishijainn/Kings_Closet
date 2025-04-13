@@ -85,6 +85,7 @@ def onAppStart(app):
 
     app.mouseX = None
     app.mouseY = None
+    app.isGrading = False
 
 def onMousePress(app, mouseX, mouseY):
     if app.state == "welcome":
@@ -176,12 +177,24 @@ def onMousePress(app, mouseX, mouseY):
             app.outfitScore = score
 
             app.state = "gradeMode"
+
+    if app.state == "gameMode":
+        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+            app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
+            app.currTopIndex = random.randint(0, len(app.tops) - 1)
+
+        elif (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+            app.playButtonY + 
+            app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
+            app.whiteBoxHeight / 2 + app.playButtonHeight):
+            app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
     
     if app.state == "gradeMode":
         if ((app.backButtonX <= mouseX <= app.backButtonX + app.backButtonWidth) and
             (app.backButtonY <= mouseY <= app.backButtonY + app.backButtonHeight)):
             app.state = "gameMode"
             app.feedbackText = ""
+            app.isGrading = False 
 
 
     if (app.soundButtonX <= mouseX <= app.soundButtonX + app.soundButtonSize and
@@ -193,16 +206,7 @@ def onMousePress(app, mouseX, mouseY):
             app.sound.play(restart=False)
             app.soundIsPlaying = True
 
-    if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
-        app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
-        app.currTopIndex = random.randint(0, len(app.tops) - 1)
 
-    elif (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
-          app.playButtonY + 
-          app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
-          app.whiteBoxHeight / 2 + app.playButtonHeight):
-        app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
-    
     
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
