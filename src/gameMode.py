@@ -1,5 +1,7 @@
 from cmu_graphics import *
 from clothesClasses import *
+from handtracking import processCameraFeed, getFingerPosition
+
 
 app.isSelectionMode = True
 app.isDressingMode = False
@@ -172,73 +174,9 @@ def drawGameMode(app):
                   width=imgWidthTop, height=imgHeightTop, align='center')
         drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY,
                   width=imgWidthBottom, height=imgHeightBottom, align='center')
-
-
-    
-#def onMousePress(app, mouseX, mouseY):
-    #if app.state == 'gameMode':    
-        #if ((2*(app.width/3) <= mouseX <= 2*(app.width/3) + modeButtonwidth) and
-            #((app.height-blackBarHeight-modeButtonHeight <= mouseY) and 
-            #(mouseY <= app.height-blackBarHeight-modeButtonHeight + modeButtonHeight))):
-            #dressme mode
-                #app.isDressingMode == True
-                #app.isSelectionMode == False
-        #if ((app.width-modeButtonWidth <= mouseX <= app.width-modeButtonWidth + modeButtonwidth) and
-            #(app.height-blackBarHeight-modeButtonHeight <= mouseY <= app.height-blackBarHeight-modeButtonHeight + modeButtonHeight)):
-            #browse mode
-                #app.isDressingMode == False
-                #app.isSelectionMode == True
-
-    # #tops forward button press
-    # if (((app.backwardButtonX <= app.mouseX) and 
-    #     (app.mouseX <= (app.backwardButtonX+
-    #                     app.forwardButtonWidth))) and
-    #     ((app.forwardButtonY <= app.mouseY) and 
-    #     (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
         
-    #     app.currTopIndex+=1
-    #     app.currTopIndex %= len(app.tops)
-
-    # #tops backward button press
-    # if (((app.forwardButtonX <= app.mouseX) and 
-    #     (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
-    #     ((app.forwardButtonY <= app.mouseY) and 
-    #     (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
-
-    #     app.currTopIndex-=1
-    #     app.currTopIndex %= len(app.tops)
-
-    # #tops play button press
-    # if (((app.playButtonX <= app.mouseX) and 
-    #     (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
-    #     ((app.playButtonY <= app.mouseY) and 
-    #     (app.mouseY <= app.playButtonY + app.playButtonHeight))):
-
-    #     pass
-
-    # #bottoms forward button press
-    # if (((app.backwardButtonX <= app.mouseX) and 
-    #     (app.mouseX <= (app.backwardButtonX +
-    #                     app.forwardButtonWidth))) and
-    #     ((app.forwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
-    #     (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
-
-    #     app.currBottomIndex+=1
-    #     app.currBottomIndex%=len(app.bottoms)
-
-    # #bottoms backward button press
-    # if (((app.forwardButtonX <= app.mouseX) and 
-    #     (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
-    #     ((app.forwardButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
-    #     (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
-
-    #     app.currBottomIndex-=1
-    #     app.currBottomIndex%=len(app.bottoms)
-
-    # #bottoms play button press
-    # if (((app.playButtonX <= app.mouseX) and 
-    #     (app.mouseX <= app.playButtonX + app.playButtonWidth)) and
-    #     ((app.playButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
-    #     (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
-
-    #     pass
+    # frame = processCameraFeed()
+    # if frame is not None:
+    #     drawImage(frame, 10, 10, width=160, height=120)
+    # if hasattr(app, 'latestCameraFrame') and app.latestCameraFrame:
+    #     drawImage(app.latestCameraFrame, 10, 10, width=160, height=120)
