@@ -4,6 +4,7 @@ from gameMode import drawGameMode
 from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
+import random
 
 def onAppStart(app):
     app.width = 800
@@ -170,6 +171,17 @@ def onMousePress(app, mouseX, mouseY):
         else:
             app.sound.play(restart=False)
             app.soundIsPlaying = True
+
+    if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+        app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
+        app.currTopIndex = random.randint(0, len(app.tops) - 1)
+
+    elif (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+          app.playButtonY + 
+          app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
+          app.whiteBoxHeight / 2 + app.playButtonHeight):
+        app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
+    
     
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
