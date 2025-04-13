@@ -1,10 +1,7 @@
 from cmu_graphics import *
 
 def drawWelcomeScreen(app):
-    # Draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    
-    # Draw start button (placeholder)
     drawStartButton(app)
 
 def drawStartButton(app):
@@ -29,104 +26,20 @@ def drawStartButton(app):
     
 
 def drawMainGame(app):
+<<<<<<< Updated upstream
     #draw background image
     drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
 
 def drawInstructionsScreen(app):
     drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
              height = app.height)
-    # drawLabel("How to Play", app.width // 2, 100, size=36, bold=True, fill='darkmagenta')
-    # drawLabel("🧥 Drag clothes from the closet onto the mannequin.", app.width // 2, 180, size=20)
-    # drawLabel("🎨 Mix and match to style your best look!", app.width // 2, 220, size=20)
-    # drawLabel("💾 Press keys to save or shuffle outfits.", app.width // 2, 260, size=20)
-    # drawLabel("Click anywhere to begin!", app.width // 2, 350, size=18, italic=True, fill='gray')
+#placeholder for background
+    drawLabel("How to Play", app.width // 2, 100, size=36, bold=True, fill='darkmagenta')
+    drawLabel("🧥 Drag clothes from the closet onto the mannequin.", app.width // 2, 180, size=20)
+    drawLabel("🎨 Mix and match to style your best look!", app.width // 2, 220, size=20)
+    drawLabel("💾 Press keys to save or shuffle outfits.", app.width // 2, 260, size=20)
+    drawLabel("Click anywhere to begin!", app.width // 2, 350, size=18, italic=True, fill='gray')
 
-    # centerX = app.width // 2
-    # drawLabel("Welcome to King’s Closet!", centerX, 60 + app.scrollY, size=24, fill='rosyBrown', bold=True)
-    # drawLabel("1. Use the arrow keys to scroll through items.", centerX, 120 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("2. Click on clothing pieces to try them on.", centerX, 180 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("3. Mix and match tops and bottoms.", centerX, 240 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("4. Press the mode switch buttons to toggle views.", centerX, 300 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("5. Finalize your outfit and admire your creation!", centerX, 360 + app.scrollY, size=20, fill='rosyBrown')
-    # drawLabel("Have fun styling!", centerX, 420 + app.scrollY, size=20, fill='rosyBrown', italic=True)
-    boxWidth = 587
-    boxHeight = 310
-    boxX = (app.width - boxWidth) // 2
-    boxY = 148
-    
-    drawRect(boxX, boxY, boxWidth, boxHeight, border='black', borderWidth=3, opacity = 0)
-    contentY = boxY + 20 + app.scrollY
-
-    visibleTop = boxY + 5
-    visibleBottom = boxY + boxHeight - 5
-    
-    currentY = boxY + 20 + app.scrollY
-    
-    if visibleTop <= currentY <= visibleBottom - 24:  
-        drawLabel("Welcome to King's Closet!", 
-                 app.width // 2, currentY, 
-                 size=24, fill='rosyBrown', bold=True)
-    currentY += 60
-    
-    # Instruction 1
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("1. Use the up and down arrows to navigate through the instructions.", 
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-    
-    # Instruction 2
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("2. Click on the arrows to try articles of clothing on.", 
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-    
-    # Instruction 3
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("3. Mix and match tops and bottoms.", 
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-
-    #Instruction 4
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("4. Get feedback if your outfit matches or not",
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-
-   #Instruction 5
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("5. Press the button on the top right to play music",
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-    #Instruction 6
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("6. Generate a random outfit by pressing the shuffle button",
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-    # Instruction 7
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("7. See how the outfit looks on you!", 
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("Finalize your outfit and admire your creation!", 
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown')
-    currentY += 40
-    # Final message
-    if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("Have fun styling!", 
-                 app.width // 2, currentY, 
-                 size=20, fill='rosyBrown', italic=True)
-    
-        
     drawRect(app.instructionsButtonX, app.instructionsButtonY,
              app.instructionsButtonWidth, app.instructionsButtonHeight,
              fill='pink', border='maroon', borderWidth=3)
@@ -171,3 +84,13 @@ def drawInstructionsScreen(app):
 #     drawLabel("MAIN GAME SCREEN", 
 #              app.width/2, app.height/2,
 #              size=24, bold=True)
+=======
+def drawUploadDialog(app):
+    if app.show_upload_dialog:
+        drawRect(100, 100, 600, 400, fill='white', border='black')
+        drawLabel("UPLOAD YOUR CLOTHING", app.width/2, 130, size=24)
+        drawRect(app.width/2 - 100, 200, 200, 200, fill='lightGray')
+        drawLabel("Click to select photo", app.width/2, 300, size=18)
+        drawRect(app.width/2 - 50, 450, 100, 40, fill='pink')
+        drawLabel("UPLOAD", app.width/2, 470, size=18)
+>>>>>>> Stashed changes
