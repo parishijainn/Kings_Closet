@@ -1,8 +1,8 @@
 from cmu_graphics import *
-from objects import HangerManager, OutfitManager
 from ui import * 
 from gameMode import drawGameMode
 from clothesClasses import *
+from outfitgrader import OutfitManager
 import os
 
 def onAppStart(app):
@@ -15,8 +15,8 @@ def onAppStart(app):
 
     app.currTopIndex = 0
     app.currBottomIndex = 0
-    app.tops = [Tops("images/jacket1.png"), Tops("images/jacket2.png")]
-    app.bottoms = [Bottoms("images/yellowskirt.png"), Bottoms("images/pinktop.png")]
+    app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png"), Tops("images/shirt3.png"), Tops("images/shirt4.png"), Tops("images/shirt5.png"), Tops("images/shirt6.png")]
+    app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), Bottoms("images/skirt3.png"), Bottoms("images/bottom1.png"), Bottoms("images/bottom2.png"), Bottoms("images/bottom3.png")]
     
     app.modeButtonWidth, app.modeButtonHeight = 160, 80
 
@@ -131,7 +131,7 @@ def redrawAll(app):
     elif app.state == "instructions":
         drawInstructionsScreen(app)
     elif app.state == "gameMode":
-        drawGameScreen(app)
+        drawGameMode(app)
 
 
 def drawGameScreen(app):
@@ -144,10 +144,7 @@ def drawGameScreen(app):
     drawImage(topImg, app.width//2, 140, width=180, height=180, align='center')
     drawImage(bottomImg, app.width//2, 320, width=180, height=180, align='center')
 
-    # Feedback area
     drawLabel(app.feedbackText, app.width//2, app.height - 100, size=22, fill='darkmagenta')
-
-    # Button to trigger grading
     drawRect(app.width/2 - 50, app.height - app.blackBarHeight - 60, 100, 40, fill='plum', border='black')
     drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
 

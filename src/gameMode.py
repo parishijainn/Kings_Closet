@@ -6,8 +6,8 @@ app.isDressingMode = False
 
 app.currTopIndex = 0
 app.currBottomIndex = 0
-app.tops = [Tops("images/jacket1.png"), Tops("images/jacket2.png")]
-app.bottoms = [Bottoms("images/yellowskirt.png"), Bottoms("images/pinktop.png")]
+app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png")]
+app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png")]
     
 app.modeButtonWidth, app.modeButtonHeight = 160, 80
 

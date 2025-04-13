@@ -104,11 +104,9 @@ class OutfitManager:
         # Analyze both pieces
         top_info = self.analyze_colors(top_path)
         bottom_info = self.analyze_colors(bottom_path)
-        
-        # Calculate match score
         score = self.calculate_match_score(top_info, bottom_info)
         
-        # Generate feedback
+        # feedback
         if score >= 90:
             return ("Perfect match! As if!", "perfect", score)
         elif score >= 70:
@@ -122,7 +120,6 @@ class OutfitManager:
         """Advanced scoring considering colors and patterns"""
         score = 0
         
-        # Color matching (60% of score)
         if bottom['main_color'] in self.color_rules.get(top['main_color'], []):
             score += 60
         elif '*' in self.color_rules.get(top['main_color'], []):
@@ -130,15 +127,13 @@ class OutfitManager:
         elif top['main_color'] == bottom['main_color']:
             score += 40
             
-        # Pattern matching (30% of score)
         if top['is_plaid'] and bottom['is_solid']:
-            score += 30  # Plaid looks best with solids
+            score += 30  
         elif not top['is_plaid'] and not bottom['is_plaid']:
-            score += 20  # Two solids are safe
+            score += 20  
             
-        # Secondary color matching (10% of score)
         common_secondaries = set(top['secondary_colors']) & set(bottom['secondary_colors'])
         if common_secondaries:
             score += min(10, len(common_secondaries) * 5)
             
-        return min(100, score)  # Cap at 100
+        return min(100, score) 

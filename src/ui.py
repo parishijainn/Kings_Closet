@@ -135,6 +135,7 @@ def drawInstructionsScreen(app):
               app.instructionsButtonX + app.instructionsButtonWidth // 2,
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
+
 # from cmu_graphics import *
 # import numpy as np
 
