@@ -207,18 +207,20 @@ def drawGameMode(app):
                   size=18, bold=True)
 
     if app.isDressingMode:
-        topY = 200
-        bottomY = 320
-        imgWidth = 100
-        imgHeight = 100
-        drawImage("images/mannequin.png", 
-                  app.width/2, app.height/2-10,
-                  width=app.width/3, height=app.height-3*app.blackBarHeight,
+        topY = 180
+        bottomY = 280
+        imgWidthTop = 100
+        imgHeightTop = 100
+        imgWidthBottom = 120
+        imgHeightBottom = 120
+        drawImage("images/mannequinCropped.png", 
+                  app.width/2, app.height/2,
+                  width=app.width/3 - 60, height=app.height - 60,
                   align='center')
         drawImage(app.tops[app.currTopIndex].image, app.width//2, topY,
-                  width=imgWidth, height=imgHeight, align='center')
+                  width=imgWidthTop, height=imgHeightTop, align='center')
         drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY,
-                  width=imgWidth, height=imgHeight, align='center')
+                  width=imgWidthBottom, height=imgHeightBottom, align='center')
 
 
     
@@ -289,7 +291,3 @@ def drawGameMode(app):
     #     (app.mouseY <= app.playButtonY+app.playButtonHeight+app.whiteBoxHeight/2))):
 
     #     pass
-
-
-
-            
