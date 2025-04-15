@@ -55,9 +55,9 @@ def onAppStart(app):
     #Clothes Selection Buttons
     app.backwardButtonWidth = app.whiteBoxWidth*0.33
     app.backwardButtonHeight = app.blackBarHeight - app.blackBarHeight*0.2
-    app.backwardButtonX = app.whiteBoxWidth+app.buttonAllowance
+    app.backwardButtonX = app.whiteBoxWidth+10
     app.backwardButtonY = ((app.height/2) - app.blackBarHeight +
-                      (app.blackBarHeight-app.forwardButtonHeight)/2)
+                      (app.blackBarHeight-app.backwardButtonHeight)/2)
     
     app.forwardButtonX = app.width - app.whiteBoxWidth - app.backwardButtonWidth - 10
     
@@ -110,109 +110,24 @@ def onAppStart(app):
     app.mouseY = None
     app.isGrading = False
 
+    app.feedbackText = ""
+
 def onMousePress(app, mouseX, mouseY):
+    pressSoundButton(app)
     if app.state == "welcome":
-        presStartPlayingButton(app)
+        pressStartPlayingButton(app)
     
     elif app.state == "instructions":
         pressStartStylingButton(app)
 
     elif app.state == 'gameMode':
-        if ((app.gradeButtonX <= mouseX <= app.gradeButtonX + app.gradeButtonWidth) and
-            (app.gradeButtonY <= mouseY <= app.gradeButtonY + app.gradeButtonHeight)):
-                topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
-                bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            
-                message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
-            
-                app.feedbackText = f"{message} ({score}%)"
-                app.outfitRating = rating
-                app.outfitScore = score
-                app.isGrading = True
-                app.state = "gradeMode"
-
-                app.state = "gradeMode"
-                app.state = "gradeMode"
-        
-        # Mode selection buttons
+        pressGradeButton(app)
         pressModeButtons(app)
+        pressSelectionButtons(app)
         
-        #tops forward button press
-        if (((app.forwardButtonX <= app.mouseX) and 
-             (app.mouseX <= (app.forwardButtonX+
-                         app.backwardButtonWidth))) and
-            ((app.backwardButtonY <= app.mouseY) and 
-             (app.mouseY <= app.backwardButtonY + app.backwardButtonHeight))):
-        
-            app.currTopIndex+=1
-            app.currTopIndex %= len(app.tops)
-
-        #tops backward button press
-        if (((app.backwardButtonX <= app.mouseX) and 
-            (app.mouseX <= app.backwardButtonX + app.backwardButtonWidth)) and
-            ((app.backwardButtonY <= app.mouseY) and 
-            (app.mouseY <= app.backwardButtonY + app.backwardButtonHeight))):
-
-            app.currTopIndex-=1
-            app.currTopIndex %= len(app.tops)
-
-
-        #bottoms forward button press
-        if (((app.forwardButtonX <= app.mouseX) and 
-            (app.mouseX <= (app.forwardButtonX +
-                         app.backwardButtonWidth))) and
-            ((app.backwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
-            (app.mouseY <= app.backwardButtonY+app.whiteBoxHeight/2 + app.backwardButtonHeight))):
-
-            app.currBottomIndex+=1
-            app.currBottomIndex%=len(app.bottoms)
-
-        #bottoms backward button press
-        if (((app.backwardButtonX <= app.mouseX) and 
-            (app.mouseX <= app.backwardButtonX + app.backwardButtonWidth)) and
-            ((app.backwardButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
-            (app.mouseY <= app.backwardButtonY+app.whiteBoxHeight/2 + app.backwardButtonHeight))):
-
-            app.currBottomIndex-=1
-            app.currBottomIndex%=len(app.bottoms)
-
-
-        
-
-            
-
-    if app.state == "gameMode" and not app.isGrading:
-        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
-            app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
-            app.currTopIndex = random.randint(0, len(app.tops) - 1)
-
-        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
-            app.playButtonY + 
-            app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
-            app.whiteBoxHeight / 2 + app.playButtonHeight):
-            app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
-
-        
-
-            
-
-            
-    
     elif app.state == "gradeMode":
         pressBackButton(app)
 
-
-    if (app.soundButtonX <= mouseX <= app.soundButtonX + app.soundButtonSize and
-            app.soundButtonY <= mouseY <= app.soundButtonY + app.soundButtonSize):
-        if app.soundIsPlaying:
-            app.sound.pause()
-            app.soundIsPlaying = False
-        else:
-            app.sound.play(restart=False)
-            app.soundIsPlaying = True
-
-
-    
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
@@ -226,7 +141,6 @@ def onMouseMove(app, mouseX, mouseY):
             bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
             message, rating, score = app.outfitManager.grade_outfit(topKey, bottomKey)
             app.feedbackText = f"{message} ({score}%)"
-
 
 def onKeyPress(app, key):
     if app.state == "instructions":
@@ -247,11 +161,9 @@ def onKeyPress(app, key):
         elif key == "down":
             app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottomKeys)
 
-
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
-
 
 def redrawAll(app):
     if app.state == "welcome":
@@ -264,7 +176,6 @@ def redrawAll(app):
         drawGameScreen(app)
 
     drawSoundButton(app)
-
 
 runApp(width=800, height=600)
 
@@ -281,6 +192,5 @@ def drawGameScreen(app):
     drawLabel(app.feedbackText, app.width//2, app.height - 100, size=22, fill='darkmagenta')
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonY, fill='plum', border='black')
     drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
-
 
 runApp()

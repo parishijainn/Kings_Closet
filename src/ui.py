@@ -120,26 +120,8 @@ def drawInstructionsScreen(app):
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
     
-def drawSoundButton(app):
-    drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
-             fill='white', border='gray', borderWidth=1)
 
-    centerX = app.soundButtonX + app.soundButtonSize // 2
-    centerY = app.soundButtonY + app.soundButtonSize // 2
 
-    if app.soundIsPlaying:
-        barWidth = 5
-        barHeight = 15
-        spacing = 5
-        drawRect(centerX - spacing - barWidth, centerY - barHeight // 2,
-                 barWidth, barHeight, fill='pink')
-        drawRect(centerX + spacing, centerY - barHeight // 2,
-                 barWidth, barHeight, fill='pink')
-    else:
-        drawPolygon(centerX - 5, centerY - 10,
-                    centerX - 5, centerY + 10,
-                    centerX + 10, centerY,
-                    fill='pink')
 
 # def drawGameScreen(app):
 #     drawRect(0, 0, app.width, app.height, fill='lightyellow')
