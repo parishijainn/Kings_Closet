@@ -1,7 +1,7 @@
 # Citation: Parishi Jain's code (2024)
 
 
-import cv2
+'''import cv2
 import mediapipe as mp
 from cmu_graphics import *
 from PIL import Image as PILImage
@@ -43,4 +43,4 @@ def processCameraFeed():
 def getFingerPosition():
     if currentIndexTipX is not None and currentIndexTipY is not None:
         return (currentIndexTipX, currentIndexTipY)
-    return None
+    return None'''

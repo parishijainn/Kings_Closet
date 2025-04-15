@@ -1,6 +1,7 @@
 from cmu_graphics import *
 from clothesClasses import *
-from handtracking import processCameraFeed, getFingerPosition
+from buttons import *
+#from handtracking import processCameraFeed, getFingerPosition
 
 
 app.isSelectionMode = True
@@ -53,18 +54,8 @@ def drawGameMode(app):
              app.height-app.blackBarHeight*2, fill='white')
 
     #mode switch buttons
-    drawRect(2*(app.width/3), 
-             app.height-app.blackBarHeight-app.modeButtonHeight, 
-             app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-    drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
-          app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
-          size=30, fill='white', bold=True, font = 'monospace')
-    drawRect((app.width/3)-app.modeButtonWidth, 
-             app.height-app.blackBarHeight-app.modeButtonHeight, 
-             app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-    drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
-          app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
-          size=30, fill='white', bold=True, font = 'monospace')
+    drawModeButtons(app)
+    
 
     if app.isSelectionMode:
         drawRect(app.width/3, (app.height/2)-app.blackBarHeight, 
@@ -78,26 +69,28 @@ def drawGameMode(app):
         drawRect(app.playButtonX, app.playButtonY + app.whiteBoxHeight / 2,
                 app.playButtonWidth, app.playButtonHeight, fill='gray')
 
-        drawRect(app.backwardButtonX, app.forwardButtonY,  # Swapped X coordinates for backwardButton
-                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
-        drawRect(app.backwardButtonX, app.forwardButtonY + app.whiteBoxHeight / 2,
-                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
+        drawRect(app.forwardButtonX, app.backwardButtonY,  # Swapped X coordinates for backwardButton
+                app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
+        drawRect(app.forwardButtonX, app.backwardButtonY + app.whiteBoxHeight / 2,
+                app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
 
-        drawRect(app.forwardButtonX, app.forwardButtonY,  # Swapped X coordinates for forwardButton
-                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
-        drawRect(app.forwardButtonX, app.forwardButtonY + app.whiteBoxHeight / 2,
-                app.forwardButtonWidth, app.forwardButtonHeight, fill='gray')
+        drawRect(app.backwardButtonX, app.backwardButtonY,  # Swapped X coordinates for forwardButton
+                app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
+        drawRect(app.backwardButtonX, app.backwardButtonY + app.whiteBoxHeight / 2,
+                app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
+        drawImportButton(app)
+        drawTryOnButton(app)
 
 
     #nav for entire top row of buttons
 #top buttons
-        drawPolygon(app.backwardButtonX + 20, app.forwardButtonY + 10,
-                    app.backwardButtonX + 20, app.forwardButtonY + app.forwardButtonHeight - 10,
-                    app.backwardButtonX + 35, app.forwardButtonY + app.forwardButtonHeight / 2,
+        drawPolygon(app.forwardButtonX + 20, app.backwardButtonY + 10,
+                    app.forwardButtonX + 20, app.backwardButtonY + app.backwardButtonHeight - 10,
+                    app.forwardButtonX + 35, app.backwardButtonY + app.backwardButtonHeight / 2,
                     fill='white')
-        drawPolygon(app.backwardButtonX + 40, app.forwardButtonY + 10,
-                    app.backwardButtonX + 40, app.forwardButtonY + app.forwardButtonHeight - 10,
-                    app.backwardButtonX + 55, app.forwardButtonY + app.forwardButtonHeight / 2,
+        drawPolygon(app.forwardButtonX + 40, app.backwardButtonY + 10,
+                    app.forwardButtonX + 40, app.backwardButtonY + app.backwardButtonHeight - 10,
+                    app.forwardButtonX + 55, app.backwardButtonY + app.backwardButtonHeight / 2,
                     fill='white')
 
         drawPolygon(app.playButtonX + 20, app.playButtonY + 10,
@@ -105,24 +98,24 @@ def drawGameMode(app):
                     app.playButtonX + app.playButtonWidth - 20, app.playButtonY + app.playButtonHeight / 2,
                     fill='white')
 
-        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + app.forwardButtonHeight - 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 35, app.forwardButtonY + app.forwardButtonHeight / 2,
+        drawPolygon(app.backwardButtonX + app.backwardButtonWidth - 20, app.backwardButtonY + 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 20, app.backwardButtonY + app.backwardButtonHeight - 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 35, app.backwardButtonY + app.backwardButtonHeight / 2,
                     fill='white')
-        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + app.forwardButtonHeight - 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 55, app.forwardButtonY + app.forwardButtonHeight / 2,
+        drawPolygon(app.backwardButtonX + app.backwardButtonWidth - 40, app.backwardButtonY + 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 40, app.backwardButtonY + app.backwardButtonHeight - 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 55, app.backwardButtonY + app.backwardButtonHeight / 2,
                     fill='white')
 
 
 #bottom buttons
-        drawPolygon(app.backwardButtonX + 20, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
-                    app.backwardButtonX + 20, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
-                    app.backwardButtonX + 35, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+        drawPolygon(app.forwardButtonX + 20, app.backwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.forwardButtonX + 20, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight - 10,
+                    app.forwardButtonX + 35, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight / 2,
                     fill='white')
-        drawPolygon(app.backwardButtonX + 40, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
-                    app.backwardButtonX + 40, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
-                    app.backwardButtonX + 55, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+        drawPolygon(app.forwardButtonX + 40, app.backwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.forwardButtonX + 40, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight - 10,
+                    app.forwardButtonX + 55, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight / 2,
                     fill='white')
 
         drawPolygon(app.playButtonX + 20, app.playButtonY + app.whiteBoxHeight / 2 + 10,
@@ -130,13 +123,13 @@ def drawGameMode(app):
                     app.playButtonX + app.playButtonWidth - 20, app.playButtonY + app.whiteBoxHeight / 2 + app.playButtonHeight / 2,
                     fill='white')
 
-        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 20, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 35, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+        drawPolygon(app.backwardButtonX + app.backwardButtonWidth - 20, app.backwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 20, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight - 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 35, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight / 2,
                     fill='white')
-        drawPolygon(app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + app.whiteBoxHeight / 2 + 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 40, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight - 10,
-                    app.forwardButtonX + app.forwardButtonWidth - 55, app.forwardButtonY + app.whiteBoxHeight / 2 + app.forwardButtonHeight / 2,
+        drawPolygon(app.backwardButtonX + app.backwardButtonWidth - 40, app.backwardButtonY + app.whiteBoxHeight / 2 + 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 40, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight - 10,
+                    app.backwardButtonX + app.backwardButtonWidth - 55, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight / 2,
                     fill='white')
 
         

@@ -1,4 +1,5 @@
 from cmu_graphics import *
+from buttons import *
 
 def drawWelcomeScreen(app):
     #draw background image
@@ -172,5 +173,4 @@ def drawGameScreen(app):
     drawLabel(app.feedbackText, app.width//2, app.height - 110,
               size=26, fill='darkmagenta', bold=True)
 
-    drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill='plum', border='black')
-    drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
+    drawBackButton(app)
