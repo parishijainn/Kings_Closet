@@ -11,16 +11,17 @@ def drawGameMode(app):
              app.blackBarHeight, fill='black')
     drawRect(app.width/3, app.blackBarHeight, app.width/3,
              app.height-app.blackBarHeight*2, fill='white')
-    
+    drawGradeButton(app)
     drawModeButtons(app)
+    drawImportButton(app)
+    drawTryOnButton(app)
     if app.isSelectionMode:
         drawRect(app.width/3, (app.height/2)-app.blackBarHeight, 
                  app.width/3, app.blackBarHeight, fill='black')
         drawRect(app.width/3, app.height-app.blackBarHeight*2, app.width/3, 
                  app.blackBarHeight, fill='black')
         drawSelectionButtons(app)
-        drawImportButton(app)
-        drawTryOnButton(app)
+        
         
         #draw outfit images 
         topY = 140
@@ -37,7 +38,7 @@ def drawGameMode(app):
                   size=22, fill='darkmagenta')
 
         #grade button
-        drawGradeButton(app)
+        
 
     if app.isDressingMode:
         topY = 180
