@@ -223,3 +223,27 @@ def pressBackButton(app):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False 
+
+#backbutton for each page
+def drawUniversalBackButton(app):
+    drawRect(app.universalBackButtonX, app.universalBackButtonY,
+             app.universalBackButtonWidth, app.universalBackButtonHeight,
+             fill='lavenderBlush', border='maroon', borderWidth=2)
+    
+    drawLabel("←", app.universalBackButtonX + app.universalBackButtonWidth // 2,
+              app.universalBackButtonY + app.universalBackButtonHeight // 2,
+              size=20, bold=True, fill='maroon')
+
+    
+def pressUniversalBackButton(app):
+    if (app.universalBackButtonX <= app.mouseX <= app.universalBackButtonX + app.universalBackButtonWidth and
+        app.universalBackButtonY <= app.mouseY <= app.universalBackButtonY + app.universalBackButtonHeight):
+    #go back to previous page
+        if app.state == "instructions":
+            app.state = "welcome"
+        elif app.state == "gameMode":
+            app.state = "instructions"
+        elif app.state == "gradeMode":
+            app.state = "gameMode"
+            app.feedbackText = ""
+            app.isGrading = False
