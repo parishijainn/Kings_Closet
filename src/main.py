@@ -6,6 +6,8 @@ from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
 import random
+from virtualtryon import tryOnCamera
+from handtracking import processCameraFeed, getFingerPosition
 
 
 def onAppStart(app):
@@ -111,6 +113,20 @@ def onAppStart(app):
     app.isGrading = False
 
     app.feedbackText = ""
+   
+    #backbutton
+    app.universalBackButtonWidth = 100
+    app.universalBackButtonHeight = 40
+    app.universalBackButtonX = 20
+    app.universalBackButtonY = app.height - app.universalBackButtonHeight - 5
+
+    app.handTrackingMode = False
+    app.cameraFrame = None
+    app.lastFingerX = None
+    app.lastFingerY = None
+    app.fingerCooldown = 0
+
+
 
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
@@ -124,9 +140,15 @@ def onMousePress(app, mouseX, mouseY):
         pressGradeButton(app)
         pressModeButtons(app)
         pressSelectionButtons(app)
+        pressTryOnButton(app)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
+
+    if app.state != "welcome":
+        pressUniversalBackButton(app)
+
+
 
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
@@ -150,7 +172,6 @@ def onKeyPress(app, key):
             app.scrollY -= 20
     if key == 'p':
         app.sound.play(restart=True)
-
     elif app.state == "gameMode":
         if key == "left":
             app.currTopIndex = (app.currTopIndex - 1) % len(app.topKeys)
@@ -165,6 +186,41 @@ def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
 
+def onStep(app):
+    if app.handTrackingMode:
+        # Update camera frame
+        app.cameraFrame = processCameraFeed()
+        finger = getFingerPosition()
+
+        if finger is not None:
+            fx, fy = finger
+            # If previous finger position exists and cooldown has passed
+            if app.lastFingerX is not None and app.fingerCooldown == 0:
+                dx = fx - app.lastFingerX
+                dy = fy - app.lastFingerY
+
+                # Swipe horizontally → change top
+                if abs(dx) > 0.07:
+                    if dx > 0:
+                        app.currTopIndex = (app.currTopIndex + 1) % len(app.tops)
+                    else:
+                        app.currTopIndex = (app.currTopIndex - 1) % len(app.tops)
+                    app.fingerCooldown = 10
+
+                # Swipe vertically → change bottom
+                elif abs(dy) > 0.07:
+                    if dy > 0:
+                        app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottoms)
+                    else:
+                        app.currBottomIndex = (app.currBottomIndex - 1) % len(app.bottoms)
+                    app.fingerCooldown = 10
+
+            # Store current position
+            app.lastFingerX, app.lastFingerY = fx, fy
+
+        if app.fingerCooldown > 0:
+            app.fingerCooldown -= 1
+
 def redrawAll(app):
     if app.state == "welcome":
         drawWelcomeScreen(app)
@@ -174,8 +230,9 @@ def redrawAll(app):
         drawGameMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
-
     drawSoundButton(app)
+    if app.state != "welcome" and app.state != "gradeMode":
+        drawUniversalBackButton(app)
 
 runApp(width=800, height=600)
 
@@ -192,5 +249,10 @@ def drawGameScreen(app):
     drawLabel(app.feedbackText, app.width//2, app.height - 100, size=22, fill='darkmagenta')
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonY, fill='plum', border='black')
     drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
+
+def pressTryOnButton(app):
+    if (app.tryOnButtonX <= app.mouseX <= app.tryOnButtonX + app.tryOnButtonWidth and
+        app.tryOnButtonY <= app.mouseY <= app.tryOnButtonY + app.tryOnButtonHeight):
+        tryOnCamera()
 
 runApp()

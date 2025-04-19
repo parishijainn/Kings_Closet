@@ -1,5 +1,6 @@
 from cmu_graphics import *
 import random
+from virtualtryon import tryOnCamera
 
 def drawSoundButton(app):
     drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
@@ -49,18 +50,35 @@ def pressStartStylingButton(app):
      
 #GAMEMODE
 def drawModeButtons(app):
+    # Dress Me Button
     drawRect(2*(app.width/3), 
              app.height-app.blackBarHeight-app.modeButtonHeight, 
              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
     drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
           size=30, fill='white', bold=True, font = 'monospace')
+    
+    # Browse Button
     drawRect((app.width/3)-app.modeButtonWidth, 
              app.height-app.blackBarHeight-app.modeButtonHeight, 
              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
     drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
           size=30, fill='white', bold=True, font = 'monospace')
+    
+    
+    handtrackX = 230
+    handtrackY = 5
+    handtrackW = 100
+    handtrackH = app.blackBarHeight - 10
+    drawRect(handtrackX, handtrackY, handtrackW, handtrackH,
+             fill='lavenderBlush', border='maroon')
+    drawLabel(f"HandTrack: {'ON' if app.handTrackingMode else 'OFF'}", 
+              handtrackX + handtrackW/2, handtrackY + handtrackH/2,
+              size=12, bold=True, fill='maroon')
+
+
+
 def pressModeButtons(app):
     if ((2*(app.width/3) <= app.mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
@@ -71,6 +89,11 @@ def pressModeButtons(app):
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
             app.isDressingMode = False
             app.isSelectionMode = True
+    
+    if (230 <= app.mouseX <= 330 and 5 <= app.mouseY <= 5 + app.blackBarHeight - 10):
+        app.handTrackingMode = not app.handTrackingMode
+
+
 
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill='plum', border='black')
@@ -109,15 +132,16 @@ def drawTryOnButton(app):
              app.tryOnButtonHeight, fill='lavenderBlush', border='maroon')
     drawLabel("Try On", app.tryOnButtonX + app.tryOnButtonWidth//2,
               app.tryOnButtonY + app.tryOnButtonHeight//2, size=15, bold=True)
+
 def pressTryOnButton(app):
      if (app.tryOnButtonX <= app.mouseX <= (app.tryOnButtonX + 
                                             app.tryOnButtonWidth) and
         app.tryOnButtonY <= app.mouseY <= (app.tryOnButtonY +
                                             app.tryOnButtonHeight)):
-        #app.state = "tryOnMode"
-        pass
+        tryOnCamera()
 
 def drawSelectionButtons(app):
+    if not app.handTrackingMode:
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,
                 app.playButtonHeight, fill='gray')
         drawRect(app.playButtonX, app.playButtonY + app.whiteBoxHeight / 2,
@@ -223,3 +247,27 @@ def pressBackButton(app):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False 
+
+#backbutton for each page
+def drawUniversalBackButton(app):
+    drawRect(app.universalBackButtonX, app.universalBackButtonY,
+             app.universalBackButtonWidth, app.universalBackButtonHeight,
+             fill='lavenderBlush', border='maroon', borderWidth=2)
+    
+    drawLabel("←", app.universalBackButtonX + app.universalBackButtonWidth // 2,
+              app.universalBackButtonY + app.universalBackButtonHeight // 2,
+              size=20, bold=True, fill='maroon')
+
+    
+def pressUniversalBackButton(app):
+    if (app.universalBackButtonX <= app.mouseX <= app.universalBackButtonX + app.universalBackButtonWidth and
+        app.universalBackButtonY <= app.mouseY <= app.universalBackButtonY + app.universalBackButtonHeight):
+    #go back to previous page
+        if app.state == "instructions":
+            app.state = "welcome"
+        elif app.state == "gameMode":
+            app.state = "instructions"
+        elif app.state == "gradeMode":
+            app.state = "gameMode"
+            app.feedbackText = ""
+            app.isGrading = False

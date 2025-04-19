@@ -5,10 +5,19 @@ https://www.cs.cmu.edu/~112/notes/term-project-and-hack112.html#personal-contrib
 
 Example: 
 
-koz
- - Wrote the Enemy class in game_logic.py
- - ...
-mdtaylor
- - Designed and coded the main game screen
- - ...
------------------------------------->
+pnihalan
+ - Home page 
+ - Music
+ -Instructons page
+ - Virtual try on camera that allows you to try on clothes in real time
+ (needs to be fixed to incorporate handtracking and positioning of 
+ clothes should be better)
+ - button that goes back on each page
+ - The randomized clothes generator and the buttons
+parishij
+ - The background design 
+- The grading mode integrating KMeans Clustering to grade the outfit combinations
+- Hand tracking mode which allows the user to browse through outfits with 
+their index finger they can move up and down and right and left
+lsponhou
+- 
