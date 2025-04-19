@@ -54,9 +54,6 @@ def drawGameMode(app):
                   width=imgWidthTop, height=imgHeightTop, align='center')
         drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY,
                   width=imgWidthBottom, height=imgHeightBottom, align='center')
-        
-    # frame = processCameraFeed()
-    # if frame is not None:
-    #     drawImage(frame, 10, 10, width=160, height=120)
-    # if hasattr(app, 'latestCameraFrame') and app.latestCameraFrame:
-    #     drawImage(app.latestCameraFrame, 10, 10, width=160, height=120)
+
+    if app.handTrackingMode and app.cameraFrame:
+        drawImage(app.cameraFrame, 20, 100, width=200, height=150)

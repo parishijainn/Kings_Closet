@@ -1,50 +1,48 @@
-# Citation: Parishi Jain's code (2024)
-<<<<<<< HEAD
+# # Citation: Parishi Jain's code (2024)
+
 import cv2
-=======
-
-
-'''import cv2
->>>>>>> ce3cf8be0043e04202b251b1f5923e2419e7477b
 import mediapipe as mp
 from cmu_graphics import *
 from PIL import Image as PILImage
 
-# Initialize Mediapipe hand detection
-mpHands = mp.solutions.hands
-handTracker = mpHands.Hands()
-mpDrawing = mp.solutions.drawing_utils
+# Initialize Mediapipe and OpenCV
+mp_hands = mp.solutions.hands
+handTracker = mp_hands.Hands()
+mp_drawing = mp.solutions.drawing_utils
 
-# Start the webcam
+# OpenCV camera feed
 camera = cv2.VideoCapture(0)
 currentIndexTipX = None
 currentIndexTipY = None
 
-# Process one frame from the camera and update fingertip position
+# Camera feed detects the landmarks
 def processCameraFeed():
     global currentIndexTipX, currentIndexTipY
-    ret, frame = camera.read()
+    ret, frame = camera.read() # Read frame from camera
     if not ret:
         return None
 
-    frame = cv2.flip(frame, 1)  # Mirror the image
+    # Invert the frame to show user themselves
+    frame = cv2.flip(frame, 1)
     frameRgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    results = handTracker.process(frameRgb)
+    # Process with MEdiapipe
+    result = handTracker.process(frameRgb)
 
-    # If hands detected, update index finger tip position
-    if results.multi_hand_landmarks:
-        for handLms in results.multi_hand_landmarks:
-            indexTip = handLms.landmark[mpHands.HandLandmark.INDEX_FINGER_TIP]
+    # Update fingertip coordinates if a hand is detected
+    if result.multi_hand_landmarks:
+        for handLandmarks in result.multi_hand_landmarks:
+            indexTip = handLandmarks.landmark[mp_hands.HandLandmark.INDEX_FINGER_TIP]
             currentIndexTipX = indexTip.x
             currentIndexTipY = indexTip.y
-            break  # Only track first hand
 
-    # Convert OpenCV BGR image to CMUImage
+    # Convert OpenCV frame to PIL image for CMU Graphics
+    frameRgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     pilImage = PILImage.fromarray(frameRgb)
     return CMUImage(pilImage)
 
-# Return the latest finger tip position
+
 def getFingerPosition():
+    #Return the position of the finger tip
     if currentIndexTipX is not None and currentIndexTipY is not None:
         return (currentIndexTipX, currentIndexTipY)
-    return None'''
+    return None
