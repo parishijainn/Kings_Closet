@@ -1,6 +1,4 @@
 # Citation: Parishi Jain's code (2024)
-
-
 import cv2
 import mediapipe as mp
 from cmu_graphics import *
