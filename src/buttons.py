@@ -140,6 +140,7 @@ def pressTryOnButton(app):
         pass
 
 def drawSelectionButtons(app):
+    if not app.handTrackingMode:
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,
                 app.playButtonHeight, fill='gray')
         drawRect(app.playButtonX, app.playButtonY + app.whiteBoxHeight / 2,
