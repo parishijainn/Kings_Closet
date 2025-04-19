@@ -125,8 +125,82 @@ def onMousePress(app, mouseX, mouseY):
         pressModeButtons(app)
         pressSelectionButtons(app)
         
+<<<<<<< Updated upstream
     elif app.state == "gradeMode":
         pressBackButton(app)
+=======
+        #tops forward button press
+        if (((app.backwardButtonX <= app.mouseX) and 
+             (app.mouseX <= (app.backwardButtonX+
+                         app.forwardButtonWidth))) and
+            ((app.forwardButtonY <= app.mouseY) and 
+             (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
+        
+            app.currTopIndex+=1
+            app.currTopIndex %= len(app.tops)
+
+        #tops backward button press
+        if (((app.forwardButtonX <= app.mouseX) and 
+            (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
+            ((app.forwardButtonY <= app.mouseY) and 
+            (app.mouseY <= app.forwardButtonY + app.forwardButtonHeight))):
+
+            app.currTopIndex-=1
+            app.currTopIndex %= len(app.tops)
+
+
+        #bottoms forward button press
+        if (((app.backwardButtonX <= app.mouseX) and 
+            (app.mouseX <= (app.backwardButtonX +
+                         app.forwardButtonWidth))) and
+            ((app.forwardButtonY+app.whiteBoxHeight/2<= app.mouseY) and 
+            (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
+
+            app.currBottomIndex+=1
+            app.currBottomIndex%=len(app.bottoms)
+
+        #bottoms backward button press
+        if (((app.forwardButtonX <= app.mouseX) and 
+            (app.mouseX <= app.forwardButtonX + app.forwardButtonWidth)) and
+            ((app.forwardButtonY+app.whiteBoxHeight/2 <= app.mouseY) and 
+            (app.mouseY <= app.forwardButtonY+app.whiteBoxHeight/2 + app.forwardButtonHeight))):
+
+            app.currBottomIndex-=1
+            app.currBottomIndex%=len(app.bottoms)
+
+
+    
+        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+            app.playButtonY <= mouseY <= app.playButtonY + app.playButtonHeight):
+            app.currTopIndex = random.randint(0, len(app.tops) - 1)
+
+        if (app.playButtonX <= mouseX <= app.playButtonX + app.playButtonWidth and
+            app.playButtonY + 
+            app.whiteBoxHeight / 2 <= mouseY <= app.playButtonY + 
+            app.whiteBoxHeight / 2 + app.playButtonHeight):
+            app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
+
+        
+
+            
+
+            
+    
+    if app.state == "gradeMode":
+        topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
+        bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+            
+        message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
+            
+        app.feedbackText = f"{message} ({score}%)"
+        app.outfitRating = rating
+        app.outfitScore = score
+        if ((app.backButtonX <= mouseX <= app.backButtonX + app.backButtonWidth) and
+            (app.backButtonY <= mouseY <= app.backButtonY + app.backButtonHeight)):
+            app.state = "gameMode"
+            app.feedbackText = ""
+            app.isGrading = False 
+>>>>>>> Stashed changes
 
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
