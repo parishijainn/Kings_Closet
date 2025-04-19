@@ -50,18 +50,35 @@ def pressStartStylingButton(app):
      
 #GAMEMODE
 def drawModeButtons(app):
+    # Dress Me Button
     drawRect(2*(app.width/3), 
              app.height-app.blackBarHeight-app.modeButtonHeight, 
              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
     drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
           size=30, fill='white', bold=True, font = 'monospace')
+    
+    # Browse Button
     drawRect((app.width/3)-app.modeButtonWidth, 
              app.height-app.blackBarHeight-app.modeButtonHeight, 
              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
     drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
           size=30, fill='white', bold=True, font = 'monospace')
+    
+    
+    handtrackX = 230
+    handtrackY = 5
+    handtrackW = 100
+    handtrackH = app.blackBarHeight - 10
+    drawRect(handtrackX, handtrackY, handtrackW, handtrackH,
+             fill='lavenderBlush', border='maroon')
+    drawLabel(f"HandTrack: {'ON' if app.handTrackingMode else 'OFF'}", 
+              handtrackX + handtrackW/2, handtrackY + handtrackH/2,
+              size=12, bold=True, fill='maroon')
+
+
+
 def pressModeButtons(app):
     if ((2*(app.width/3) <= app.mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
@@ -72,6 +89,11 @@ def pressModeButtons(app):
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
             app.isDressingMode = False
             app.isSelectionMode = True
+    
+    if (230 <= app.mouseX <= 330 and 5 <= app.mouseY <= 5 + app.blackBarHeight - 10):
+        app.handTrackingMode = not app.handTrackingMode
+
+
 
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill='plum', border='black')
@@ -119,6 +141,7 @@ def pressTryOnButton(app):
         tryOnCamera()
 
 def drawSelectionButtons(app):
+    if not app.handTrackingMode:
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,
                 app.playButtonHeight, fill='gray')
         drawRect(app.playButtonX, app.playButtonY + app.whiteBoxHeight / 2,
@@ -224,6 +247,7 @@ def pressBackButton(app):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False 
+
 #backbutton for each page
 def drawUniversalBackButton(app):
     drawRect(app.universalBackButtonX, app.universalBackButtonY,
