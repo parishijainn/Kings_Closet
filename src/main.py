@@ -111,6 +111,12 @@ def onAppStart(app):
     app.isGrading = False
 
     app.feedbackText = ""
+   
+    #backbutton
+    app.universalBackButtonWidth = 100
+    app.universalBackButtonHeight = 40
+    app.universalBackButtonX = 20
+    app.universalBackButtonY = app.height - app.universalBackButtonHeight - 5
 
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
@@ -127,6 +133,9 @@ def onMousePress(app, mouseX, mouseY):
         
     elif app.state == "gradeMode":
         pressBackButton(app)
+
+    if app.state != "welcome":
+        pressUniversalBackButton(app)
 
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
@@ -176,6 +185,9 @@ def redrawAll(app):
         drawGameScreen(app)
 
     drawSoundButton(app)
+    if app.state != "welcome" and app.state != "gradeMode":
+        drawUniversalBackButton(app)
+
 
 runApp(width=800, height=600)
 
