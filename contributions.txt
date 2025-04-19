@@ -20,4 +20,6 @@ parishij
 - Hand tracking mode which allows the user to browse through outfits with 
 their index finger they can move up and down and right and left
 lsponhou
-- 
+- user importing new clothes
+- the gamemode of users cycling through the different tops and bottoms
+-visualizing the clothes on a mannequin
