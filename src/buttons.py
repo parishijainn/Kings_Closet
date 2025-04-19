@@ -1,5 +1,6 @@
 from cmu_graphics import *
 import random
+from virtualtryon import tryOnCamera
 
 def drawSoundButton(app):
     drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
@@ -109,13 +110,13 @@ def drawTryOnButton(app):
              app.tryOnButtonHeight, fill='lavenderBlush', border='maroon')
     drawLabel("Try On", app.tryOnButtonX + app.tryOnButtonWidth//2,
               app.tryOnButtonY + app.tryOnButtonHeight//2, size=15, bold=True)
+
 def pressTryOnButton(app):
      if (app.tryOnButtonX <= app.mouseX <= (app.tryOnButtonX + 
                                             app.tryOnButtonWidth) and
         app.tryOnButtonY <= app.mouseY <= (app.tryOnButtonY +
                                             app.tryOnButtonHeight)):
-        #app.state = "tryOnMode"
-        pass
+        tryOnCamera()
 
 def drawSelectionButtons(app):
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,

@@ -6,6 +6,7 @@ from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
 import random
+from virtualtryon import tryOnCamera
 
 
 def onAppStart(app):
@@ -130,12 +131,15 @@ def onMousePress(app, mouseX, mouseY):
         pressGradeButton(app)
         pressModeButtons(app)
         pressSelectionButtons(app)
+        pressTryOnButton(app)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
 
     if app.state != "welcome":
         pressUniversalBackButton(app)
+
+
 
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
@@ -204,5 +208,10 @@ def drawGameScreen(app):
     drawLabel(app.feedbackText, app.width//2, app.height - 100, size=22, fill='darkmagenta')
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonY, fill='plum', border='black')
     drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
+
+def pressTryOnButton(app):
+    if (app.tryOnButtonX <= app.mouseX <= app.tryOnButtonX + app.tryOnButtonWidth and
+        app.tryOnButtonY <= app.mouseY <= app.tryOnButtonY + app.tryOnButtonHeight):
+        tryOnCamera()
 
 runApp()
