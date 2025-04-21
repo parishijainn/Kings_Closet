@@ -156,3 +156,4 @@ def drawGameScreen(app):
               size=26, fill='darkmagenta', bold=True)
 
     drawBackButton(app)
+    drawPopupMenu(app)

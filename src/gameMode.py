@@ -38,7 +38,7 @@ def drawGameMode(app):
 
                 #grade button
                 drawGradeButton(app)
-
+                drawPopupMenu(app)
         if app.isDressingMode:
                 topY = 180
                 bottomY = 280
@@ -54,10 +54,9 @@ def drawGameMode(app):
                         width=imgWidthTop, height=imgHeightTop, align='center')
                 drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY,
                         width=imgWidthBottom, height=imgHeightBottom, align='center')
-
+                
         if app.handTrackingMode and app.cameraFrame:
                 drawImage(app.cameraFrame, 20, 100, width=200, height=150)
-        
         if app.handTrackingMode:
                 drawLabel("Swipe horizontally to change TOPS", 120, 300,
                         size=15, fill='maroon', bold=True)
@@ -65,5 +64,5 @@ def drawGameMode(app):
                         size=15, fill='maroon', bold=True)
                 drawLabel("Hold up 5 fingers to get a random outfit!", 120, 340,
                         size=15, fill='maroon', bold=True)
-
+                drawPopupMenu(app)
         

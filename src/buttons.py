@@ -2,6 +2,42 @@ from cmu_graphics import *
 import random
 from virtualtryon import tryOnCamera
 
+#POPUP MENU
+def drawPopupMenu(app):
+    if app.isInstructing:
+        drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
+                fill='white', border='black',align='center')
+        drawRect(app.popupX, app.popupY-app.popupHeight/2 + 13, app.popupWidth, 30, fill='lightpink', align='center', border='black')
+        drawCircle(app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, 10, fill='red')
+        drawLabel("X", app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, size=15, fill='white')
+        if app.handTrackingMode:
+            drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
+        elif app.state == "gameMode":
+            drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
+        elif app.state == 'importMode':
+            drawLabel("importMode instructions", app.popupX, app.popupY, size=20)
+        elif app.state == 'tryOnMode':
+            drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)
+        
+        
+def pressX(app):
+    if (app.popupX-app.popupWidth/2+5 <= app.mouseX <= app.popupX-app.popupWidth/2+25 and
+        app.popupY-app.popupHeight/2+3 <= app.mouseY <= app.popupY-app.popupHeight/2+23):
+        app.isInstructing = False
+
+def drawCategoryButtons(app):
+    drawRect(app.topButtonX, app.topButtonY, 150, 100, fill="lightblue")
+    drawLabel("Top", app.topButtonX, app.topButtonY, size=20,)
+    drawRect(app.bottomButtonX, app.bottomButtonY, 150, 100, fill="lightblue")
+    drawLabel("Bottom", app.bottomButtonX, app.bottomButtonY, size=20,)
+def pressCategoryButtons(app):
+    if (app.topButtonX <= app.mouseX <= app.topButtonX+150 and 
+        app.topButtonY <= app.mouseY <= app.topButtonY+100):
+        app.category = "top"
+    if (app.bottomButtonX <= app.mouseX <= app.bottomButtonX+150 and 
+         app.bottomButtonY <= app.mouseY <= app.bottomButtonY+100):
+        app.category = "bottom"
+        
 def drawSoundButton(app):
     drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
              fill='white', border='gray', borderWidth=1)
@@ -92,6 +128,8 @@ def pressModeButtons(app):
     
     if (230 <= app.mouseX <= 330 and 5 <= app.mouseY <= 5 + app.blackBarHeight - 10):
         app.handTrackingMode = not app.handTrackingMode
+        if app.handTrackingMode:
+            app.isInstructing = True
 
 
 
@@ -114,6 +152,7 @@ def pressGradeButton(app):
                 
         app.state = "gradeMode"
         
+        
 def drawImportButton(app):
     drawRect(app.importButtonX, app.importButtonY, app.importButtonWidth, 
              app.importButtonHeight, fill='lavenderBlush', border='maroon')
@@ -124,8 +163,9 @@ def pressImportButton(app):
                                             app.importButtonWidth) and
         app.importButtonY <= app.mouseY <= (app.importButtonY +
                                             app.importButtonHeight)):
-        #app.state = "importMode"
-        pass
+        app.state = "importMode"
+        app.isInstructing = True
+        
     
 def drawTryOnButton(app):
     drawRect(app.tryOnButtonX, app.tryOnButtonY, app.tryOnButtonWidth, 
@@ -139,6 +179,8 @@ def pressTryOnButton(app):
         app.tryOnButtonY <= app.mouseY <= (app.tryOnButtonY +
                                             app.tryOnButtonHeight)):
         tryOnCamera()
+        app.state = "tryOnMode"
+        app.isInstructing = True
 
 def drawSelectionButtons(app):
     if not app.handTrackingMode:

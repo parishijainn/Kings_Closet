@@ -2,6 +2,7 @@ from cmu_graphics import *
 from ui import * 
 from buttons import *
 from gameMode import drawGameMode
+from importMode import *
 from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
@@ -15,6 +16,14 @@ def onAppStart(app):
     app.height = 600
     app.state = "welcome"
 
+    #INSTRUCTIONS POPUPS
+    app.popupX = app.width//2
+    app.popupY = app.height//2
+    app.popupWidth = 600
+    app.popupHeight = 300
+
+    
+    app.isInstructing = True
     #WELCOMEMODE
     app.backgroundImage = "images/kingclosetbackgrounds.png"
     app.buttonWidth = 310
@@ -92,6 +101,19 @@ def onAppStart(app):
     app.backButtonY = app.height - 60
     app.backButtonWidth = 120
     app.backButtonHeight = 40
+
+    #IMPORTMODE
+    app.topButtonX = 225
+    app.topButtonY = 675
+    app.bottomButtonX = 425
+    app.bottomButtonY = 675
+    app.category = 'top'
+    app.closetFile = 'closet.json'
+    app.uploadFolderTops = 'uploads/tops'
+    app.uploadFolderBottoms = 'uploads/bottoms'
+    os.makedirs(app.uploadFolderTops, exist_ok=True)
+    os.makedirs(app.uploadFolderBottoms, exist_ok=True)
+    
     
     
     # Initialize managers
@@ -141,12 +163,16 @@ def onMousePress(app, mouseX, mouseY):
         pressModeButtons(app)
         pressSelectionButtons(app)
         pressTryOnButton(app)
+        pressImportButton(app)
+        pressX(app)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
+        pressX(app)
 
     if app.state != "welcome":
         pressUniversalBackButton(app)
+        pressX(app)
 
 
 
@@ -228,6 +254,8 @@ def redrawAll(app):
         drawInstructionsScreen(app)
     elif app.state == "gameMode":
         drawGameMode(app)
+    elif app.state == "importMode":
+        drawImportMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
     drawSoundButton(app)
@@ -255,4 +283,5 @@ def pressTryOnButton(app):
         app.tryOnButtonY <= app.mouseY <= app.tryOnButtonY + app.tryOnButtonHeight):
         tryOnCamera()
 
-runApp()
+
+
