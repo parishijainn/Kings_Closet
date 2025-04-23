@@ -58,7 +58,7 @@ def overlayPng(frame, overlayImage, positionX, positionY):
     return frame
 
 
-def tryOnCamera():
+def tryOnCamera(app):
     topImages, bottomImages = loadClothingImages()
     currentTopIndex = 0
     currentBottomIndex = 0
@@ -172,11 +172,11 @@ def tryOnCamera():
         cv2.imshow("Virtual Try-On", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
-            return "gameMode"
+            app.state = "gameMode"
+            break
 
     videoCapture.release()
     cv2.destroyAllWindows()
-    return "gameMode"
 
 if __name__ == '__main__':
     tryOnCamera()

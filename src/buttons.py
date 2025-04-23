@@ -229,8 +229,8 @@ def pressTryOnButton(app):
                                             app.tryOnButtonWidth) and
         app.tryOnButtonY <= app.mouseY <= (app.tryOnButtonY +
                                             app.tryOnButtonHeight)):
-        tryOnCamera()
         app.state = "tryOnMode"
+        tryOnCamera(app)
         app.isInstructing = True
 
 
