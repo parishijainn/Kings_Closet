@@ -14,11 +14,10 @@ def drawPopupMenu(app):
             drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
         elif app.state == "gameMode":
             drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
-        elif app.state == 'importMode':
-            drawLabel("importMode instructions", app.popupX, app.popupY, size=20)
+        elif app.state == 'storeMode':
+            drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
         elif app.state == 'tryOnMode':
-            drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)
-        
+            drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)     
 def pressX(app):
     if (app.popupX-app.popupWidth/2+5 <= app.mouseX <= app.popupX-app.popupWidth/2+25 and
         app.popupY-app.popupHeight/2+3 <= app.mouseY <= app.popupY-app.popupHeight/2+23):
@@ -195,8 +194,6 @@ def drawModeButtons(app):
               handtrackX + handtrackW/2, handtrackY + handtrackH/2,
               size=15, bold=True, fill=app.darkBrown, align='center')
 
-
-
 def pressModeButtons(app):
     if ((2*(app.width/3) <= app.mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
@@ -212,7 +209,6 @@ def pressModeButtons(app):
         app.handTrackingMode = not app.handTrackingMode
         if app.handTrackingMode:
             app.isInstructing = True
-
 
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill=app.lightPink, border='black')
@@ -233,7 +229,6 @@ def pressGradeButton(app):
         app.isGrading = True
                 
         app.state = "gradeMode"
-        
         
 def drawImportButton(app):
     drawRect(app.importButtonX, app.importButtonY, app.importButtonWidth, 
@@ -396,3 +391,6 @@ def pressUniversalBackButton(app):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False
+
+
+ 
