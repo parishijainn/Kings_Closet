@@ -19,6 +19,11 @@ def onAppStart(app):
     app.closetTops = []
     app.closetBottoms = []
     app.storePage = "pickType"
+    app.money = 500
+    app.closetTopPrices = [20, 20, 20, 20, 20, 20]
+    app.closetBottomPrices = [20, 20, 20, 20, 20, 20]
+    app.closetTopTypes = ["Tees", "Tees", "Tees", "Tees", "Tees", "Tees"]
+    app.closetBottomTypes = ['Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans']
 
     #INSTRUCTIONS POPUPS
     app.popupX = app.width//2
@@ -92,11 +97,11 @@ def onAppStart(app):
     app.tryOnButtonWidth = 100
     app.tryOnButtonHeight = app.blackBarHeight - 10
 
-    #Import Clothes Button
-    app.importButtonX = 295
-    app.importButtonY = 5
-    app.importButtonWidth = 110
-    app.importButtonHeight = app.blackBarHeight - 10
+    #store Clothes Button
+    app.storeButtonX = 295
+    app.storeButtonY = 5
+    app.storeButtonWidth = 110
+    app.storeButtonHeight = app.blackBarHeight - 10
     
     #Store Clothes Button
     app.storeButtonX = 10
@@ -175,11 +180,13 @@ def onMousePress(app, mouseX, mouseY):
         pressTryOnButton(app)
         pressStoreButton(app)
         pressX(app)
+        sellClothes(app, mouseX, mouseY)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
         pressX(app)
     if app.state == 'storeMode':
+        pressBackButton(app)
         if app.storePage == "pickType":
             pressPickType(app, mouseX, mouseY)
         else:
@@ -266,8 +273,13 @@ def onStep(app):
             app.fingerCooldown -= 1
 
 def redrawAll(app):
+    
     if app.state == "welcome":
         drawWelcomeScreen(app)
+    if app.storePage == 'sellTop':
+        drawSellTop(app)
+    elif app.storePage == 'sellBottom':
+        drawSellBottom(app)
     elif app.state == "instructions":
         drawInstructionsScreen(app)
     elif app.state == "gameMode":
@@ -279,6 +291,7 @@ def redrawAll(app):
     elif app.state == 'storeMode':
         drawStoreMode(app)
     drawSoundButton(app)
+    drawMoney(app)
     
     if app.state != "welcome" and app.state != "gradeMode":
         drawUniversalBackButton(app)

@@ -2,17 +2,8 @@ from cmu_graphics import *
 from buttons import *
 import os
 
-app.money = 500
-app.closetTopPrices = [20, 20, 20, 20, 20, 20]
-app.closetBottomPrices = [20, 20, 20, 20, 20, 20]
-app.closetTopTypes = ["Tees", "Tees", "Tees", "Tees", "Tees", "Tees"]
-app.closetBottomTypes = ['Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans']
-#drawMoney(app)
-#drawStoreMode(app)
-#if app.storePage == 'sellTop':
-#drawSellTop(app)
-#elif app.storePage == 'sellBottom':
-#drawSellBottom(app)
+
+
 
 def drawMoney(app):
     drawCircle(500, 20, 10, fill='lightYellow', border='black')
