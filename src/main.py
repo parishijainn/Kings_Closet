@@ -7,6 +7,7 @@ from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
 import random
+from tkinter import filedialog, Tk
 from virtualtryon import tryOnCamera
 from handtracking import processCameraFeed, getFingerPosition
 
@@ -114,8 +115,6 @@ def onAppStart(app):
     os.makedirs(app.uploadFolderTops, exist_ok=True)
     os.makedirs(app.uploadFolderBottoms, exist_ok=True)
     
-    
-    
     # Initialize managers
     # app.hangerManager = HangerManager(app)
     # app.outfitManager = OutfitManager(app)
@@ -148,8 +147,6 @@ def onAppStart(app):
     app.lastFingerY = None
     app.fingerCooldown = 0
 
-
-
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
     if app.state == "welcome":
@@ -174,8 +171,6 @@ def onMousePress(app, mouseX, mouseY):
         pressUniversalBackButton(app)
         pressX(app)
 
-
-
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
@@ -198,6 +193,7 @@ def onKeyPress(app, key):
             app.scrollY -= 20
     if key == 'p':
         app.sound.play(restart=True)
+
     elif app.state == "gameMode":
         if key == "left":
             app.currTopIndex = (app.currTopIndex - 1) % len(app.topKeys)
@@ -211,6 +207,8 @@ def onKeyPress(app, key):
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
+
+    
 
 def onStep(app):
     if app.handTrackingMode:
@@ -264,24 +262,6 @@ def redrawAll(app):
 
 runApp(width=800, height=600)
 
-def drawGameScreen(app):
-    drawRect(0, 0, app.width, app.height, fill='pink')
-    drawLabel("King's Closet: Outfit Grader", app.width // 2, 30, size=28, bold=True)
-
-    topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
-    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]]
-
-    drawImage(topImg, app.width//2, 140, width=180, height=180, align='center')
-    drawImage(bottomImg, app.width//2, 320, width=180, height=180, align='center')
-
-    drawLabel(app.feedbackText, app.width//2, app.height - 100, size=22, fill='darkmagenta')
-    drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonY, fill='plum', border='black')
-    drawLabel("Grade", app.width/2, app.height - app.blackBarHeight - 40, size=18, bold=True)
-
-def pressTryOnButton(app):
-    if (app.tryOnButtonX <= app.mouseX <= app.tryOnButtonX + app.tryOnButtonWidth and
-        app.tryOnButtonY <= app.mouseY <= app.tryOnButtonY + app.tryOnButtonHeight):
-        tryOnCamera()
 
 
 
