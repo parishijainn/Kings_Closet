@@ -7,14 +7,16 @@ app.closetTopPrices = [20, 20, 20, 20, 20, 20]
 app.closetBottomPrices = [20, 20, 20, 20, 20, 20]
 app.closetTopTypes = ["Tees", "Tees", "Tees", "Tees", "Tees", "Tees"]
 app.closetBottomTypes = ['Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans']
+#drawMoney(app)
+#drawStoreMode(app)
+#if app.storePage == 'sellTop':
+#drawSellTop(app)
+#elif app.storePage == 'sellBottom':
+#drawSellBottom(app)
 
 def drawMoney(app):
     drawCircle(500, 20, 10, fill='lightYellow', border='black')
     drawLabel(f'$      {app.money}', 500, 20)
-
-#drawLabel("ERROR: Insufficient funds!")
-#drawLabel("Try selling some clothes from your closet to earn more money")
-#drawLabel("or put together a 100% perfect outfit to earn $50")
 
 def putImagesIntoLists(folderPath):
     storeList = []
@@ -140,12 +142,12 @@ def addToCloset(app, mouseX, mouseY):
                     app.closetBottomPrices.append(price)
                     app.closetBottomTypes.append(type.type)
 
-
 def sellClothes(app, mouseX, mouseY):
     if (app.whiteBoxX <= mouseX <= app.whiteBoxX+app.whiteBoxWidth and 
         50 <= mouseY <= 325):
         app.isInstructing = True
-        drawSellTop(app)
+        app.storePage = 'sellTop'
+        
         if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
             app.money += app.closetTopPrices[app.currTopIndex]
             app.tops.pop(app.currTopIndex)
@@ -157,7 +159,7 @@ def sellClothes(app, mouseX, mouseY):
     elif (app.whiteBoxX <= mouseX <= app.whiteBoxX+app.whiteBoxWidth and 
           375 <= mouseY <= 700):
         app.isInstructing = True
-        drawSellBottom(app)
+        app.storePage = 'sellBottom'
         if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
             app.money += app.closetBottomPrices[app.currBottomIndex]
             app.bottoms.pop(app.currBottomIndex)

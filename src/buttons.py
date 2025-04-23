@@ -230,13 +230,13 @@ def pressGradeButton(app):
                 
         app.state = "gradeMode"
         
-def drawImportButton(app):
+def drawStoreButton(app):
     drawRect(app.importButtonX, app.importButtonY, app.importButtonWidth, 
              app.importButtonHeight, fill=app.lightPink, border='black')
     drawLabel("Import Clothes", app.importButtonX + app.importButtonWidth//2,
               app.importButtonY + app.importButtonHeight//2, size=15, bold=True, fill=app.darkBrown)
     
-def pressImportButton(app):
+def pressStoreButton(app):
     if (app.importButtonX <= app.mouseX <= (app.importButtonX + 
                                             app.importButtonWidth) and
         app.importButtonY <= app.mouseY <= (app.importButtonY +
