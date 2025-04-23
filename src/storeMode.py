@@ -150,6 +150,7 @@ def drawSellTop(app):
     drawLabel('Yes', 325, 590)
     drawRect(550, 550, 250, 80, fill='lightPink')
     drawLabel('No', 675, 590)
+
 def drawSellBottom(app):
     drawImage(app.bottoms[app.currBottomIndex],600, 200, width=250, height=300)
     drawLabel('Would you like',350, 200)
