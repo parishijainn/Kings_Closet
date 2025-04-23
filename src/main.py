@@ -132,7 +132,7 @@ def onAppStart(app):
     app.outfitManager = OutfitManager(app)
     app.topKeys = list(app.outfitManager.tops.keys())
     app.bottomKeys = list(app.outfitManager.bottoms.keys())
-
+    
     app.mouseX = None
     app.mouseY = None
     app.isGrading = False

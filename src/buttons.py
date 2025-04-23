@@ -229,12 +229,15 @@ def pressGradeButton(app):
                                             app.gradeButtonHeight)):
         topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
         bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+        
         message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
         app.feedbackText = f"{message} ({score}%)"
         app.outfitRating = rating
         app.outfitScore = score
         app.isGrading = True
-                
+       
+        app.chosenTopImg    = app.outfitManager.tops[   topKey    ]
+        app.chosenBottomImg = app.outfitManager.bottoms[bottomKey]
         app.state = "gradeMode"
 
 #STORE BUTTONS        
