@@ -2,9 +2,15 @@ from cmu_graphics import *
 from buttons import *
 import os
 
+app.money = 500
 
+def drawMoney(app):
+    drawCircle(500, 20, 10, fill='lightYellow', border='black')
+    drawLabel(f'$      {app.money}', 500, 20)
 
-
+#drawLabel("ERROR: Insufficient funds!")
+#drawLabel("Try selling some clothes from your closet to earn more money")
+#drawLabel("or put together a 100% perfect outfit to earn $50")
 
 def putImagesIntoLists(folderPath):
     storeList = []
@@ -13,21 +19,18 @@ def putImagesIntoLists(folderPath):
         storeList.append(fullPath)
     return storeList
 
-
-
 class StoreClothes:
     def __init__(self, folderPath):
         self.folderPath = folderPath
         self.type = folderPath.split('/')[-1]
         self.list = putImagesIntoLists(folderPath)
-        self.pageNum = len(self.list)//40
         if self.type in ['Tanks', 'Tees', 'LongSleeves', 'Hoodies', 'Sweaters']:
             self.topOrBottom = 'Top'
         else:
             self.topOrBottom = 'Bottom'
 
     def __repr__(self):
-        return self.list, self.type, self.pageNum, self.topOrBottom
+        return self.list, self.type, self.topOrBottom
     
 storeClothes = [StoreClothes('CLOTHES/Tanks'), 
                 StoreClothes('CLOTHES/Tees'),
@@ -37,9 +40,8 @@ storeClothes = [StoreClothes('CLOTHES/Tanks'),
                 StoreClothes('CLOTHES/Jeans'),
                 StoreClothes('CLOTHES/Shorts'),
                 StoreClothes('CLOTHES/Skirts'),]
+prices = [15, 20, 25, 40, 50, 50, 30, 40]
     
-
-
 def drawStoreMode(app):
     whiteWidth = 136
     whiteHeight = 160
@@ -47,25 +49,28 @@ def drawStoreMode(app):
     drawUniversalBackButton(app)
 
     if app.storePage == "pickType":
+        drawLabel("Welcome to the Store!", app.width/2, 120)
+        drawLabel("What are you shopping for?", app.width/2, 140)
         drawRect(20, 220, 175, 140, fill='white')
-        drawLabel('Tanks',20, 220)
+        drawLabel('Tanks - $15',107, 290)
         drawRect(215, 220, 175, 140, fill='white')
-        drawLabel('Tees',215, 220)
+        drawLabel('Tees - $20',302, 290)
         drawRect(410, 220, 175, 140, fill='white')
-        drawLabel('Long Sleeves',410, 220)
+        drawLabel('Long Sleeves - $25',497, 290)
         drawRect(605, 220, 175, 140, fill='white')
-        drawLabel('Hoodies',605, 220)
-        drawRect(20, 360, 175, 140, fill='white')
-        drawLabel('Sweaters',20, 360)
-        drawRect(215, 360, 175, 140, fill='white')
-        drawLabel('Jeans',215, 360)
-        drawRect(410, 360, 175, 140, fill='white')
-        drawLabel('Shorts',410, 360)
-        drawRect(605, 360, 175, 140, fill='white')
-        drawLabel('Skirts',605, 360)
+        drawLabel('Hoodies - $40',692, 290)
+        drawRect(20, 380, 175, 140, fill='white')
+        drawLabel('Sweaters - $50',107, 450)
+        drawRect(215, 380, 175, 140, fill='white')
+        drawLabel('Jeans - $50',302, 450)
+        drawRect(410, 380, 175, 140, fill='white')
+        drawLabel('Shorts - $30',497, 450)
+        drawRect(605, 380, 175, 140, fill='white')
+        drawLabel('Skirts - $40',692, 450)
     else:
         type = storeClothes[app.storePage]
         imageCount = 0
+        drawLabel(f'{type.type} - ${prices[app.storePage]}', 50, 30)
         x = 20
         y = 70
         for image in type.list:
@@ -95,24 +100,10 @@ def pressPickType(app, x, y):
         app.storePage = 6
     elif 605 <= x <= 780 and 360 <= y <= 500:
         app.storePage = 7
-        
 
-
-    
-
-    #background, back and forward buttons, type label, page coun
-    
-    
-
-    
-    
-    
-    
-
-    #forward and back buttons, page numbers
-    pass
 def addToCloset(app, mouseX, mouseY):
     type = storeClothes[app.storePage]
+    price = prices[app.storePage]
     imageCount = 0
     width = 136
     height = 160
@@ -126,10 +117,16 @@ def addToCloset(app, mouseX, mouseY):
             x = 20
             y += 180  
         if x <= mouseX <= x + width and y <= mouseY <= y + height:
-            if type.topOrBottom == 'Top':
-                app.closetTops.append(image)
+            if app.money < price:
+                app.isInstructing = True
+                #popup error
             else:
-                app.closetBottoms.append(image)
+                app.money -= price
+                type.list.pop(imageCount-1)
+                if type.topOrBottom == 'Top':
+                    app.closetTops.append(image)
+                else:
+                    app.closetBottoms.append(image)
            
 
 
