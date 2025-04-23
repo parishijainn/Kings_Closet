@@ -110,12 +110,10 @@ def drawModeButtons(app):
         borderColor = 'black'
         borderWidth = 1
 
-    # Draw the Dress Me button as a hexagon with hover effect
     drawPolygon(*dressMePoints, fill=app.brown, border=borderColor, borderWidth=borderWidth)
     drawLabel('Dress Me', buttonXDressMe + buttonWidth / 2, 
               buttonY + buttonHeight / 2, size=25, fill='white', bold=True)
 
-    # Define points for the Browse button (hexagon shape)
     browsePoints = []
     for i in range(6):
         angle = math.radians(60 * i)
@@ -124,7 +122,6 @@ def drawModeButtons(app):
         browsePoints.append(x)
         browsePoints.append(y)
 
-    # Check if hovering over Browse button
     if (buttonXBrowse <= app.mouseX <= buttonXBrowse + buttonWidth and
         buttonY <= app.mouseY <= buttonY + buttonHeight):
         borderColor = 'black'
@@ -133,21 +130,16 @@ def drawModeButtons(app):
         borderColor = 'black'
         borderWidth = 1
 
-    # Draw the Browse button as a hexagon with hover effect
     drawPolygon(*browsePoints, fill=app.brown, border=borderColor, borderWidth=borderWidth)
     drawLabel('Browse', buttonXBrowse + buttonWidth / 2, 
               buttonY + buttonHeight / 2, size=25, fill='white', bold=True)
 
-    # Draw a 6-sided polygon (Hexagon) above the buttons with the fill being app.brown and border black
-    centerX = app.width / 2  # Center the polygon on the X-axis
-    centerY = buttonY - 100  # Position it above the buttons
-
-    # Define the radius and angle step for the hexagon
+    centerX = app.width / 2 
+    centerY = buttonY - 100  
     radius = 50
-    angleStep = 360 / 6  # 360 degrees divided by 6 sides
+    angleStep = 360 / 6  
     points = []
 
-    # Generate the points for the hexagon
     for i in range(6):
         angle = angleStep * i
         x = centerX + radius * math.cos(math.radians(angle))
@@ -183,12 +175,10 @@ def pressModeButtons(app):
         if app.handTrackingMode:
             app.isInstructing = True
 
-
-
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill=app.lightPink, border='black')
-    drawLabel("Grade", app.gradeButtonX + 25, app.gradeButtonY +20,
-              size=15, fill=app.darkBrown, bold=True, align='left')
+    drawLabel("Grade", app.gradeButtonX + app.gradeButtonWidth//2, app.gradeButtonY + app.gradeButtonHeight//2,
+              size=15, fill=app.darkBrown, bold=True, align='center')
 
 def pressGradeButton(app):
     if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + 
@@ -208,7 +198,7 @@ def pressGradeButton(app):
 def drawStoreButton(app):
     drawRect(app.storeButtonX, app.storeButtonY, app.storeButtonWidth, 
              app.storeButtonHeight, fill=app.lightPink, border='black')
-    drawLabel("store", app.storeButtonX + app.storeButtonWidth//2,
+    drawLabel("Store", app.storeButtonX + app.storeButtonWidth//2,
               app.storeButtonY + app.storeButtonHeight//2, size=15, bold=True, fill=app.darkBrown)
     
 def pressStoreButton(app):

@@ -97,17 +97,16 @@ def onAppStart(app):
     app.tryOnButtonWidth = 100
     app.tryOnButtonHeight = app.blackBarHeight - 10
 
-    #store Clothes Button
-    app.storeButtonX = 295
-    app.storeButtonY = 5
-    app.storeButtonWidth = 110
-    app.storeButtonHeight = app.blackBarHeight - 10
-    
     #Store Clothes Button
-    app.storeButtonX = 10
+    app.storeButtonX = 305
     app.storeButtonY = 5
     app.storeButtonWidth = 100
     app.storeButtonHeight = app.blackBarHeight - 10
+
+    # Money Button
+    app.moneyButtonX = app.width - 45
+    app.moneyButtonY = app.blackBarHeight + 20
+    app.moneyButtonR = 10
 
     #GRADEMODE
     #Back Button
@@ -115,11 +114,6 @@ def onAppStart(app):
     app.backButtonY = app.height - 60
     app.backButtonWidth = 120
     app.backButtonHeight = 40
-
-    
-    # Initialize managers
-    # app.hangerManager = HangerManager(app)
-    # app.outfitManager = OutfitManager(app)
 
     app.sound = Sound('kidsInAmerica.mp3')
     app.soundIsPlaying = False

@@ -11,9 +11,8 @@ def drawGameMode(app):
                 app.blackBarHeight, fill=app.darkBrown)
         drawRect(app.width/3, app.blackBarHeight, app.width/3,
                 app.height-app.blackBarHeight*2, fill='white')
-        
-        # if app.username:
-        #         drawLabel(f"{app.username}'s closet", 10, 10, size=20, fill='white', align='left', bold=True)
+        if app.username:
+                drawLabel(f"{app.username}'s Closet", 10, app.blackBarHeight-25, size=30, fill='white', align='left', bold=True)
 
         drawModeButtons(app)
         # if app.isSelectionMode:

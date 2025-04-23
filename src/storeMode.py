@@ -2,12 +2,9 @@ from cmu_graphics import *
 from buttons import *
 import os
 
-
-
-
 def drawMoney(app):
-    drawCircle(500, 20, 10, fill='lightYellow', border='black')
-    drawLabel(f'$      {app.money}', 500, 20)
+    drawCircle(app.moneyButtonX, app.moneyButtonY, app.moneyButtonR, fill='lightYellow', border='black')
+    drawLabel(f'$        {app.money}', app.width-40, app.moneyButtonY)
 
 def putImagesIntoLists(folderPath):
     storeList = []
@@ -169,6 +166,7 @@ def drawSellTop(app):
     drawLabel('Yes', 325, 590)
     drawRect(550, 550, 250, 80, fill='lightPink')
     drawLabel('No', 675, 590)
+
 def drawSellBottom(app):
     drawImage(app.bottoms[app.currBottomIndex],600, 200, width=250, height=300)
     drawLabel('Would you like',350, 200)
