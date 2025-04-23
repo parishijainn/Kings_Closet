@@ -120,7 +120,7 @@ def onAppStart(app):
     #MONEY BUTTON
     app.moneyButtonX = app.width - 45
     app.moneyButtonY = app.blackBarHeight + 20
-    app.moneyButtonR = 10
+    app.moneyButtonR = 20
 
     #BACK BUTTON
     app.backButtonX = app.width/2 - 60
@@ -165,37 +165,6 @@ def onAppStart(app):
     app.brown = rgb(89, 72, 72)
     app.redBrown = rgb(111, 61, 61)
 
-# def onMousePress(app, mouseX, mouseY):
-#     pressSoundButton(app)
-#     if app.state == "welcome":
-#         pressStartPlayingButton(app)
-    
-#     elif app.state == "instructions":
-#         pressStartStylingButton(app)
-
-#     elif app.state == 'gameMode':
-#         pressGradeButton(app)
-#         pressModeButtons(app)
-#         pressSelectionButtons(app)
-#         pressTryOnButton(app)
-#         pressStoreButton(app)
-#         pressX(app)
-#         sellClothes(app, mouseX, mouseY)
-        
-#     elif app.state == "gradeMode":
-#         pressBackButton(app)
-#         pressX(app)
-
-#     if app.state == 'storeMode':
-#         pressBackButton(app)
-#         if app.storePage == "pickType":
-#             pressPickType(app, mouseX, mouseY)
-#         else:
-#             addToCloset(app, mouseX, mouseY)
-
-#     if app.state != "welcome":
-#         pressUniversalBackButton(app)
-#         pressX(app)
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
     if app.state == "welcome":
@@ -211,11 +180,7 @@ def onMousePress(app, mouseX, mouseY):
         pressTryOnButton(app)
         pressStoreButton(app)
         pressX(app)
-        sellClothes(app, mouseX, mouseY)
-
-        # Synchronize indices before grading
-        app.visibleTopIndex = app.currTopIndex
-        app.visibleBottomIndex = app.currBottomIndex
+        sellClothes(app)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
@@ -270,6 +235,7 @@ def onKeyPress(app, key):
             app.currBottomIndex = (app.currBottomIndex - 1) % len(app.bottomKeys)
         elif key == "down":
             app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottomKeys)
+        
 
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
