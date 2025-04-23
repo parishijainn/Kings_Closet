@@ -139,8 +139,12 @@ def sellClothes(app):
             app.closetTopPrices.pop(app.currTopIndex)
             app.closetTopTypes.pop(app.currTopIndex)
             app.isInstructing = False
+            app.state = "gameMode"
         if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
             app.isInstructing = False
+            app.state = "gameMode"
+            
+            
     elif (266 <= app.mouseX <= 532 and 300 <= app.mouseY <= 500):
         app.isInstructing = True
         app.state = 'sellBottom'
@@ -156,7 +160,7 @@ def sellClothes(app):
 
 def drawSellTop(app):
     drawGameMode(app)
-    drawImage(app.tops[app.currTopIndex],550, 200, width=125, height=150)
+    drawImage(app.tops[app.currTopIndex].image,550, 200, width=125, height=150)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
     drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)

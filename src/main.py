@@ -183,6 +183,9 @@ def onMousePress(app, mouseX, mouseY):
         pressBackButton(app)
         pressX(app)
 
+    elif app.state == 'sellTop' or app.state == 'sellBottom':
+        sellClothes(app)
+
     if app.state == 'storeMode':
         pressBackButton(app)
         if app.storePage == "pickType":
@@ -274,10 +277,10 @@ def onStep(app):
 def redrawAll(app):
     if app.state == "welcome":
         drawWelcomeScreen(app)
-    if app.storePage == 'sellTop' and app.isInstructing:
-        drawGameMode(app)
-        drawPopupMenu(app)
-        drawSellTop(app)
+    #if app.storePage == 'sellTop' and app.isInstructing:
+        #drawGameMode(app)
+        #drawPopupMenu(app)
+        #drawSellTop(app)
     elif app.storePage == 'sellBottom' and app.isInstructing:
         drawGameMode(app)
         drawPopupMenu(app)
