@@ -22,9 +22,8 @@ def onAppStart(app):
     app.popupY = app.height//2
     app.popupWidth = 600
     app.popupHeight = 300
-
-    
     app.isInstructing = True
+
     #WELCOMEMODE
     app.backgroundImage = "images/kingclosetbackgrounds.png"
     app.buttonWidth = 310
@@ -79,21 +78,21 @@ def onAppStart(app):
     app.playButtonY = app.backwardButtonY
 
     #Grade Button
-    app.gradeButtonX = app.width - 150
+    app.gradeButtonX = app.width - 150 
     app.gradeButtonY = 5
     app.gradeButtonWidth = 100
     app.gradeButtonHeight = app.blackBarHeight - 10
 
     #Try On Button
-    app.tryOnButtonX = 120
+    app.tryOnButtonX = 545
     app.tryOnButtonY = 5
     app.tryOnButtonWidth = 100
     app.tryOnButtonHeight = app.blackBarHeight - 10
 
     #Import Clothes Button
-    app.importButtonX = 10
+    app.importButtonX = 295
     app.importButtonY = 5
-    app.importButtonWidth = 100
+    app.importButtonWidth = 110
     app.importButtonHeight = app.blackBarHeight - 10
 
     #GRADEMODE
@@ -152,7 +151,12 @@ def onAppStart(app):
     app.usernameBoxHeight = 40
     app.usernameBoxX = app.width // 2 - app.usernameBoxWidth // 2
     app.usernameBoxY = app.height // 2 - 70
-
+    
+    # Custom Colors
+    app.lightPink = rgb(255, 233, 233)
+    app.lightBrown = rgb(186, 170, 170)
+    app.darkBrown = rgb(137, 118, 118)
+    app.brown = rgb(89, 72, 72)
 
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
@@ -193,14 +197,18 @@ def onMouseMove(app, mouseX, mouseY):
             app.feedbackText = f"{message} ({score}%)"
 
 def onKeyPress(app, key):
-    if app.state == "instructions":
+    if app.state == "welcome":
+        if key == "backspace":
+            app.username = app.username[:-1]
+        elif key == "enter" and app.username.strip() != "":
+            app.hasEnteredUsername = True
+        elif len(key) == 1 and len(app.username) < 20:
+            app.username += key
+    elif app.state == "instructions":
         if key == "up" and app.scrollY < app.maxScrollUp:
             app.scrollY += 20
         elif key == "down" and app.scrollY > -app.maxScrollDown:
             app.scrollY -= 20
-    if key == 'p':
-        app.sound.play(restart=True)
-
     elif app.state == "gameMode":
         if key == "left":
             app.currTopIndex = (app.currTopIndex - 1) % len(app.topKeys)
@@ -214,7 +222,6 @@ def onKeyPress(app, key):
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
-
 
 def onStep(app):
     if app.handTrackingMode:

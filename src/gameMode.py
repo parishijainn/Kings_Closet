@@ -6,9 +6,9 @@ from buttons import *
 def drawGameMode(app):
         drawImage("images/cheetahBackground.png", 0, 0,
                 width=app.width, height=app.height)
-        drawRect(0, 0, app.width, app.blackBarHeight, fill='black')
+        drawRect(0, 0, app.width, app.blackBarHeight, fill=app.darkBrown)
         drawRect(0, app.height-app.blackBarHeight, app.width,
-                app.blackBarHeight, fill='black')
+                app.blackBarHeight, fill=app.darkBrown)
         drawRect(app.width/3, app.blackBarHeight, app.width/3,
                 app.height-app.blackBarHeight*2, fill='white')
         
