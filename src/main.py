@@ -237,7 +237,6 @@ def onKeyPress(app, key):
         elif key == "down":
             app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottomKeys)
         
-
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY

@@ -49,9 +49,4 @@ def drawGameMode(app):
 
         if app.handTrackingMode and app.cameraFrame:
                 drawImage(app.cameraFrame, 20, 100, width=200, height=150)
-        
-        if app.handTrackingMode:
-                drawLabel("Swipe horizontally to change TOPS", 120, 300, size=15, fill='maroon', bold=True)
-                drawLabel("Swipe vertically to change BOTTOMS", 120, 320, size=15, fill='maroon', bold=True)
-                drawLabel("Hold up 5 fingers to get a random outfit!", 120, 340, size=15, fill='maroon', bold=True)
                 drawPopupMenu(app)

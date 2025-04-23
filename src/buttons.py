@@ -5,21 +5,57 @@ import math
 from storeMode import *
 
 #POPUP MENU
+# def drawPopupMenu(app):
+#     if app.isInstructing:
+#         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
+#                 fill='white', border='black',align='center')
+#         drawRect(app.popupX, app.popupY-app.popupHeight/2 + 13, app.popupWidth, 30, fill='lightpink', align='center', border='black')
+#         drawCircle(app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, 10, fill='red')
+#         drawLabel("X", app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, size=15, fill='white')
+        
+#         if app.handTrackingMode:
+#             drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
+#         elif app.state == "gameMode":
+#             drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
+#         elif app.state == 'storeMode':
+#             drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
+#         elif app.state == 'tryOnMode':
+#             drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)
+
 def drawPopupMenu(app):
-    if app.isInstructing:
+    if app.isInstructing and app.state != 'storeMode':
         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
-                fill='white', border='black',align='center')
-        drawRect(app.popupX, app.popupY-app.popupHeight/2 + 13, app.popupWidth, 30, fill='lightpink', align='center', border='black')
-        drawCircle(app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, 10, fill='red')
-        drawLabel("X", app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, size=15, fill='white')
+                 fill='white', border='black', align='center')
+        drawRect(app.popupX, app.popupY - app.popupHeight/2 + 13, app.popupWidth, 30,
+                 fill='lightpink', align='center', border='black')
+        drawCircle(app.popupX - app.popupWidth/2 + 15, app.popupY - app.popupHeight/2 + 13,
+                   10, fill='red')
+        drawLabel("X", app.popupX - app.popupWidth/2 + 15, app.popupY - app.popupHeight/2 + 13,
+                  size=15, fill='white')
+
+        # Hand Tracking Mode Instructions
         if app.handTrackingMode:
-            drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
+            drawLabel("Hand Tracking Mode", app.popupX, app.popupY - 100, size=20, bold=True)
+            drawLabel("• Swipe horizontally to change tops", app.popupX, app.popupY - 60, size=16)
+            drawLabel("• Swipe vertically to change bottoms", app.popupX, app.popupY - 30, size=16)
+            drawLabel("• Hold up 5 fingers for a random outfit", app.popupX, app.popupY, size=16)
+
+        # Game Mode Instructions
         elif app.state == "gameMode":
-            drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
-        elif app.state == 'storeMode':
-            drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
+            drawLabel("Game Mode", app.popupX, app.popupY - 110, size=20, bold=True)
+            drawLabel("• Click on the arrows to browse clothing", app.popupX, app.popupY - 80, size=16)
+            drawLabel("• Mix and match tops and bottoms", app.popupX, app.popupY - 50, size=16)
+            drawLabel("• Click the store to buy clothing with coins", app.popupX, app.popupY - 20, size=16)
+            drawLabel("• Click handtracking to play without a keyboard", app.popupX, app.popupY + 10, size=16)
+            drawLabel("• Click try on to see the outfit on your body", app.popupX, app.popupY + 40, size=16)
+            drawLabel("• Click grade to get feedback on your outfit", app.popupX, app.popupY + 70, size=16)
+
+        # Try On Mode Instructions
         elif app.state == 'tryOnMode':
-            drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)     
+            drawLabel("Try-On Mode", app.popupX, app.popupY - 40, size=20, bold=True)
+            drawLabel("• Swipe right to change tops", app.popupX, app.popupY - 10, size=16)
+            drawLabel("• Swipe left to change bottoms", app.popupX, app.popupY + 20, size=16)
+
 
 def pressX(app):
     if (app.popupX-app.popupWidth/2+5 <= app.mouseX <= app.popupX-app.popupWidth/2+25 and

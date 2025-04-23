@@ -179,4 +179,4 @@ def tryOnCamera(app):
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
-    tryOnCamera()
+    tryOnCamera(app)
