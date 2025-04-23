@@ -2,6 +2,7 @@ from cmu_graphics import *
 import random
 from virtualtryon import tryOnCamera
 import math
+
 #POPUP MENU
 def drawPopupMenu(app):
     if app.isInstructing:
@@ -18,11 +19,13 @@ def drawPopupMenu(app):
             drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
         elif app.state == 'tryOnMode':
             drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)     
+
 def pressX(app):
     if (app.popupX-app.popupWidth/2+5 <= app.mouseX <= app.popupX-app.popupWidth/2+25 and
         app.popupY-app.popupHeight/2+3 <= app.mouseY <= app.popupY-app.popupHeight/2+23):
         app.isInstructing = False
 
+#CATEGORY BUTTONS
 def drawCategoryButtons(app):
     drawRect(app.topButtonX, app.topButtonY, 150, 100, fill="lightblue")
     drawLabel("Top", app.topButtonX, app.topButtonY, size=20,)
@@ -36,7 +39,8 @@ def pressCategoryButtons(app):
     if (app.bottomButtonX <= app.mouseX <= app.bottomButtonX+150 and 
          app.bottomButtonY <= app.mouseY <= app.bottomButtonY+100):
         app.category = "bottom"
-        
+
+#SOUND BUTTON       
 def drawSoundButton(app):
     drawRect(app.soundButtonX, app.soundButtonY, app.soundButtonSize, app.soundButtonSize,
              fill='white', border='gray', borderWidth=1)
@@ -68,7 +72,7 @@ def pressSoundButton(app):
             app.sound.play(restart=False)
             app.soundIsPlaying = True
 
-#WELCOMEMODE
+#WELCOME MODE
 def drawStartPlayingButton(app):
      pass
 
@@ -77,7 +81,7 @@ def pressStartPlayingButton(app):
                 app.buttonY <= app.mouseY <= app.buttonY + app.buttonHeight):
             app.state = "instructions"
      
-#INSTRUCTIONSMODE
+#INSTRUCTIONS MODE
 def drawStartStylingButton(app):
      pass
 
@@ -175,6 +179,7 @@ def pressModeButtons(app):
         if app.handTrackingMode:
             app.isInstructing = True
 
+#GRADE BUTTONS
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill=app.lightPink, border='black')
     drawLabel("Grade", app.gradeButtonX + app.gradeButtonWidth//2, app.gradeButtonY + app.gradeButtonHeight//2,
@@ -194,7 +199,8 @@ def pressGradeButton(app):
         app.isGrading = True
                 
         app.state = "gradeMode"
-        
+
+#STORE BUTTONS        
 def drawStoreButton(app):
     drawRect(app.storeButtonX, app.storeButtonY, app.storeButtonWidth, 
              app.storeButtonHeight, fill=app.lightPink, border='black')
@@ -209,7 +215,8 @@ def pressStoreButton(app):
         app.state = "storeMode"
         app.isInstructing = True
         
-   
+
+#TRY ON BUTTON   
 def drawTryOnButton(app):
     drawRect(app.tryOnButtonX, app.tryOnButtonY, app.tryOnButtonWidth, 
              app.tryOnButtonHeight, fill=app.lightPink, border='black')
@@ -225,6 +232,8 @@ def pressTryOnButton(app):
         app.state = "tryOnMode"
         app.isInstructing = True
 
+
+#SELECTION BUTTONS
 def drawSelectionButtons(app):
     if not app.handTrackingMode:
         drawRect(app.playButtonX, app.playButtonY, app.playButtonWidth,
@@ -281,6 +290,7 @@ def drawSelectionButtons(app):
                     app.backwardButtonX + app.backwardButtonWidth - 40, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight - 10,
                     app.backwardButtonX + app.backwardButtonWidth - 55, app.backwardButtonY + app.whiteBoxHeight / 2 + app.backwardButtonHeight / 2,
                     fill='white')
+
 def pressSelectionButtons(app):
     #tops forward button press
     if (((app.forwardButtonX <= app.mouseX) and 
@@ -322,10 +332,12 @@ def pressSelectionButtons(app):
         app.whiteBoxHeight / 2 + app.playButtonHeight):
         app.currBottomIndex = random.randint(0, len(app.bottoms) - 1)
 
-#GRADEMODE
+
+#BACK BUTTONS
 def drawBackButton(app):
     drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill=app.lightPink, border='black')
     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
+
 def pressBackButton(app):
      if ((app.backButtonX <= app.mouseX <= app.backButtonX + app.backButtonWidth) and
             (app.backButtonY <= app.mouseY <= app.backButtonY + app.backButtonHeight)):
@@ -333,7 +345,6 @@ def pressBackButton(app):
             app.feedbackText = ""
             app.isGrading = False 
 
-#backbutton for each page
 def drawUniversalBackButton(app):
     drawRect(app.universalBackButtonX, app.universalBackButtonY,
              app.universalBackButtonWidth, app.universalBackButtonHeight,
@@ -342,8 +353,7 @@ def drawUniversalBackButton(app):
     drawLabel("←", app.universalBackButtonX + app.universalBackButtonWidth // 2,
               app.universalBackButtonY + app.universalBackButtonHeight // 2,
               size=20, bold=True, fill=app.darkBrown)
-
-    
+   
 def pressUniversalBackButton(app):
     if (app.universalBackButtonX <= app.mouseX <= app.universalBackButtonX + app.universalBackButtonWidth and
         app.universalBackButtonY <= app.mouseY <= app.universalBackButtonY + app.universalBackButtonHeight):

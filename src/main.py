@@ -59,19 +59,22 @@ def onAppStart(app):
     app.currBottomIndex = 0
     app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png"), Tops("images/shirt3.png"), Tops("images/shirt4.png"), Tops("images/shirt5.png"), Tops("images/shirt6.png")]
     app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), Bottoms("images/skirt3.png"), Bottoms("images/bottom1.png"), Bottoms("images/bottom2.png"), Bottoms("images/bottom3.png")]
+    app.visibleTopIndex = app.currTopIndex
+    app.visibleBottomIndex = app.currBottomIndex
+
     
-    #Background
+    #BACKGROUND
     app.gameScreenBackgroundImage = "images/cheetahBackGround.png"
     app.blackBarHeight = 50
     app.whiteBoxWidth = app.width/3
     app.whiteBoxHeight = app.height - 2*app.blackBarHeight
     app.whiteBoxX = app.width/3
 
-    #Mode Switch Buttons
+    #MODE BUTTONS
     app.modeButtonWidth = 160
     app.modeButtonHeight = 80
 
-    #Clothes Selection Buttons
+    #CLOTHES SELECTION BUTTONS
     app.backwardButtonWidth = app.whiteBoxWidth*0.33
     app.backwardButtonHeight = app.blackBarHeight - app.blackBarHeight*0.2
     app.backwardButtonX = app.whiteBoxWidth+10
@@ -80,47 +83,50 @@ def onAppStart(app):
     
     app.forwardButtonX = app.width - app.whiteBoxWidth - app.backwardButtonWidth - 10
     
+    #SOUND BUTTON
     app.playButtonWidth = app.backwardButtonWidth*0.66
     app.playButtonHeight = app.backwardButtonHeight
     app.playButtonX = app.width/2 - app.playButtonWidth/2
     app.playButtonY = app.backwardButtonY
-
-    #Grade Button
-    app.gradeButtonX = app.width - 150 
-    app.gradeButtonY = 5
-    app.gradeButtonWidth = 100
-    app.gradeButtonHeight = app.blackBarHeight - 10
-
-    #Try On Button
-    app.tryOnButtonX = 545
-    app.tryOnButtonY = 5
-    app.tryOnButtonWidth = 100
-    app.tryOnButtonHeight = app.blackBarHeight - 10
-
-    #Store Clothes Button
-    app.storeButtonX = 305
-    app.storeButtonY = 5
-    app.storeButtonWidth = 100
-    app.storeButtonHeight = app.blackBarHeight - 10
-
-    # Money Button
-    app.moneyButtonX = app.width - 45
-    app.moneyButtonY = app.blackBarHeight + 20
-    app.moneyButtonR = 10
-
-    #GRADEMODE
-    #Back Button
-    app.backButtonX = app.width/2 - 60
-    app.backButtonY = app.height - 60
-    app.backButtonWidth = 120
-    app.backButtonHeight = 40
-
     app.sound = Sound('kidsInAmerica.mp3')
     app.soundIsPlaying = False
     app.soundButtonX = app.width - 40
     app.soundButtonY = 10
     app.soundButtonSize = 30
-    
+
+    #GRADE BUTTON
+    app.gradeButtonX = app.width - 150 
+    app.gradeButtonY = 5
+    app.gradeButtonWidth = 100
+    app.gradeButtonHeight = app.blackBarHeight - 10
+
+    #TRY ON BUTTON
+    app.tryOnButtonX = 545
+    app.tryOnButtonY = 5
+    app.tryOnButtonWidth = 100
+    app.tryOnButtonHeight = app.blackBarHeight - 10
+
+    #STORE BUTTON
+    app.storeButtonX = 305
+    app.storeButtonY = 5
+    app.storeButtonWidth = 100
+    app.storeButtonHeight = app.blackBarHeight - 10
+
+    #MONEY BUTTON
+    app.moneyButtonX = app.width - 45
+    app.moneyButtonY = app.blackBarHeight + 20
+    app.moneyButtonR = 10
+
+    #BACK BUTTON
+    app.backButtonX = app.width/2 - 60
+    app.backButtonY = app.height - 60
+    app.backButtonWidth = 120
+    app.backButtonHeight = 40
+    app.universalBackButtonWidth = 100
+    app.universalBackButtonHeight = 40
+    app.universalBackButtonX = 20
+    app.universalBackButtonY = app.height - app.universalBackButtonHeight - 5
+
     app.outfitManager = OutfitManager(app)
     app.topKeys = list(app.outfitManager.tops.keys())
     app.bottomKeys = list(app.outfitManager.bottoms.keys())
@@ -130,20 +136,15 @@ def onAppStart(app):
     app.isGrading = False
 
     app.feedbackText = ""
-   
-    #backbutton
-    app.universalBackButtonWidth = 100
-    app.universalBackButtonHeight = 40
-    app.universalBackButtonX = 20
-    app.universalBackButtonY = app.height - app.universalBackButtonHeight - 5
 
+    #HANDTRACKING VARIABLES    
     app.handTrackingMode = False
     app.cameraFrame = None
     app.lastFingerX = None
     app.lastFingerY = None
     app.fingerCooldown = 0
 
-    # Username 
+    #USERNAME VARIABLES 
     app.username = ""
     app.typing = False
     app.enteredUsername = False
@@ -152,13 +153,44 @@ def onAppStart(app):
     app.usernameBoxX = app.width // 2 - app.usernameBoxWidth // 2
     app.usernameBoxY = app.height // 2
     
-    # Custom Colors
+    #CUSTOM COLORS
     app.lightPink = rgb(255, 233, 233)
     app.lightBrown = rgb(186, 170, 170)
     app.darkBrown = rgb(137, 118, 118)
     app.brown = rgb(89, 72, 72)
     app.redBrown = rgb(111, 61, 61)
 
+# def onMousePress(app, mouseX, mouseY):
+#     pressSoundButton(app)
+#     if app.state == "welcome":
+#         pressStartPlayingButton(app)
+    
+#     elif app.state == "instructions":
+#         pressStartStylingButton(app)
+
+#     elif app.state == 'gameMode':
+#         pressGradeButton(app)
+#         pressModeButtons(app)
+#         pressSelectionButtons(app)
+#         pressTryOnButton(app)
+#         pressStoreButton(app)
+#         pressX(app)
+#         sellClothes(app, mouseX, mouseY)
+        
+#     elif app.state == "gradeMode":
+#         pressBackButton(app)
+#         pressX(app)
+
+#     if app.state == 'storeMode':
+#         pressBackButton(app)
+#         if app.storePage == "pickType":
+#             pressPickType(app, mouseX, mouseY)
+#         else:
+#             addToCloset(app, mouseX, mouseY)
+
+#     if app.state != "welcome":
+#         pressUniversalBackButton(app)
+#         pressX(app)
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
     if app.state == "welcome":
@@ -175,10 +207,15 @@ def onMousePress(app, mouseX, mouseY):
         pressStoreButton(app)
         pressX(app)
         sellClothes(app, mouseX, mouseY)
+
+        # Synchronize indices before grading
+        app.visibleTopIndex = app.currTopIndex
+        app.visibleBottomIndex = app.currBottomIndex
         
     elif app.state == "gradeMode":
         pressBackButton(app)
         pressX(app)
+
     if app.state == 'storeMode':
         pressBackButton(app)
         if app.storePage == "pickType":
@@ -199,9 +236,11 @@ def onMouseMove(app, mouseX, mouseY):
         playButtonX = app.width / 2 - 50
         playButtonY = app.height - app.blackBarHeight - 60
         if playButtonX <= mouseX <= playButtonX + 100 and playButtonY <= mouseY <= playButtonY + 40:
+            # topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
+            # bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
             topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
             bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            message, rating, score = app.outfitManager.grade_outfit(topKey, bottomKey)
+            message, score = app.outfitManager.grade_outfit(topKey, bottomKey)
             app.feedbackText = f"{message} ({score}%)"
 
 def onKeyPress(app, key):
@@ -267,7 +306,6 @@ def onStep(app):
             app.fingerCooldown -= 1
 
 def redrawAll(app):
-    
     if app.state == "welcome":
         drawWelcomeScreen(app)
     if app.storePage == 'sellTop':
@@ -285,14 +323,8 @@ def redrawAll(app):
     elif app.state == 'storeMode':
         drawStoreMode(app)
     drawSoundButton(app)
-    drawMoney(app)
-    
+   
     if app.state != "welcome" and app.state != "gradeMode":
         drawUniversalBackButton(app)
     
-
 runApp(width=800, height=600)
-
-
-
-

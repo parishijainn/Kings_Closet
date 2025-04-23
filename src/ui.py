@@ -131,15 +131,16 @@ def drawGameScreen(app):
     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
-    topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
-    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]]
+    # Use visibleTopIndex and visibleBottomIndex to fetch the correct outfit
+    topImg = app.outfitManager.tops[app.topKeys[app.visibleTopIndex % len(app.topKeys)]]
+    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.visibleBottomIndex % len(app.bottomKeys)]]
 
-    drawImage(topImg, app.width//2, 150, width=180, height=180, align='center')
-    drawImage(bottomImg, app.width//2, 340, width=180, height=180, align='center')
+    drawImage(topImg, app.width // 2, 150, width=180, height=180, align='center')
+    drawImage(bottomImg, app.width // 2, 340, width=180, height=180, align='center')
 
     # More vivid result text
-    drawLabel("Match Result:", app.width//2, app.height - 140, size=22, fill='black')
-    drawLabel(app.feedbackText, app.width//2, app.height - 110,
+    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
+    drawLabel(app.feedbackText, app.width // 2, app.height - 110,
               size=26, fill='darkmagenta', bold=True)
 
     drawBackButton(app)
