@@ -114,29 +114,29 @@ def addToCloset(app, mouseX, mouseY):
                     app.closetBottomPrices.append(price)
                     app.closetBottomTypes.append(type.type)
 
-def sellClothes(app, mouseX, mouseY):
-    if (266 <= mouseX <= 532 and 50 <= mouseY <= 250):
+def sellClothes(app):
+    if (266 <= app.mouseX <= 532 and 50 <= app.mouseY <= 250):
         app.isInstructing = True
         app.storePage = 'sellTop'
         
-        if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
+        if 150 <= app.mouseX <= 375 and 375 <= app.mouseY <= 425:
             app.money += app.closetTopPrices[app.currTopIndex]
             app.tops.pop(app.currTopIndex)
             app.closetTopPrices.pop(app.currTopIndex)
             app.closetTopTypes.pop(app.currTopIndex)
             app.isInstructing = False
-        if 550 <= mouseX <= 800 and 550 <= mouseY <= 630:
+        if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
             app.isInstructing = False
-    elif (266 <= mouseX <= 532 and 300 <= mouseY <= 500):
+    elif (266 <= app.mouseX <= 532 and 300 <= app.mouseY <= 500):
         app.isInstructing = True
         app.storePage = 'sellBottom'
-        if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
+        if 150 <= app.mouseX <= 375 and 375 <= app.mouseY <= 425:
             app.money += app.closetBottomPrices[app.currBottomIndex]
             app.bottoms.pop(app.currBottomIndex)
             app.closetBottomPrices.pop(app.currBottomIndex)
             app.closetBottomTypes.pop(app.currBottomIndex)
             app.isInstructing = False
-        if 550 <= mouseX <= 800 and 550 <= mouseY <= 630:
+        if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
             app.isInstructing = False
 
 def drawSellTop(app):
@@ -145,19 +145,19 @@ def drawSellTop(app):
     drawLabel('to sell this', 350, 300)
     drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)
     drawRect(150, 375, 225, 50, fill='lightPink')
-    drawLabel('Yes', 325, 590)
+    drawLabel('Yes', 267, 400)
     drawRect(425, 375, 225, 50, fill='lightPink')
-    drawLabel('No', 675, 590)
+    drawLabel('No', 537, 400)
 
 def drawSellBottom(app):
     drawImage(app.bottoms[app.currBottomIndex].image,550, 200, width=125, height=150)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
-    drawLabel(f'{app.closetBottomTypes[app.currBottomIndex].image} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
+    drawLabel(f'{app.closetBottomTypes[app.currBottomIndex]} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
     drawRect(150, 375, 225, 50, fill='lightPink')
-    drawLabel('Yes', 325, 590)
+    drawLabel('Yes', 267, 400)
     drawRect(425, 375, 225, 50, fill='lightPink')
-    drawLabel('No', 675, 590)
+    drawLabel('No', 537, 400)
 
 
 

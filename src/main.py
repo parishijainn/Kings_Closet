@@ -180,7 +180,7 @@ def onMousePress(app, mouseX, mouseY):
         pressTryOnButton(app)
         pressStoreButton(app)
         pressX(app)
-        sellClothes(app, mouseX, mouseY)
+        sellClothes(app)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
