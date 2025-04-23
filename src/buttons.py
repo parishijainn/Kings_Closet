@@ -1,7 +1,7 @@
 from cmu_graphics import *
 import random
 from virtualtryon import tryOnCamera
-
+import math
 #POPUP MENU
 def drawPopupMenu(app):
     if app.isInstructing:
@@ -28,6 +28,7 @@ def drawCategoryButtons(app):
     drawLabel("Top", app.topButtonX, app.topButtonY, size=20,)
     drawRect(app.bottomButtonX, app.bottomButtonY, 150, 100, fill="lightblue")
     drawLabel("Bottom", app.bottomButtonX, app.bottomButtonY, size=20,)
+
 def pressCategoryButtons(app):
     if (app.topButtonX <= app.mouseX <= app.topButtonX+150 and 
         app.topButtonY <= app.mouseY <= app.topButtonY+100):
@@ -56,6 +57,7 @@ def drawSoundButton(app):
                     centerX - 5, centerY + 10,
                     centerX + 10, centerY,
                     fill='pink')      
+
 def pressSoundButton(app):
      if (app.soundButtonX <= app.mouseX <= app.soundButtonX + app.soundButtonSize and
             app.soundButtonY <= app.mouseY <= app.soundButtonY + app.soundButtonSize):
@@ -69,6 +71,7 @@ def pressSoundButton(app):
 #WELCOMEMODE
 def drawStartPlayingButton(app):
      pass
+
 def pressStartPlayingButton(app):
      if (app.buttonX <= app.mouseX <= app.buttonX + app.buttonWidth and
                 app.buttonY <= app.mouseY <= app.buttonY + app.buttonHeight):
@@ -77,39 +80,120 @@ def pressStartPlayingButton(app):
 #INSTRUCTIONSMODE
 def drawStartStylingButton(app):
      pass
+
 def pressStartStylingButton(app):
      if (app.instructionsButtonX <= app.mouseX <= app.instructionsButtonX + app.instructionsButtonWidth and
                 app.instructionsButtonY <= app.mouseY <= app.instructionsButtonY + app.instructionsButtonHeight):
             app.state = "gameMode"
      
 #GAMEMODE
+# def drawModeButtons(app):
+#     # Dress Me Button
+#     drawRect(2*(app.width/3), 
+#              app.height-app.blackBarHeight-app.modeButtonHeight, 
+#              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
+#     drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
+#           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
+#           size=30, fill='white', bold=True, font = 'monospace')
+    
+#     # Browse Button
+#     drawRect((app.width/3)-app.modeButtonWidth, 
+#              app.height-app.blackBarHeight-app.modeButtonHeight, 
+#              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
+#     drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
+#           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
+#           size=30, fill='white', bold=True, font = 'monospace')
+    
+    
+#     handtrackX = 410
+#     handtrackY = 5
+#     handtrackW = 130
+#     handtrackH = app.blackBarHeight - 10
+#     drawRect(handtrackX, handtrackY, handtrackW, handtrackH,
+#              fill=app.lightPink, border='black')
+#     drawLabel(f"HandTrack: {'ON' if app.handTrackingMode else 'OFF'}", 
+#               handtrackX + handtrackW/2, handtrackY + handtrackH/2,
+#               size=15, bold=True, fill=app.darkBrown, align='center')
+
+import math
+
 def drawModeButtons(app):
-    # Dress Me Button
-    drawRect(2*(app.width/3), 
-             app.height-app.blackBarHeight-app.modeButtonHeight, 
-             app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-    drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
-          app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
-          size=30, fill='white', bold=True, font = 'monospace')
-    
-    # Browse Button
-    drawRect((app.width/3)-app.modeButtonWidth, 
-             app.height-app.blackBarHeight-app.modeButtonHeight, 
-             app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-    drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
-          app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
-          size=30, fill='white', bold=True, font = 'monospace')
-    
-    
-    handtrackX = 230
+    # Coordinates for the buttons
+    buttonWidth = app.modeButtonWidth
+    buttonHeight = app.modeButtonHeight * 1.5  
+    buttonXDressMe = 2 * (app.width / 3)  
+    buttonXBrowse = (app.width / 3) - app.modeButtonWidth * 1.5  
+    buttonY = app.height / 2 - app.modeButtonHeight / 2 + 50  
+
+    dressMePoints = []
+    for i in range(6):
+        angle = math.radians(60 * i)
+        x = buttonXDressMe + buttonWidth / 2 + (buttonWidth / 2) * math.cos(angle)
+        y = buttonY + buttonHeight / 2 + (buttonHeight / 2) * math.sin(angle)
+        dressMePoints.append(x)
+        dressMePoints.append(y)
+
+    # Check if hovering over Dress Me button
+    if (buttonXDressMe <= app.mouseX <= buttonXDressMe + buttonWidth and
+        buttonY <= app.mouseY <= buttonY + buttonHeight):
+        borderColor = 'blue'
+        borderWidth = 3
+    else:
+        borderColor = 'black'
+        borderWidth = 1
+
+    drawPolygon(*dressMePoints, fill=app.brown, border=borderColor, borderWidth=borderWidth)
+    drawLabel('Dress Me', buttonXDressMe + buttonWidth / 2, 
+              buttonY + buttonHeight / 2, size=30, fill='white', bold=True)
+
+    # Define points for the Browse button (hexagon shape)
+    browsePoints = []
+    for i in range(6):
+        angle = math.radians(60 * i)
+        x = buttonXBrowse + buttonWidth / 2 + (buttonWidth / 2) * math.cos(angle)
+        y = buttonY + buttonHeight / 2 + (buttonHeight / 2) * math.sin(angle)
+        browsePoints.append(x)
+        browsePoints.append(y)
+
+    # Check if hovering over Browse button
+    if (buttonXBrowse <= app.mouseX <= buttonXBrowse + buttonWidth and
+        buttonY <= app.mouseY <= buttonY + buttonHeight):
+        borderColor = 'blue'
+        borderWidth = 3
+    else:
+        borderColor = 'black'
+        borderWidth = 1
+
+    drawPolygon(*browsePoints, fill=app.brown, border=borderColor, borderWidth=borderWidth)
+    drawLabel('Browse', buttonXBrowse + buttonWidth / 2, 
+              buttonY + buttonHeight / 2, size=30, fill='white', bold=True)
+
+    centerX = app.width / 2  
+    centerY = buttonY - 100 
+
+    radius = 50
+    angleStep = 360 / 6  # 360 degrees divided by 6 sides
+    points = []
+
+    # Generate the points for the hexagon
+    for i in range(6):
+        angle = angleStep * i
+        x = centerX + radius * math.cos(math.radians(angle))
+        y = centerY + radius * math.sin(math.radians(angle))
+        points.append(x)
+        points.append(y)
+
+    # Handtracking display
+    handtrackX = 410
     handtrackY = 5
-    handtrackW = 100
+    handtrackW = 130
     handtrackH = app.blackBarHeight - 10
     drawRect(handtrackX, handtrackY, handtrackW, handtrackH,
-             fill='lavenderBlush', border='maroon')
+             fill=app.lightPink, border='black')
     drawLabel(f"HandTrack: {'ON' if app.handTrackingMode else 'OFF'}", 
               handtrackX + handtrackW/2, handtrackY + handtrackH/2,
-              size=12, bold=True, fill='maroon')
+              size=15, bold=True, fill=app.darkBrown, align='center')
+
 def pressModeButtons(app):
     if ((2*(app.width/3) <= app.mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
@@ -121,15 +205,16 @@ def pressModeButtons(app):
             app.isDressingMode = False
             app.isSelectionMode = True
     
-    if (230 <= app.mouseX <= 330 and 5 <= app.mouseY <= 5 + app.blackBarHeight - 10):
+    if (410 <= app.mouseX <= 540 and 5 <= app.mouseY <= 5 + app.blackBarHeight - 10):
         app.handTrackingMode = not app.handTrackingMode
         if app.handTrackingMode:
             app.isInstructing = True
 
 def drawGradeButton(app):
-    drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill='plum', border='black')
+    drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill=app.lightPink, border='black')
     drawLabel("Grade", app.gradeButtonX + 25, app.gradeButtonY +20,
-              size=18, bold=True, align='left')
+              size=15, fill=app.darkBrown, bold=True, align='left')
+
 def pressGradeButton(app):
     if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + 
                                             app.gradeButtonWidth) and
@@ -145,24 +230,27 @@ def pressGradeButton(app):
                 
         app.state = "gradeMode"
         
-def drawStoreButton(app):
-    drawRect(app.storeButtonX, app.storeButtonY, app.storeButtonWidth, 
-             app.storeButtonHeight, fill='lavenderBlush', border='maroon')
-    drawLabel("store", app.storeButtonX + app.storeButtonWidth//2,
-              app.storeButtonY + app.storeButtonHeight//2, size=15, bold=True)
-def pressStoreButton(app):
-    if (app.storeButtonX <= app.mouseX <= (app.storeButtonX + 
-                                            app.storeButtonWidth) and
-        app.storeButtonY <= app.mouseY <= (app.storeButtonY +
-                                            app.storeButtonHeight)):
-        app.state = "storeMode"
+def drawImportButton(app):
+    drawRect(app.importButtonX, app.importButtonY, app.importButtonWidth, 
+             app.importButtonHeight, fill=app.lightPink, border='black')
+    drawLabel("Import Clothes", app.importButtonX + app.importButtonWidth//2,
+              app.importButtonY + app.importButtonHeight//2, size=15, bold=True, fill=app.darkBrown)
+    
+def pressImportButton(app):
+    if (app.importButtonX <= app.mouseX <= (app.importButtonX + 
+                                            app.importButtonWidth) and
+        app.importButtonY <= app.mouseY <= (app.importButtonY +
+                                            app.importButtonHeight)):
+        app.state = "importMode"
         app.isInstructing = True
         
+   
 def drawTryOnButton(app):
     drawRect(app.tryOnButtonX, app.tryOnButtonY, app.tryOnButtonWidth, 
-             app.tryOnButtonHeight, fill='lavenderBlush', border='maroon')
+             app.tryOnButtonHeight, fill=app.lightPink, border='black')
     drawLabel("Try On", app.tryOnButtonX + app.tryOnButtonWidth//2,
-              app.tryOnButtonY + app.tryOnButtonHeight//2, size=15, bold=True)
+              app.tryOnButtonY + app.tryOnButtonHeight//2, size=15, bold=True, fill=app.darkBrown)
+
 def pressTryOnButton(app):
      if (app.tryOnButtonX <= app.mouseX <= (app.tryOnButtonX + 
                                             app.tryOnButtonWidth) and
@@ -271,7 +359,7 @@ def pressSelectionButtons(app):
 
 #GRADEMODE
 def drawBackButton(app):
-    drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill='plum', border='black')
+    drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill=app.lightPink, border='black')
     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
 def pressBackButton(app):
      if ((app.backButtonX <= app.mouseX <= app.backButtonX + app.backButtonWidth) and
@@ -284,11 +372,13 @@ def pressBackButton(app):
 def drawUniversalBackButton(app):
     drawRect(app.universalBackButtonX, app.universalBackButtonY,
              app.universalBackButtonWidth, app.universalBackButtonHeight,
-             fill='lavenderBlush', border='maroon', borderWidth=2)
+             fill=app.lightPink, border=app.darkBrown, borderWidth=2)
     
     drawLabel("←", app.universalBackButtonX + app.universalBackButtonWidth // 2,
               app.universalBackButtonY + app.universalBackButtonHeight // 2,
-              size=20, bold=True, fill='maroon')
+              size=20, bold=True, fill=app.darkBrown)
+
+    
 def pressUniversalBackButton(app):
     if (app.universalBackButtonX <= app.mouseX <= app.universalBackButtonX + app.universalBackButtonWidth and
         app.universalBackButtonY <= app.mouseY <= app.universalBackButtonY + app.universalBackButtonHeight):
