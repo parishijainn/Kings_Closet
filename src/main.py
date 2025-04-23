@@ -4,10 +4,6 @@ from buttons import *
 from gameMode import drawGameMode
 from clothesClasses import *
 from outfitgrader import OutfitManager
-import os
-import random
-from tkinter import filedialog, Tk
-from virtualtryon import tryOnCamera
 from handtracking import processCameraFeed, getFingerPosition
 from storeMode import *
 
@@ -15,7 +11,6 @@ def onAppStart(app):
     app.width = 800
     app.height = 600
     app.state = "welcome"
-
     app.closetTops = []
     app.closetBottoms = []
     app.storePage = "pickType"
@@ -87,12 +82,13 @@ def onAppStart(app):
     app.backwardButtonY = ((app.height/2) - app.blackBarHeight +
                       (app.blackBarHeight-app.backwardButtonHeight)/2)
     
-    app.forwardButtonX = app.width - app.whiteBoxWidth - app.backwardButtonWidth - 10
+    app.forwardButtonX = (app.width - app.whiteBoxWidth - 
+                          app.backwardButtonWidth - 10)
     
     #SOUND BUTTON
     app.playButtonWidth = app.backwardButtonWidth*0.66
     app.playButtonHeight = app.backwardButtonHeight
-    app.playButtonX = app.width/2 - app.playButtonWidth/2
+    app.playButtonX = (app.width/2 - app.playButtonWidth/2)
     app.playButtonY = app.backwardButtonY
     app.sound = Sound('kidsInAmerica.mp3')
     app.soundIsPlaying = False
@@ -202,16 +198,15 @@ def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
 
-        # Evaluate outfit
+    # Evaluate outfit
     if app.isSelectionMode:
         playButtonX = app.width / 2 - 50
         playButtonY = app.height - app.blackBarHeight - 60
-        if playButtonX <= mouseX <= playButtonX + 100 and playButtonY <= mouseY <= playButtonY + 40:
-            # topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
-            # bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
-            bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            message, score = app.outfitManager.grade_outfit(topKey, bottomKey)
+        if (playButtonX <= mouseX <= playButtonX + 100 and playButtonY <= 
+                mouseY <= playButtonY + 40):
+            topKey= app.topKeys[app.currTopIndex % len(app.topKeys)]
+            bottomKey= app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
+            message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
             app.feedbackText = f"{message} ({score}%)"
 
 def onKeyPress(app, key):
@@ -233,14 +228,10 @@ def onKeyPress(app, key):
         elif key == "right":
             app.currTopIndex = (app.currTopIndex + 1) % len(app.topKeys)
         elif key == "up":
-            app.currBottomIndex = (app.currBottomIndex - 1) % len(app.bottomKeys)
+            app.currBottomIndex =(app.currBottomIndex - 1) % len(app.bottomKeys)
         elif key == "down":
-            app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottomKeys)
+            app.currBottomIndex =(app.currBottomIndex + 1) % len(app.bottomKeys)
         
-def onMouseMove(app, mouseX, mouseY):
-    app.mouseX = mouseX
-    app.mouseY = mouseY
-
 def onStep(app):
     if app.handTrackingMode:
         # Update camera frame
@@ -257,17 +248,21 @@ def onStep(app):
                 # Swipe horizontally → change top
                 if abs(dx) > 0.07:
                     if dx > 0:
-                        app.currTopIndex = (app.currTopIndex + 1) % len(app.tops)
+                        app.currTopIndex = ((app.currTopIndex + 1) % 
+                                            len(app.tops))
                     else:
-                        app.currTopIndex = (app.currTopIndex - 1) % len(app.tops)
+                        app.currTopIndex = ((app.currTopIndex - 1) % 
+                                            len(app.tops))
                     app.fingerCooldown = 10
 
                 # Swipe vertically → change bottom
                 elif abs(dy) > 0.07:
                     if dy > 0:
-                        app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottoms)
+                        app.currBottomIndex= ((app.currBottomIndex + 1) % 
+                                              len(app.bottoms))
                     else:
-                        app.currBottomIndex = (app.currBottomIndex - 1) % len(app.bottoms)
+                        app.currBottomIndex= ((app.currBottomIndex - 1) % 
+                                              len(app.bottoms))
                     app.fingerCooldown = 10
 
             # Store current position
@@ -301,5 +296,8 @@ def redrawAll(app):
    
     if app.state != "welcome" and app.state != "gradeMode":
         drawUniversalBackButton(app)
-    
-runApp(width=800, height=600)
+
+def main():    
+    runApp()
+
+main()
