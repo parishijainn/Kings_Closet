@@ -1,6 +1,7 @@
 from cmu_graphics import *
 from buttons import *
 import os
+from clothesClasses import *
 
 def drawMoney(app):
     # drawCircle(app.moneyButtonX, app.moneyButtonY, app.moneyButtonR, fill='lightYellow', border='black')
@@ -11,12 +12,13 @@ def putImagesIntoLists(folderPath):
     storeList = []
     for filename in os.listdir(folderPath):
         fullPath = os.path.join(folderPath, filename)
-        storeList.append(fullPath)
+        if os.path.isfile(fullPath):
+            storeList.append(fullPath)
     return storeList
 
 class StoreClothes:
     def __init__(self, folderPath):
-        self.folderPath = folderPath
+        self.image = folderPath
         self.type = folderPath.split('/')[-1]
         self.list = putImagesIntoLists(folderPath)
         if self.type in ['Tanks', 'Tees', 'LongSleeves', 'Hoodies', 'Sweaters']:
@@ -116,13 +118,15 @@ def addToCloset(app, mouseX, mouseY):
                 drawLabel("outfit to earn more money", 400, 400)
             else:
                 app.money -= price
-                type.list.pop(imageCount-1)
+                
                 if type.topOrBottom == 'Top':
-                    app.tops.append(image)
+                    app.tops.append(Tops(type.list[imageCount-1]))
+                    type.list.pop(imageCount-1)
                     app.closetTopPrices.append(price)
                     app.closetTopTypes.append(type.type)
                 else:
-                    app.bottoms.append(image)
+                    app.bottoms.append(type.list[imageCount-1])
+                    type.list.pop(imageCount-1)
                     app.closetBottomPrices.append(price)
                     app.closetBottomTypes.append(type.type)
 
