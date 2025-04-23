@@ -115,8 +115,7 @@ def addToCloset(app, mouseX, mouseY):
                     app.closetBottomTypes.append(type.type)
 
 def sellClothes(app, mouseX, mouseY):
-    if (app.whiteBoxX <= mouseX <= app.whiteBoxX+app.whiteBoxWidth and 
-        50 <= mouseY <= 325):
+    if (266 <= mouseX <= 532 and 50 <= mouseY <= 250):
         app.isInstructing = True
         app.storePage = 'sellTop'
         
@@ -128,8 +127,7 @@ def sellClothes(app, mouseX, mouseY):
             app.isInstructing = False
         if 550 <= mouseX <= 800 and 550 <= mouseY <= 630:
             app.isInstructing = False
-    elif (app.whiteBoxX <= mouseX <= app.whiteBoxX+app.whiteBoxWidth and 
-          375 <= mouseY <= 700):
+    elif (266 <= mouseX <= 532 and 300 <= mouseY <= 500):
         app.isInstructing = True
         app.storePage = 'sellBottom'
         if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
@@ -142,23 +140,23 @@ def sellClothes(app, mouseX, mouseY):
             app.isInstructing = False
 
 def drawSellTop(app):
-    drawImage(app.tops[app.currTopIndex],600, 200, width=250, height=300)
+    drawImage(app.tops[app.currTopIndex].image, 550, 200, width=125, height=150)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
     drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)
-    drawRect(200, 550, 250, 80, fill='lightPink')
+    drawRect(150, 375, 225, 50, fill='lightPink')
     drawLabel('Yes', 325, 590)
-    drawRect(550, 550, 250, 80, fill='lightPink')
+    drawRect(425, 375, 225, 50, fill='lightPink')
     drawLabel('No', 675, 590)
 
 def drawSellBottom(app):
-    drawImage(app.bottoms[app.currBottomIndex],600, 200, width=250, height=300)
+    drawImage(app.bottoms[app.currBottomIndex].image,550, 200, width=125, height=150)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
-    drawLabel(f'{app.closetBottomTypes[app.currBottomIndex]} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
-    drawRect(200, 550, 250, 80, fill='lightPink')
+    drawLabel(f'{app.closetBottomTypes[app.currBottomIndex].image} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
+    drawRect(150, 375, 225, 50, fill='lightPink')
     drawLabel('Yes', 325, 590)
-    drawRect(550, 550, 250, 80, fill='lightPink')
+    drawRect(425, 375, 225, 50, fill='lightPink')
     drawLabel('No', 675, 590)
 
 
