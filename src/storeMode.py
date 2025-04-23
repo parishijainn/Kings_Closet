@@ -36,7 +36,6 @@ def drawStoreMode(app):
     whiteWidth = 136
     whiteHeight = 160
     drawRect(0, 0, app.width, app.height, fill='lightBlue')
-    drawUniversalBackButton(app)
 
     if app.storePage == "pickType":
         drawLabel("Welcome to the Store!", app.width/2, 120)

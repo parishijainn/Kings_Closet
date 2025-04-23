@@ -23,7 +23,8 @@ def onAppStart(app):
     app.closetTopPrices = [20, 20, 20, 20, 20, 20]
     app.closetBottomPrices = [20, 20, 20, 20, 20, 20]
     app.closetTopTypes = ["Tees", "Tees", "Tees", "Tees", "Tees", "Tees"]
-    app.closetBottomTypes = ['Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans']
+    app.closetBottomTypes = ['Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans', 
+                             'Jeans']
 
     #INSTRUCTIONS POPUPS
     app.popupX = app.width//2
@@ -57,8 +58,12 @@ def onAppStart(app):
 
     app.currTopIndex = 0
     app.currBottomIndex = 0
-    app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png"), Tops("images/shirt3.png"), Tops("images/shirt4.png"), Tops("images/shirt5.png"), Tops("images/shirt6.png")]
-    app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), Bottoms("images/skirt3.png"), Bottoms("images/bottom1.png"), Bottoms("images/bottom2.png"), Bottoms("images/bottom3.png")]
+    app.tops = [Tops("images/shirt1.png"), Tops("images/shirt2.png"), 
+                Tops("images/shirt3.png"), Tops("images/shirt4.png"), 
+                Tops("images/shirt5.png"), Tops("images/shirt6.png")]
+    app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), 
+                   Bottoms("images/skirt3.png"), Bottoms("images/bottom1.png"), 
+                   Bottoms("images/bottom2.png"), Bottoms("images/bottom3.png")]
     app.visibleTopIndex = app.currTopIndex
     app.visibleBottomIndex = app.currBottomIndex
 
