@@ -231,17 +231,17 @@ def pressGradeButton(app):
         app.state = "gradeMode"
         
 def drawStoreButton(app):
-    drawRect(app.importButtonX, app.importButtonY, app.importButtonWidth, 
-             app.importButtonHeight, fill=app.lightPink, border='black')
-    drawLabel("Import Clothes", app.importButtonX + app.importButtonWidth//2,
-              app.importButtonY + app.importButtonHeight//2, size=15, bold=True, fill=app.darkBrown)
+    drawRect(app.storeButtonX, app.storeButtonY, app.storeButtonWidth, 
+             app.storeButtonHeight, fill=app.lightPink, border='black')
+    drawLabel("store", app.storeButtonX + app.storeButtonWidth//2,
+              app.storeButtonY + app.storeButtonHeight//2, size=15, bold=True, fill=app.darkBrown)
     
 def pressStoreButton(app):
-    if (app.importButtonX <= app.mouseX <= (app.importButtonX + 
-                                            app.importButtonWidth) and
-        app.importButtonY <= app.mouseY <= (app.importButtonY +
-                                            app.importButtonHeight)):
-        app.state = "importMode"
+    if (app.storeButtonX <= app.mouseX <= (app.storeButtonX + 
+                                            app.storeButtonWidth) and
+        app.storeButtonY <= app.mouseY <= (app.storeButtonY +
+                                            app.storeButtonHeight)):
+        app.state = "storeMode"
         app.isInstructing = True
         
    
@@ -391,6 +391,11 @@ def pressUniversalBackButton(app):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False
+        elif app.state == 'storeMode':
+            if app.storePage == "pickType":
+                app.state = "gameMode"
+            else:
+                app.storePage = "pickType"
 
 
  
