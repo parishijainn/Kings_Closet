@@ -151,13 +151,14 @@ def onAppStart(app):
     app.usernameBoxWidth = 300
     app.usernameBoxHeight = 40
     app.usernameBoxX = app.width // 2 - app.usernameBoxWidth // 2
-    app.usernameBoxY = app.height // 2 - 70
+    app.usernameBoxY = app.height // 2
     
     # Custom Colors
     app.lightPink = rgb(255, 233, 233)
     app.lightBrown = rgb(186, 170, 170)
     app.darkBrown = rgb(137, 118, 118)
     app.brown = rgb(89, 72, 72)
+    app.redBrown = rgb(111, 61, 61)
 
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)

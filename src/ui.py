@@ -5,9 +5,9 @@ def drawWelcomeScreen(app):
     #draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
     drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, app.usernameBoxHeight,
-             fill='white', border='black', borderWidth=3)
+             fill=app.lightPink, border=app.redBrown, borderWidth=5)
     drawLabel(app.username or 'Enter your name', app.usernameBoxX + app.usernameBoxWidth // 2,
-              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill='black')
+              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill=app.redBrown, bold=True)
     
     if app.enteredUsername:
         drawStartButton(app)
