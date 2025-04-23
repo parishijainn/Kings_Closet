@@ -3,8 +3,9 @@ from buttons import *
 import os
 
 def drawMoney(app):
-    drawCircle(500, 20, 13, fill='lightYellow', border='black')
-    drawLabel(f'        $  {app.money}', 500, 20, bold=True, size=20)
+    # drawCircle(app.moneyButtonX, app.moneyButtonY, app.moneyButtonR, fill='lightYellow', border='black')
+    drawImage("images/coin.png", app.moneyButtonX-40, app.moneyButtonY-15, width=app.moneyButtonR*1.5, height=app.moneyButtonR*1.5)
+    drawLabel(f'   {app.money}', app.width-40, app.moneyButtonY, bold=True, size=20, fill='black')
 
 def putImagesIntoLists(folderPath):
     storeList = []
@@ -18,7 +19,7 @@ class StoreClothes:
         self.folderPath = folderPath
         self.type = folderPath.split('/')[-1]
         self.list = putImagesIntoLists(folderPath)
-        if self.type in ['Tanks', 'Tees']:
+        if self.type in ['Tanks', 'Tees', 'LongSleeves', 'Hoodies', 'Sweaters']:
             self.topOrBottom = 'Top'
         else:
             self.topOrBottom = 'Bottom'
@@ -30,13 +31,12 @@ storeClothes = [StoreClothes('CLOTHES/Tanks'),
                 StoreClothes('CLOTHES/Tees'),
                 StoreClothes('CLOTHES/Shorts'),
                 StoreClothes('CLOTHES/Skirts'),]
-prices = [15, 25, 40, 50]
+prices = [15, 20, 25, 40, 50, 50, 30, 40]
     
 def drawStoreMode(app):
     whiteWidth = 136
     whiteHeight = 160
     drawRect(0, 0, app.width, app.height, fill='lightBlue')
-    drawUniversalBackButton(app)
 
     if app.storePage == "pickType":
         drawLabel("Welcome to the Store!", app.width/2, 120)
@@ -44,12 +44,19 @@ def drawStoreMode(app):
         drawRect(20, 220, 175, 140, fill='white')
         drawLabel('Tanks - $15',107, 290)
         drawRect(215, 220, 175, 140, fill='white')
-        drawLabel('Tees - $25',302, 290)
+        drawLabel('Tees - $20',302, 290)
         drawRect(410, 220, 175, 140, fill='white')
-        drawLabel('Shorts - $40',497, 290)
+        drawLabel('Long Sleeves - $25',497, 290)
         drawRect(605, 220, 175, 140, fill='white')
-        drawLabel('Skirts - $50',692, 290)
-        
+        drawLabel('Hoodies - $40',692, 290)
+        drawRect(20, 380, 175, 140, fill='white')
+        drawLabel('Sweaters - $50',107, 450)
+        drawRect(215, 380, 175, 140, fill='white')
+        drawLabel('Jeans - $50',302, 450)
+        drawRect(410, 380, 175, 140, fill='white')
+        drawLabel('Shorts - $30',497, 450)
+        drawRect(605, 380, 175, 140, fill='white')
+        drawLabel('Skirts - $40',692, 450)
     else:
         type = storeClothes[app.storePage]
         imageCount = 0
@@ -75,7 +82,14 @@ def pressPickType(app, x, y):
         app.storePage = 2
     elif 605 <= x <= 780 and 220 <= y <= 360:
         app.storePage = 3
-    
+    elif 20 <= x <= 195 and 360 <= y <= 500:
+        app.storePage = 4
+    elif 215 <= x <= 390 and 360 <= y <= 500:
+        app.storePage = 5
+    elif 410 <= x <= 585 and 360 <= y <= 500:
+        app.storePage = 6
+    elif 605 <= x <= 780 and 360 <= y <= 500:
+        app.storePage = 7
 
 def addToCloset(app, mouseX, mouseY):
     type = storeClothes[app.storePage]
@@ -91,9 +105,7 @@ def addToCloset(app, mouseX, mouseY):
             x += 156
         if imageCount % 5 == 1 and imageCount != 1:
             x = 20
-            y += 180
-        
-        
+            y += 180  
         if x <= mouseX <= x + width and y <= mouseY <= y + height:
             if app.money < price:
                 app.isInstructing = True
@@ -140,7 +152,7 @@ def sellClothes(app):
             app.isInstructing = False
 
 def drawSellTop(app):
-    drawImage(app.tops[app.currTopIndex].image, 550, 200, width=125, height=150)
+    drawImage(app.tops[app.currTopIndex],600, 200, width=250, height=300)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
     drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)
@@ -150,7 +162,7 @@ def drawSellTop(app):
     drawLabel('No', 537, 400)
 
 def drawSellBottom(app):
-    drawImage(app.bottoms[app.currBottomIndex].image,550, 200, width=125, height=150)
+    drawImage(app.bottoms[app.currBottomIndex],600, 200, width=250, height=300)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
     drawLabel(f'{app.closetBottomTypes[app.currBottomIndex]} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
