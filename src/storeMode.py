@@ -3,6 +3,10 @@ from buttons import *
 import os
 
 app.money = 500
+app.closetTopPrices = [20, 20, 20, 20, 20, 20]
+app.closetBottomPrices = [20, 20, 20, 20, 20, 20]
+app.closetTopTypes = ["Tees", "Tees", "Tees", "Tees", "Tees", "Tees"]
+app.closetBottomTypes = ['Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans', 'Jeans']
 
 def drawMoney(app):
     drawCircle(500, 20, 10, fill='lightYellow', border='black')
@@ -119,14 +123,68 @@ def addToCloset(app, mouseX, mouseY):
         if x <= mouseX <= x + width and y <= mouseY <= y + height:
             if app.money < price:
                 app.isInstructing = True
-                #popup error
+                drawLabel("ERROR: Insufficient funds!", 400, 200)
+                drawLabel("Try selling some clothes from", 400, 250)
+                drawLabel("your closet or putting", 400, 300)
+                drawLabel("together a 100% perfect", 400, 350)
+                drawLabel("outfit to earn more money", 400, 400)
             else:
                 app.money -= price
                 type.list.pop(imageCount-1)
                 if type.topOrBottom == 'Top':
-                    app.closetTops.append(image)
+                    app.tops.append(image)
+                    app.closetTopPrices.append(price)
+                    app.closetTopTypes.append(type.type)
                 else:
-                    app.closetBottoms.append(image)
-           
+                    app.bottoms.append(image)
+                    app.closetBottomPrices.append(price)
+                    app.closetBottomTypes.append(type.type)
+
+
+def sellClothes(app, mouseX, mouseY):
+    if (app.whiteBoxX <= mouseX <= app.whiteBoxX+app.whiteBoxWidth and 
+        50 <= mouseY <= 325):
+        app.isInstructing = True
+        drawSellTop(app)
+        if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
+            app.money += app.closetTopPrices[app.currTopIndex]
+            app.tops.pop(app.currTopIndex)
+            app.closetTopPrices.pop(app.currTopIndex)
+            app.closetTopTypes.pop(app.currTopIndex)
+            app.isInstructing = False
+        if 550 <= mouseX <= 800 and 550 <= mouseY <= 630:
+            app.isInstructing = False
+    elif (app.whiteBoxX <= mouseX <= app.whiteBoxX+app.whiteBoxWidth and 
+          375 <= mouseY <= 700):
+        app.isInstructing = True
+        drawSellBottom(app)
+        if 200 <= mouseX <= 450 and 550 <= mouseY <= 630:
+            app.money += app.closetBottomPrices[app.currBottomIndex]
+            app.bottoms.pop(app.currBottomIndex)
+            app.closetBottomPrices.pop(app.currBottomIndex)
+            app.closetBottomTypes.pop(app.currBottomIndex)
+            app.isInstructing = False
+        if 550 <= mouseX <= 800 and 550 <= mouseY <= 630:
+            app.isInstructing = False
+
+def drawSellTop(app):
+    drawImage(app.tops[app.currTopIndex],600, 200, width=250, height=300)
+    drawLabel('Would you like',350, 200)
+    drawLabel('to sell this', 350, 300)
+    drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)
+    drawRect(200, 550, 250, 80, fill='lightPink')
+    drawLabel('Yes', 325, 590)
+    drawRect(550, 550, 250, 80, fill='lightPink')
+    drawLabel('No', 675, 590)
+def drawSellBottom(app):
+    drawImage(app.bottoms[app.currBottomIndex],600, 200, width=250, height=300)
+    drawLabel('Would you like',350, 200)
+    drawLabel('to sell this', 350, 300)
+    drawLabel(f'{app.closetBottomTypes[app.currBottomIndex]} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
+    drawRect(200, 550, 250, 80, fill='lightPink')
+    drawLabel('Yes', 325, 590)
+    drawRect(550, 550, 250, 80, fill='lightPink')
+    drawLabel('No', 675, 590)
+
 
 
