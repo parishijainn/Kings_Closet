@@ -9,12 +9,16 @@ import random
 from tkinter import filedialog, Tk
 from virtualtryon import tryOnCamera
 from handtracking import processCameraFeed, getFingerPosition
-
+from storeMode import *
 
 def onAppStart(app):
     app.width = 800
     app.height = 600
     app.state = "welcome"
+
+    app.closetTops = []
+    app.closetBottoms = []
+    app.storePage = "pickType"
 
     #INSTRUCTIONS POPUPS
     app.popupX = app.width//2
@@ -89,11 +93,11 @@ def onAppStart(app):
     app.tryOnButtonWidth = 100
     app.tryOnButtonHeight = app.blackBarHeight - 10
 
-    #Import Clothes Button
-    app.importButtonX = 10
-    app.importButtonY = 5
-    app.importButtonWidth = 100
-    app.importButtonHeight = app.blackBarHeight - 10
+    #Store Clothes Button
+    app.storeButtonX = 10
+    app.storeButtonY = 5
+    app.storeButtonWidth = 100
+    app.storeButtonHeight = app.blackBarHeight - 10
 
     #GRADEMODE
     #Back Button
@@ -102,18 +106,10 @@ def onAppStart(app):
     app.backButtonWidth = 120
     app.backButtonHeight = 40
 
-    #IMPORTMODE
-    app.topButtonX = 225
-    app.topButtonY = 675
-    app.bottomButtonX = 425
-    app.bottomButtonY = 675
-    app.category = 'top'
-    app.closetFile = 'closet.json'
-    app.uploadFolderTops = 'uploads/tops'
-    app.uploadFolderBottoms = 'uploads/bottoms'
-    os.makedirs(app.uploadFolderTops, exist_ok=True)
-    os.makedirs(app.uploadFolderBottoms, exist_ok=True)
-
+    
+    # Initialize managers
+    # app.hangerManager = HangerManager(app)
+    # app.outfitManager = OutfitManager(app)
 
     app.sound = Sound('kidsInAmerica.mp3')
     app.soundIsPlaying = False
@@ -143,16 +139,6 @@ def onAppStart(app):
     app.lastFingerY = None
     app.fingerCooldown = 0
 
-    # Username 
-    app.username = ""
-    app.typing = False
-    app.enteredUsername = False
-    app.usernameBoxWidth = 300
-    app.usernameBoxHeight = 40
-    app.usernameBoxX = app.width // 2 - app.usernameBoxWidth // 2
-    app.usernameBoxY = app.height // 2 - 70
-
-
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
     if app.state == "welcome":
@@ -166,12 +152,17 @@ def onMousePress(app, mouseX, mouseY):
         pressModeButtons(app)
         pressSelectionButtons(app)
         pressTryOnButton(app)
-        pressImportButton(app)
+        pressStoreButton(app)
         pressX(app)
         
     elif app.state == "gradeMode":
         pressBackButton(app)
         pressX(app)
+    if app.state == 'storeMode':
+        if app.storePage == "pickType":
+            pressPickType(app, mouseX, mouseY)
+        else:
+            addToCloset(app, mouseX, mouseY)
 
     if app.state != "welcome":
         pressUniversalBackButton(app)
@@ -214,6 +205,7 @@ def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
 
+    
 
 def onStep(app):
     if app.handTrackingMode:
@@ -257,13 +249,17 @@ def redrawAll(app):
         drawInstructionsScreen(app)
     elif app.state == "gameMode":
         drawGameMode(app)
-    elif app.state == "importMode":
-        drawImportMode(app)
+    elif app.state == "storeMode":
+        drawStoreMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
+    elif app.state == 'storeMode':
+        drawStoreMode(app)
     drawSoundButton(app)
+    
     if app.state != "welcome" and app.state != "gradeMode":
         drawUniversalBackButton(app)
+    
 
 runApp(width=800, height=600)
 

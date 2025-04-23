@@ -12,8 +12,8 @@ def drawGameMode(app):
         drawRect(app.width/3, app.blackBarHeight, app.width/3,
                 app.height-app.blackBarHeight*2, fill='white')
         
-        if app.username:
-                drawLabel(f"{app.username}'s closet", 10, 10, size=20, fill='white', align='left', bold=True)
+        # if app.username:
+        #         drawLabel(f"{app.username}'s closet", 10, 10, size=20, fill='white', align='left', bold=True)
 
         drawModeButtons(app)
         # if app.isSelectionMode:
@@ -72,7 +72,7 @@ def drawGameMode(app):
                 drawRect(app.width/3, (app.height/2)-app.blackBarHeight, app.width/3, app.blackBarHeight, fill='black')
                 drawRect(app.width/3, app.height-app.blackBarHeight*2, app.width/3, app.blackBarHeight, fill='black')
                 drawSelectionButtons(app)
-                drawImportButton(app)
+                drawStoreButton(app)
                 drawTryOnButton(app)
 
                 topY = 140

@@ -14,12 +14,10 @@ def drawPopupMenu(app):
             drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
         elif app.state == "gameMode":
             drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
-        elif app.state == 'importMode':
-            drawLabel("importMode instructions", app.popupX, app.popupY, size=20)
+        elif app.state == 'storeMode':
+            drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
         elif app.state == 'tryOnMode':
-            drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)
-        
-        
+            drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)     
 def pressX(app):
     if (app.popupX-app.popupWidth/2+5 <= app.mouseX <= app.popupX-app.popupWidth/2+25 and
         app.popupY-app.popupHeight/2+3 <= app.mouseY <= app.popupY-app.popupHeight/2+23):
@@ -112,9 +110,6 @@ def drawModeButtons(app):
     drawLabel(f"HandTrack: {'ON' if app.handTrackingMode else 'OFF'}", 
               handtrackX + handtrackW/2, handtrackY + handtrackH/2,
               size=12, bold=True, fill='maroon')
-
-
-
 def pressModeButtons(app):
     if ((2*(app.width/3) <= app.mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
         (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
@@ -130,8 +125,6 @@ def pressModeButtons(app):
         app.handTrackingMode = not app.handTrackingMode
         if app.handTrackingMode:
             app.isInstructing = True
-
-
 
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill='plum', border='black')
@@ -152,27 +145,24 @@ def pressGradeButton(app):
                 
         app.state = "gradeMode"
         
-        
-def drawImportButton(app):
-    drawRect(app.importButtonX, app.importButtonY, app.importButtonWidth, 
-             app.importButtonHeight, fill='lavenderBlush', border='maroon')
-    drawLabel("Import Clothes", app.importButtonX + app.importButtonWidth//2,
-              app.importButtonY + app.importButtonHeight//2, size=15, bold=True)
-def pressImportButton(app):
-    if (app.importButtonX <= app.mouseX <= (app.importButtonX + 
-                                            app.importButtonWidth) and
-        app.importButtonY <= app.mouseY <= (app.importButtonY +
-                                            app.importButtonHeight)):
-        app.state = "importMode"
+def drawStoreButton(app):
+    drawRect(app.storeButtonX, app.storeButtonY, app.storeButtonWidth, 
+             app.storeButtonHeight, fill='lavenderBlush', border='maroon')
+    drawLabel("store", app.storeButtonX + app.storeButtonWidth//2,
+              app.storeButtonY + app.storeButtonHeight//2, size=15, bold=True)
+def pressStoreButton(app):
+    if (app.storeButtonX <= app.mouseX <= (app.storeButtonX + 
+                                            app.storeButtonWidth) and
+        app.storeButtonY <= app.mouseY <= (app.storeButtonY +
+                                            app.storeButtonHeight)):
+        app.state = "storeMode"
         app.isInstructing = True
         
-    
 def drawTryOnButton(app):
     drawRect(app.tryOnButtonX, app.tryOnButtonY, app.tryOnButtonWidth, 
              app.tryOnButtonHeight, fill='lavenderBlush', border='maroon')
     drawLabel("Try On", app.tryOnButtonX + app.tryOnButtonWidth//2,
               app.tryOnButtonY + app.tryOnButtonHeight//2, size=15, bold=True)
-
 def pressTryOnButton(app):
      if (app.tryOnButtonX <= app.mouseX <= (app.tryOnButtonX + 
                                             app.tryOnButtonWidth) and
@@ -299,8 +289,6 @@ def drawUniversalBackButton(app):
     drawLabel("←", app.universalBackButtonX + app.universalBackButtonWidth // 2,
               app.universalBackButtonY + app.universalBackButtonHeight // 2,
               size=20, bold=True, fill='maroon')
-
-    
 def pressUniversalBackButton(app):
     if (app.universalBackButtonX <= app.mouseX <= app.universalBackButtonX + app.universalBackButtonWidth and
         app.universalBackButtonY <= app.mouseY <= app.universalBackButtonY + app.universalBackButtonHeight):
@@ -313,3 +301,6 @@ def pressUniversalBackButton(app):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False
+
+
+ 
