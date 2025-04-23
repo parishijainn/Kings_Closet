@@ -4,7 +4,13 @@ from buttons import *
 def drawWelcomeScreen(app):
     #draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    drawStartButton(app)
+    drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, app.usernameBoxHeight,
+             fill='white', border='black', borderWidth=3)
+    drawLabel(app.username or 'Enter your name', app.usernameBoxX + app.usernameBoxWidth // 2,
+              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill='black')
+    
+    if app.enteredUsername:
+        drawStartButton(app)
 
 def drawStartButton(app):
     isHovering = (app.mouseX is not None and app.mouseY is not None and
@@ -120,25 +126,6 @@ def drawInstructionsScreen(app):
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
     
-
-
-
-# def drawGameScreen(app):
-#     drawRect(0, 0, app.width, app.height, fill='lightyellow')
-#     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
-
-#     # Display selected outfit
-#     topImg = app.outfitManager.tops[app.topKeys[app.currTopIndex % len(app.topKeys)]]
-#     bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]]
-    
-#     drawImage(topImg, app.width//2, 150, width=180, height=180, align='center')
-#     drawImage(bottomImg, app.width//2, 340, width=180, height=180, align='center')
-    
-#     drawLabel(app.feedbackText, app.width//2, app.height - 100,
-#               size=24, fill='darkmagenta', bold=True)
-    
-#     drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill='plum', border='black')
-#     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
 
 def drawGameScreen(app):
     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)

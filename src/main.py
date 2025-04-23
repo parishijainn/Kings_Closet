@@ -114,10 +114,7 @@ def onAppStart(app):
     app.uploadFolderBottoms = 'uploads/bottoms'
     os.makedirs(app.uploadFolderTops, exist_ok=True)
     os.makedirs(app.uploadFolderBottoms, exist_ok=True)
-    
-    # Initialize managers
-    # app.hangerManager = HangerManager(app)
-    # app.outfitManager = OutfitManager(app)
+
 
     app.sound = Sound('kidsInAmerica.mp3')
     app.soundIsPlaying = False
@@ -146,6 +143,16 @@ def onAppStart(app):
     app.lastFingerX = None
     app.lastFingerY = None
     app.fingerCooldown = 0
+
+    # Username 
+    app.username = ""
+    app.typing = False
+    app.enteredUsername = False
+    app.usernameBoxWidth = 300
+    app.usernameBoxHeight = 40
+    app.usernameBoxX = app.width // 2 - app.usernameBoxWidth // 2
+    app.usernameBoxY = app.height // 2 - 70
+
 
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
@@ -208,7 +215,6 @@ def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
 
-    
 
 def onStep(app):
     if app.handTrackingMode:
