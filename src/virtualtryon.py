@@ -1,93 +1,178 @@
-
 import cv2
 import mediapipe as mp
 import os
 
+#constants
+topScale = 1.25      #how much to scale the shirt width
+bottomScale = 2.5    #how much to scale the bottom width
+swipeThreshold = 0.2 #how far the finger must move for swipe
+
+
 def loadClothingImages():
-    folder = 'images'
-    tops = [cv2.imread(os.path.join(folder, f"shirt{i}.png"), cv2.IMREAD_UNCHANGED) for i in range(1, 7)]
-    bottoms = [cv2.imread(os.path.join(folder, f"skirt{i}.png"), cv2.IMREAD_UNCHANGED) for i in range(1, 4)]
-    bottoms += [cv2.imread(os.path.join(folder, f"bottom{i}.png"), cv2.IMREAD_UNCHANGED) for i in range(1, 4)]
-    return tops, bottoms
+    folderPath = 'images'
+    topImages = [
+        cv2.imread(os.path.join(folderPath, f"shirt{i}.png"), cv2.IMREAD_UNCHANGED)
+        for i in range(1, 7)
+    ]
+    bottomImages = [
+        cv2.imread(os.path.join(folderPath, f"skirt{i}.png"), cv2.IMREAD_UNCHANGED)
+        for i in range(1, 4)
+    ]
+    return topImages, bottomImages
 
-def overlayPNG(frame, image, x, y):
-    height, width = image.shape[:2]
+#overlay an RGBA image onto a BGR frame 
+def overlayPng(frame, overlayImage, positionX, positionY):
+    overlayHeight, overlayWidth = overlayImage.shape[:2]
+    frameHeight, frameWidth = frame.shape[:2]
 
-    if image.shape[2] != 4:
+    #clip overlay region
+    if positionX + overlayWidth < 0 or positionX > frameWidth or \
+       positionY + overlayHeight < 0 or positionY > frameHeight:
         return frame
-    
-    #skip if  image would go outside the boundaries
-    if y + height > frame.shape[0] or x + width > frame.shape[1]:
-        return frame
 
-    #breaks the image into its color and transparency parts
-    imageRGB = image[:, :, :3]
-    transparencyMask = image[:, :, 3] / 255.0
+    #compute intersection area
+    x1 = max(positionX, 0)
+    y1 = max(positionY, 0)
+    x2 = min(positionX + overlayWidth, frameWidth)
+    y2 = min(positionY + overlayHeight, frameHeight)
+    offsetX = x1 - positionX
+    offsetY = y1 - positionY
+    intersectionWidth = x2 - x1
+    intersectionHeight = y2 - y1
 
-    #get the part of the frame where the image will go
-    background = frame[y:y+height, x:x+width]
+    foregroundRegion = overlayImage[offsetY:offsetY + intersectionHeight,
+                                    offsetX:offsetX + intersectionWidth]
+    alphaChannel = foregroundRegion[:, :, 3:] / 255.0
+    backgroundRegion = frame[y1:y2, x1:x2]
 
-    #blend the image with the background based on transparency
-    for c in range(3):
-        background[:, :, c] = (1 - transparencyMask) * background[:, :, c] + transparencyMask * imageRGB[:, :, c]
-    #replace that part of the frame with the blended result
-    frame[y:y+height, x:x+width] = background
+    #blend foreground into background using transparency
+    for channel in range(3):
+        backgroundRegion[:, :, channel] = (
+            (1 - alphaChannel[:, :, 0]) * backgroundRegion[:, :, channel] +
+            alphaChannel[:, :, 0] * foregroundRegion[:, :, channel]
+        )
+
+    frame[y1:y2, x1:x2] = backgroundRegion
     return frame
 
 
 def tryOnCamera():
-    tops, bottoms = loadClothingImages()
-    currTop = 0
-    currBottom = 0
+    topImages, bottomImages = loadClothingImages()
+    currentTopIndex = 0
+    currentBottomIndex = 0
 
-    mpPose = mp.solutions.pose
-    pose = mpPose.Pose()
-    cap = cv2.VideoCapture(0)
+    #mediapipe solutions
+    poseSolution = mp.solutions.pose
+    handSolution = mp.solutions.hands
+    poseDetector = poseSolution.Pose(
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5
+    )
+    handDetector = handSolution.Hands(
+        max_num_hands=2,
+        min_detection_confidence=0.5,
+        min_tracking_confidence=0.5
+    )
+
+    videoCapture = cv2.VideoCapture(0)
+    previousRightX = None
+    previousLeftY = None
 
     while True:
-        ret, frame = cap.read()
-        if not ret:
-            print("⚠️ Could not read frame.")
+        success, frame = videoCapture.read()
+        if not success:
             break
+
         frame = cv2.flip(frame, 1)
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = pose.process(rgb)
+        frameHeight, frameWidth = frame.shape[:2]
+        colorFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        #checks if the pose is detected and then extracts the landmarks on your body
-        if results.pose_landmarks:
-            landmarks = results.pose_landmarks.landmark
-            left_shoulder = landmarks[mpPose.PoseLandmark.LEFT_SHOULDER]
-            right_shoulder = landmarks[mpPose.PoseLandmark.RIGHT_SHOULDER]
-            left_hip = landmarks[mpPose.PoseLandmark.LEFT_HIP]
-            right_hip = landmarks[mpPose.PoseLandmark.RIGHT_HIP]
+        #pose detection for clothing placement
+        poseResult = poseDetector.process(colorFrame)
+        if poseResult.pose_landmarks:
+            landmarks = poseResult.pose_landmarks.landmark
+            leftShoulder = landmarks[poseSolution.PoseLandmark.LEFT_SHOULDER]
+            rightShoulder = landmarks[poseSolution.PoseLandmark.RIGHT_SHOULDER]
+            leftHip = landmarks[poseSolution.PoseLandmark.LEFT_HIP]
+            rightHip = landmarks[poseSolution.PoseLandmark.RIGHT_HIP]
 
-            #estimate position and size
-            shoulder_x = int((left_shoulder.x + right_shoulder.x) / 2 * frame.shape[1])
-            shoulder_y = int((left_shoulder.y + right_shoulder.y) / 2 * frame.shape[0])
-            shoulder_width = int(abs(right_shoulder.x - left_shoulder.x) * frame.shape[1])
+            #compute midpoints
+            shoulderX = int((leftShoulder.x + rightShoulder.x) / 2 * frameWidth)
+            shoulderY = int((leftShoulder.y + rightShoulder.y) / 2 * frameHeight)
+            hipX = int((leftHip.x + rightHip.x) / 2 * frameWidth)
+            hipY = int((leftHip.y + rightHip.y) / 2 * frameHeight)
 
-            hip_x = int((left_hip.x + right_hip.x) / 2 * frame.shape[1])
-            hip_y = int((left_hip.y + right_hip.y) / 2 * frame.shape[0])
-            hip_width = int(abs(right_hip.x - left_hip.x) * frame.shape[1])
+            #compute widths and scale
+            rawShoulderWidth = abs(rightShoulder.x - leftShoulder.x) * frameWidth
+            rawHipWidth = abs(rightHip.x - leftHip.x) * frameWidth
+            scaledShoulderWidth = max(50, min(int(rawShoulderWidth * topScale), frameWidth))
+            scaledHipWidth = max(50, min(int(rawHipWidth * bottomScale), frameWidth))
 
-            top_resized = cv2.resize(tops[currTop], (shoulder_width, shoulder_width))
-            bottom_resized = cv2.resize(bottoms[currBottom], (hip_width, hip_width))
+            #overlay top
+            resizedTop = cv2.resize(
+                topImages[currentTopIndex],
+                (scaledShoulderWidth, scaledShoulderWidth)
+            )
+            frame = overlayPng(
+                frame,
+                resizedTop,
+                shoulderX - scaledShoulderWidth // 2,
+                shoulderY - scaledShoulderWidth // 4
+            )
 
-            frame = overlayPNG(frame, top_resized, shoulder_x - shoulder_width//2, shoulder_y - shoulder_width//2)
-            frame = overlayPNG(frame, bottom_resized, hip_x - hip_width//2, hip_y - hip_width//4)
+            #overlay bottom
+            resizedBottom = cv2.resize(
+                bottomImages[currentBottomIndex],
+                (scaledHipWidth, scaledHipWidth)
+            )
+            frame = overlayPng(
+                frame,
+                resizedBottom,
+                hipX - scaledHipWidth // 2,
+                hipY - scaledHipWidth // 4
+            )
+
+        #hand tracking for swipe gestures
+        handResult = handDetector.process(colorFrame)
+        if handResult.multi_hand_landmarks and handResult.multi_handedness:
+            for handLm, handedness in zip(
+                    handResult.multi_hand_landmarks,
+                    handResult.multi_handedness
+                ):
+                handLabel = handedness.classification[0].label  # 'Left' or 'Right'
+                indexTip = handLm.landmark[handSolution.HandLandmark.INDEX_FINGER_TIP]
+                xPos, yPos = indexTip.x, indexTip.y
+
+                if handLabel == 'Right' and previousRightX is not None:
+                    deltaX = xPos - previousRightX
+                    if deltaX > swipeThreshold:
+                        currentTopIndex = (currentTopIndex + 1) % len(topImages)
+                    elif deltaX < -swipeThreshold:
+                        currentTopIndex = (currentTopIndex - 1) % len(topImages)
+                    previousRightX = xPos
+
+                elif handLabel == 'Left' and previousLeftY is not None:
+                    deltaY = yPos - previousLeftY
+                    if deltaY > swipeThreshold:
+                        currentBottomIndex = (currentBottomIndex + 1) % len(bottomImages)
+                    elif deltaY < -swipeThreshold:
+                        currentBottomIndex = (currentBottomIndex - 1) % len(bottomImages)
+                    previousLeftY = yPos
+
+                #initialize previous positions
+                if handLabel == 'Right' and previousRightX is None:
+                    previousRightX = xPos
+                if handLabel == 'Left' and previousLeftY is None:
+                    previousLeftY = yPos
 
         cv2.imshow("Virtual Try-On", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break
-        elif key == ord('w'):
-            currTop = (currTop + 1) % len(tops)
-        elif key == ord('s'):
-            currTop = (currTop - 1) % len(tops)
-        elif key == ord('d'):
-            currBottom = (currBottom + 1) % len(bottoms)
-        elif key == ord('a'):
-            currBottom = (currBottom - 1) % len(bottoms)
 
-    cap.release()
+    videoCapture.release()
     cv2.destroyAllWindows()
+    return "gameMode"
+
+if __name__ == '__main__':
+    tryOnCamera()
