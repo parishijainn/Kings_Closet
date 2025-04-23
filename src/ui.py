@@ -126,14 +126,15 @@ def drawInstructionsScreen(app):
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
     
-
 def drawGameScreen(app):
     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
-    # Use visibleTopIndex and visibleBottomIndex to fetch the correct outfit
-    topImg = app.outfitManager.tops[app.topKeys[app.visibleTopIndex % len(app.topKeys)]]
-    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.visibleBottomIndex % len(app.bottomKeys)]]
+    #use visibleTopIndex and visibleBottomIndex to fetch the correct outfit
+    topImg = app.outfitManager.tops[app.topKeys[app.visibleTopIndex 
+                                                % len(app.topKeys)]]
+    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.visibleBottomIndex 
+                                                         % len(app.bottomKeys)]]
 
     drawImage(topImg, app.width // 2, 150, width=180, height=180, align='center')
     drawImage(bottomImg, app.width // 2, 340, width=180, height=180, align='center')

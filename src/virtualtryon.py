@@ -11,11 +11,13 @@ swipeThreshold = 0.2 #how far the finger must move for swipe
 def loadClothingImages():
     folderPath = 'images'
     topImages = [
-        cv2.imread(os.path.join(folderPath, f"shirt{i}.png"), cv2.IMREAD_UNCHANGED)
+        cv2.imread(os.path.join(folderPath, f"shirt{i}.png"), 
+                   cv2.IMREAD_UNCHANGED)
         for i in range(1, 7)
     ]
     bottomImages = [
-        cv2.imread(os.path.join(folderPath, f"skirt{i}.png"), cv2.IMREAD_UNCHANGED)
+        cv2.imread(os.path.join(folderPath, f"skirt{i}.png"), 
+                   cv2.IMREAD_UNCHANGED)
         for i in range(1, 4)
     ]
     return topImages, bottomImages
@@ -56,7 +58,7 @@ def overlayPng(frame, overlayImage, positionX, positionY):
     return frame
 
 
-def tryOnCamera():
+def tryOnCamera(app):
     topImages, bottomImages = loadClothingImages()
     currentTopIndex = 0
     currentBottomIndex = 0
@@ -105,8 +107,10 @@ def tryOnCamera():
             #compute widths and scale
             rawShoulderWidth = abs(rightShoulder.x - leftShoulder.x) * frameWidth
             rawHipWidth = abs(rightHip.x - leftHip.x) * frameWidth
-            scaledShoulderWidth = max(50, min(int(rawShoulderWidth * topScale), frameWidth))
-            scaledHipWidth = max(50, min(int(rawHipWidth * bottomScale), frameWidth))
+            scaledShoulderWidth = max(50, min(int(rawShoulderWidth * topScale),
+                                              frameWidth))
+            scaledHipWidth = max(50, min(int(rawHipWidth * bottomScale), 
+                                         frameWidth))
 
             #overlay top
             resizedTop = cv2.resize(
@@ -168,11 +172,11 @@ def tryOnCamera():
         cv2.imshow("Virtual Try-On", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
+            app.state = "gameMode"
             break
 
     videoCapture.release()
     cv2.destroyAllWindows()
-    return "gameMode"
 
 if __name__ == '__main__':
-    tryOnCamera()
+    tryOnCamera(app)

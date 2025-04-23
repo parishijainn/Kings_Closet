@@ -15,9 +15,9 @@ class OutfitManager:
         }
         
         self.bottoms = {
-            'bottom1': 'images/bottom1.png',
-            'bottom2': 'images/bottom2.png',
-            'bottom3': 'images/bottom3.png',
+            # 'bottom1': 'images/bottom1.png',
+            # 'bottom2': 'images/bottom2.png',
+            # 'bottom3': 'images/bottom3.png',
             'skirt1': 'images/skirt1.png',
             'skirt2': 'images/skirt2.png',
             'skirt3': 'images/skirt3.png'
