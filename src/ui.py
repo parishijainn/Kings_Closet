@@ -126,7 +126,6 @@ def drawInstructionsScreen(app):
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
     
-
 def drawGameScreen(app):
     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
