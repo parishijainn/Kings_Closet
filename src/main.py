@@ -64,6 +64,7 @@ def onAppStart(app):
     app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), 
                    Bottoms("images/skirt3.png"), Bottoms("images/bottom1.png"), 
                    Bottoms("images/bottom2.png"), Bottoms("images/bottom3.png")]
+    
     app.visibleTopIndex = app.currTopIndex
     app.visibleBottomIndex = app.currBottomIndex
 
@@ -236,7 +237,6 @@ def onKeyPress(app, key):
         elif key == "down":
             app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottomKeys)
         
-
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
