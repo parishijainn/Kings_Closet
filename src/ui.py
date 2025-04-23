@@ -4,13 +4,13 @@ from buttons import *
 def drawWelcomeScreen(app):
     #draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    # drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, app.usernameBoxHeight,
-    #          fill='white', border='black', borderWidth=3)
-    # drawLabel(app.username or 'Enter your name', app.usernameBoxX + app.usernameBoxWidth // 2,
-    #           app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill='black')
+    drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, app.usernameBoxHeight,
+             fill='white', border='black', borderWidth=3)
+    drawLabel(app.username or 'Enter your name', app.usernameBoxX + app.usernameBoxWidth // 2,
+              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill='black')
     
-    # if app.enteredUsername:
-    #     drawStartButton(app)
+    if app.enteredUsername:
+        drawStartButton(app)
 
 def drawStartButton(app):
     isHovering = (app.mouseX is not None and app.mouseY is not None and
