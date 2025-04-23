@@ -2,6 +2,7 @@ from cmu_graphics import *
 import random
 from virtualtryon import tryOnCamera
 import math
+from storeMode import *
 
 #POPUP MENU
 def drawPopupMenu(app):

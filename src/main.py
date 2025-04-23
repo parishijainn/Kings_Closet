@@ -308,9 +308,13 @@ def onStep(app):
 def redrawAll(app):
     if app.state == "welcome":
         drawWelcomeScreen(app)
-    if app.storePage == 'sellTop':
+    if app.storePage == 'sellTop' and app.isInstructing:
+        drawGameMode(app)
+        drawPopupMenu(app)
         drawSellTop(app)
-    elif app.storePage == 'sellBottom':
+    elif app.storePage == 'sellBottom' and app.isInstructing:
+        drawGameMode(app)
+        drawPopupMenu(app)
         drawSellBottom(app)
     elif app.state == "instructions":
         drawInstructionsScreen(app)
