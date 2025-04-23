@@ -2,7 +2,6 @@ from cmu_graphics import *
 from ui import * 
 from buttons import *
 from gameMode import drawGameMode
-from importMode import *
 from clothesClasses import *
 from outfitgrader import OutfitManager
 import os
