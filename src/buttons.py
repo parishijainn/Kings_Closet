@@ -87,43 +87,12 @@ def pressStartStylingButton(app):
             app.state = "gameMode"
      
 #GAMEMODE
-# def drawModeButtons(app):
-#     # Dress Me Button
-#     drawRect(2*(app.width/3), 
-#              app.height-app.blackBarHeight-app.modeButtonHeight, 
-#              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-#     drawLabel('Dress Me', 2 * (app.width / 3) + app.modeButtonWidth / 2, 
-#           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
-#           size=30, fill='white', bold=True, font = 'monospace')
-    
-#     # Browse Button
-#     drawRect((app.width/3)-app.modeButtonWidth, 
-#              app.height-app.blackBarHeight-app.modeButtonHeight, 
-#              app.modeButtonWidth, app.modeButtonHeight, fill='gray')
-#     drawLabel('Browse', (app.width / 3) - app.modeButtonWidth / 2, 
-#           app.height - app.blackBarHeight - app.modeButtonHeight / 2, 
-#           size=30, fill='white', bold=True, font = 'monospace')
-    
-    
-#     handtrackX = 410
-#     handtrackY = 5
-#     handtrackW = 130
-#     handtrackH = app.blackBarHeight - 10
-#     drawRect(handtrackX, handtrackY, handtrackW, handtrackH,
-#              fill=app.lightPink, border='black')
-#     drawLabel(f"HandTrack: {'ON' if app.handTrackingMode else 'OFF'}", 
-#               handtrackX + handtrackW/2, handtrackY + handtrackH/2,
-#               size=15, bold=True, fill=app.darkBrown, align='center')
-
-import math
-
 def drawModeButtons(app):
-    # Coordinates for the buttons
     buttonWidth = app.modeButtonWidth
-    buttonHeight = app.modeButtonHeight * 1.5  
+    buttonHeight = app.modeButtonHeight * 1.5
     buttonXDressMe = 2 * (app.width / 3)  
-    buttonXBrowse = (app.width / 3) - app.modeButtonWidth * 1.5  
-    buttonY = app.height / 2 - app.modeButtonHeight / 2 + 50  
+    buttonXBrowse = app.width / 3 - app.modeButtonWidth
+    buttonY = app.height // 2 - buttonHeight // 2 
 
     dressMePoints = []
     for i in range(6):
@@ -133,18 +102,18 @@ def drawModeButtons(app):
         dressMePoints.append(x)
         dressMePoints.append(y)
 
-    # Check if hovering over Dress Me button
     if (buttonXDressMe <= app.mouseX <= buttonXDressMe + buttonWidth and
         buttonY <= app.mouseY <= buttonY + buttonHeight):
-        borderColor = 'blue'
-        borderWidth = 3
+        borderColor = 'black'
+        borderWidth = 4
     else:
         borderColor = 'black'
         borderWidth = 1
 
+    # Draw the Dress Me button as a hexagon with hover effect
     drawPolygon(*dressMePoints, fill=app.brown, border=borderColor, borderWidth=borderWidth)
     drawLabel('Dress Me', buttonXDressMe + buttonWidth / 2, 
-              buttonY + buttonHeight / 2, size=30, fill='white', bold=True)
+              buttonY + buttonHeight / 2, size=25, fill='white', bold=True)
 
     # Define points for the Browse button (hexagon shape)
     browsePoints = []
@@ -158,19 +127,22 @@ def drawModeButtons(app):
     # Check if hovering over Browse button
     if (buttonXBrowse <= app.mouseX <= buttonXBrowse + buttonWidth and
         buttonY <= app.mouseY <= buttonY + buttonHeight):
-        borderColor = 'blue'
+        borderColor = 'black'
         borderWidth = 3
     else:
         borderColor = 'black'
         borderWidth = 1
 
+    # Draw the Browse button as a hexagon with hover effect
     drawPolygon(*browsePoints, fill=app.brown, border=borderColor, borderWidth=borderWidth)
     drawLabel('Browse', buttonXBrowse + buttonWidth / 2, 
-              buttonY + buttonHeight / 2, size=30, fill='white', bold=True)
+              buttonY + buttonHeight / 2, size=25, fill='white', bold=True)
 
-    centerX = app.width / 2  
-    centerY = buttonY - 100 
+    # Draw a 6-sided polygon (Hexagon) above the buttons with the fill being app.brown and border black
+    centerX = app.width / 2  # Center the polygon on the X-axis
+    centerY = buttonY - 100  # Position it above the buttons
 
+    # Define the radius and angle step for the hexagon
     radius = 50
     angleStep = 360 / 6  # 360 degrees divided by 6 sides
     points = []
@@ -195,13 +167,14 @@ def drawModeButtons(app):
               size=15, bold=True, fill=app.darkBrown, align='center')
 
 def pressModeButtons(app):
-    if ((2*(app.width/3) <= app.mouseX <= 2*(app.width/3) + app.modeButtonWidth) and
-        (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
+    # Updated coordinates based on the new positioning of buttons
+    if ((2 * (app.width / 3) <= app.mouseX <= 2 * (app.width / 3) + app.modeButtonWidth) and
+        (app.height // 2 - app.modeButtonHeight // 2 <= app.mouseY <= app.height // 2 + app.modeButtonHeight // 2)):
             app.isDressingMode = True
             app.isSelectionMode = False
 
-    if ((app.whiteBoxWidth-app.modeButtonWidth <= app.mouseX <= app.whiteBoxWidth) and
-        (app.height-app.blackBarHeight-app.modeButtonHeight <= app.mouseY <= app.height-app.blackBarHeight)):
+    if ((app.width / 3 - app.modeButtonWidth <= app.mouseX <= app.width / 3) and
+        (app.height // 2 - app.modeButtonHeight // 2 <= app.mouseY <= app.height // 2 + app.modeButtonHeight // 2)):
             app.isDressingMode = False
             app.isSelectionMode = True
     
@@ -209,6 +182,8 @@ def pressModeButtons(app):
         app.handTrackingMode = not app.handTrackingMode
         if app.handTrackingMode:
             app.isInstructing = True
+
+
 
 def drawGradeButton(app):
     drawRect(app.gradeButtonX, app.gradeButtonY, app.gradeButtonWidth, app.gradeButtonHeight, fill=app.lightPink, border='black')
