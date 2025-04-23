@@ -1,9 +1,12 @@
 from cmu_graphics import *
 from clothesClasses import *
 from buttons import *
-from storeMode import *
+#from storeMode import *
 #from handtracking import processCameraFeed, getFingerPosition
-
+def drawMoney(app):
+    # drawCircle(app.moneyButtonX, app.moneyButtonY, app.moneyButtonR, fill='lightYellow', border='black')
+    drawImage("images/coin.png", app.moneyButtonX-40, app.moneyButtonY-15, width=app.moneyButtonR*1.5, height=app.moneyButtonR*1.5)
+    drawLabel(f'   {app.money}', app.width-40, app.moneyButtonY, bold=True, size=20, fill='black')
 def drawGameMode(app):
         drawImage("images/cheetahBackground.png", 0, 0,
                 width=app.width, height=app.height)

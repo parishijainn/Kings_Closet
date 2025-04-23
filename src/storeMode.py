@@ -2,11 +2,9 @@ from cmu_graphics import *
 from buttons import *
 import os
 from clothesClasses import *
+from gameMode import *
 
-def drawMoney(app):
-    # drawCircle(app.moneyButtonX, app.moneyButtonY, app.moneyButtonR, fill='lightYellow', border='black')
-    drawImage("images/coin.png", app.moneyButtonX-40, app.moneyButtonY-15, width=app.moneyButtonR*1.5, height=app.moneyButtonR*1.5)
-    drawLabel(f'   {app.money}', app.width-40, app.moneyButtonY, bold=True, size=20, fill='black')
+
 
 def putImagesIntoLists(folderPath):
     storeList = []
@@ -125,7 +123,7 @@ def addToCloset(app, mouseX, mouseY):
                     app.closetTopPrices.append(price)
                     app.closetTopTypes.append(type.type)
                 else:
-                    app.bottoms.append(type.list[imageCount-1])
+                    app.bottoms.append(Bottoms(type.list[imageCount-1]))
                     type.list.pop(imageCount-1)
                     app.closetBottomPrices.append(price)
                     app.closetBottomTypes.append(type.type)
@@ -133,7 +131,7 @@ def addToCloset(app, mouseX, mouseY):
 def sellClothes(app):
     if (266 <= app.mouseX <= 532 and 50 <= app.mouseY <= 250):
         app.isInstructing = True
-        app.storePage = 'sellTop'
+        app.state = 'sellTop'
         
         if 150 <= app.mouseX <= 375 and 375 <= app.mouseY <= 425:
             app.money += app.closetTopPrices[app.currTopIndex]
@@ -145,7 +143,8 @@ def sellClothes(app):
             app.isInstructing = False
     elif (266 <= app.mouseX <= 532 and 300 <= app.mouseY <= 500):
         app.isInstructing = True
-        app.storePage = 'sellBottom'
+        app.state = 'sellBottom'
+
         if 150 <= app.mouseX <= 375 and 375 <= app.mouseY <= 425:
             app.money += app.closetBottomPrices[app.currBottomIndex]
             app.bottoms.pop(app.currBottomIndex)
@@ -156,7 +155,8 @@ def sellClothes(app):
             app.isInstructing = False
 
 def drawSellTop(app):
-    drawImage(app.tops[app.currTopIndex],600, 200, width=250, height=300)
+    drawGameMode(app)
+    drawImage(app.tops[app.currTopIndex],550, 200, width=125, height=150)
     drawLabel('Would you like',350, 200)
     drawLabel('to sell this', 350, 300)
     drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)

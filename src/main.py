@@ -286,6 +286,8 @@ def redrawAll(app):
         drawInstructionsScreen(app)
     elif app.state == "gameMode":
         drawGameMode(app)
+    elif app.state == "sellTop":
+        drawSellTop(app)
     elif app.state == "storeMode":
         drawStoreMode(app)
     elif app.state == "gradeMode":
