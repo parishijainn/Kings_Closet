@@ -14,6 +14,8 @@ original design, and what the source is for that code.
 navigate openCV, https://www.youtube.com/watch?v=6C7R24-Ze10
 this video was my main source of help for the writing of the virtual try
 on function
+I also used this video to teach me how to use handtracking and mediapipe
+https://www.youtube.com/watch?v=RRBXVu5UE-U
 
 - Swipe-cooldown logic : I used AI help to discover how to 
 leverage Python’s time module to enforce a cooldown 
