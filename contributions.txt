@@ -10,8 +10,6 @@ pnihalan
  - Music
  -Instructons page
  - Virtual try on camera that allows you to try on clothes in real time
- (needs to be fixed to incorporate handtracking and positioning of 
- clothes should be better)
  - button that goes back on each page
  - The randomized clothes generator and the buttons
 parishij
