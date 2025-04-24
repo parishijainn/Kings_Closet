@@ -7,3 +7,23 @@ In addition, your code must also include citations directly in the code that
 make it clear where you use code that is partly or entirely not of your 
 original design, and what the source is for that code.
 ------------------------------------>
+
+
+-- Virtual Try On --
+-  I used this video to help me figure out how to 
+navigate openCV, https://www.youtube.com/watch?v=6C7R24-Ze10
+- Swipe-cooldown logiC : I used AI help to discover how to 
+leverage Python’s time module to enforce a cooldown 
+between each swipe event in the try-on loop. 
+
+- Alpha blending implementation: I used AI guidance to figure
+ out how to blend the RGBA overlay PNG into
+  the BGR camera frame—specifically how 
+  to extract and apply the alpha channel 
+  for smooth transparency
+
+- Landmark midpoint calculation: 
+I used AI to derive the formula for computing 
+the midpoint between two pose landmarks 
+(shoulders, hips) so that the 
+overlays would center correctly on the body.
