@@ -4,6 +4,14 @@ from cmu_graphics import *
 from PIL import Image as PILImage
 import random
 
+'''Andrew ID: parishij
+This hand tracking code was originally developed for a previous assignment.
+I, worked on the original handtracking implementation and am 
+reusing and expanding upon my earlier code in this project. 
+This version builds on that foundation by integrating outfit randomization
+(via 5-finger detection) and app-specific interactions like swipe detection
+for clothing changes.'''
+
 # Initialize Mediapipe and OpenCV
 mp_hands = mp.solutions.hands
 handTracker = mp_hands.Hands()

@@ -1,8 +1,6 @@
 from cmu_graphics import *
 from clothesClasses import *
 from buttons import *
-#from storeMode import *
-#from handtracking import processCameraFeed, getFingerPosition
 
 def drawMoney(app):
     drawImage("images/coin.png", app.moneyButtonX-40, app.moneyButtonY-15, width=app.moneyButtonR*1.5, height=app.moneyButtonR*1.5)

@@ -7,3 +7,49 @@ In addition, your code must also include citations directly in the code that
 make it clear where you use code that is partly or entirely not of your 
 original design, and what the source is for that code.
 ------------------------------------>
+
+Andrew ID: parishij
+I initially wrote the logic of the analyzeColors function to analyze colors in 
+clothing images using OpenCV and KMeans clustering. My implementation extracted 
+RGB pixel values, clustered them to find dominant colors, and attempted to name 
+them based on threshold ranges I defined for common fashion colors.
+
+To learn how to implement K-Means Clustering, I used the following articles:
+- "Image Color Segmentation by K-Means Clustering Algorithm" (Medium)
+  https://medium.com/data-science/image-color-segmentation-by-k-means-
+  clustering-algorithm-5792e563f26e
+
+- "K-Means Clustering in OpenCV and Application for Color Quantization"
+  (Machine Learning Mastery)
+  https://www.machinelearningmastery.com/k-means-clustering-in-opencv-and-
+  application-for-color-quantization/
+
+- "Deconstructing an Image with Pixels" (Medium)
+  https://medium.com/@ys3372/deconstructing-an-image-with-pixels-4c65c3a2268c
+
+After implementing the basics, I used ChatGPT to help me improve and debug it. 
+My prompt to GPT was:
+
+    "im making an outfit grading game that analyzes clothes using image colors. 
+    i wrote this that gets the main colors with KMeans and maps them to 
+    named thresholds like 'blue' or 'red.' im having issues with mismatches 
+    because a color might look correct but returns unknown. can you help me
+    with this function so it better handles unknown colors and gives fallback 
+    results if it cant find an exact match?"
+
+GPT helped me refine the color matching logic, especially by:
+- Improving how color clusters are sorted by dominance
+- Introducing a fallback Euclidean distance match when threshold matching fails
+- Suggesting a structure to cache color results to avoid recomputation
+
+This function plays a key role in grading outfits based on color compatibility 
+rules I defined, making sure top and bottom clothing items visually match.
+
+For the handtracking code, it was originally developed for an old assignment.
+I worked on the original handtracking implementation and am 
+reusing and expanding upon my earlier code in this project. 
+This version builds on that foundation by integrating outfit randomization
+(via 5-finger detection) and app-specific interactions like swipe detection
+for clothing changes.
+
+

@@ -12,11 +12,18 @@ pnihalan
  - Virtual try on camera that allows you to try on clothes in real time
  - button that goes back on each page
  - The randomized clothes generator and the buttons
-parishij
- - The background design 
-- The grading mode integrating KMeans Clustering to grade the outfit combinations
-- Hand tracking mode which allows the user to browse through outfits with 
-their index finger they can move up and down and right and left
+
+Contributions by Parishi Jain: (Andrew ID: parishij)
+- Designed the custom backgrounds used across the game modes.
+- Developed the Outfit Grader system by integrating KMeans Clustering to analyze 
+dominant clothing colors and assess outfit compatibility based on defined color 
+rules.
+- Built the Hand Tracking Mode using MediaPipe, allowing users to browse through 
+outfits using finger gestures — swiping left/right to switch tops and up/down to
+ switch bottoms.
+- Refined and cleaned up UI animations and transitions to enhance the user 
+experience and make outfit selection smoother and more engaging.
+
 lsponhou
 - user importing new clothes
 - the gamemode of users cycling through the different tops and bottoms
