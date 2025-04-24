@@ -12,21 +12,58 @@ original design, and what the source is for that code.
 -- Virtual Try On --
 -  I used this video to help me figure out how to 
 navigate openCV, https://www.youtube.com/watch?v=6C7R24-Ze10
-- Swipe-cooldown logiC : I used AI help to discover how to 
+this video was my main source of help for the writing of the virtual try
+on function
+
+- Swipe-cooldown logic : I used AI help to discover how to 
 leverage Python’s time module to enforce a cooldown 
 between each swipe event in the try-on loop. 
+I asked it : "How can i make my handtracking less laggy and make it not 
+jump picture to picture.
+what if gave me: 
+def overlayPng(frame, overlayImage, positionX, positionY):
+    overlayHeight, overlayWidth = overlayImage.shape[:2]
+    frameHeight, frameWidth = frame.shape[:2]
+
+    if positionX + overlayWidth < 0 or positionX > frameWidth or \
+       positionY + overlayHeight < 0 or positionY > frameHeight:
+        return frame
+
 
 - Alpha blending implementation: I used AI guidance to figure
  out how to blend the RGBA overlay PNG into
   the BGR camera frame—specifically how 
   to extract and apply the alpha channel 
   for smooth transparency
+i asked it: When I draw the PNG on top of the video, 
+the see-through parts either disappear or turn opaque, 
+and the edges look jagged. How can I write code so that 
+each pixel of the PNG mixes smoothly
+what it gave me: 
+def overlayPng(frame, overlayImage, positionX, positionY):
+    overlayHeight, overlayWidth = overlayImage.shape[:2]
+    frameHeight, frameWidth = frame.shape[:2]
+
+    if positionX + overlayWidth < 0 or positionX > frameWidth or \
+       positionY + overlayHeight < 0 or positionY > frameHeight:
+        return frame
 
 - Landmark midpoint calculation: 
 I used AI to derive the formula for computing 
 the midpoint between two pose landmarks 
 (shoulders, hips) so that the 
 overlays would center correctly on the body.
+i asked it: “What’s the formula to compute the midpoint
+ between two MediaPipe pose landmarks (in pixel coords) 
+ so I can center overlays on shoulders or hips?”
+what it gave: 
+shoulderX = int((leftShoulder.x + 
+                             rightShoulder.x) / 2 * frameWidth)
+            shoulderY = int((leftShoulder.y + 
+                             rightShoulder.y) / 2 * frameHeight)
+            hipX = int((leftHip.x + rightHip.x) / 2 * frameWidth)
+            hipY = int((leftHip.y + rightHip.y) / 2 * frameHeight)
+
 
 
 

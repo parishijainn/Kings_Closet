@@ -7,20 +7,21 @@ Example:
 
 pnihalan
  - Home page 
- - Music
+ - Music for each bage
  -Instructons page
  - Virtual try on camera that allows you to try on clothes in real time
  - button that goes back on each page
+ - Handtracking on the virtual try on
  - The randomized clothes generator and the buttons
+ - basic styling things like hovering over the button
+
 parishij
  - The background design 
 - The grading mode integrating KMeans Clustering to grade the outfit combinations
 - Hand tracking mode which allows the user to browse through outfits with 
 their index finger they can move up and down and right and left
-lsponhou
-- create store UI and function, including adding clothes from store to closet
-- money system
-- the gamemode of users cycling through the different tops and bottoms
-- visualizing the clothes on a mannequin
-- created buttons.py and organized/wrote most button mechanics
 
+lsponhou
+- user importing new clothes
+- the gamemode of users cycling through the different tops and bottoms
+-visualizing the clothes on a mannequin
