@@ -5,7 +5,7 @@ from clothesClasses import *
 from gameMode import *
 
 
-
+#chatGpt helped write this function
 def putImagesIntoLists(folderPath):
     storeList = []
     for filename in os.listdir(folderPath):
