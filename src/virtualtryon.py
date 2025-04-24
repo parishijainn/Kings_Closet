@@ -182,7 +182,10 @@ def tryOnCamera(app):
         cv2.imshow("Virtual Try-On", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
-            app.state = "gameMode"
+            app.isGrading = False
+            app.isInstructing = False
+            app.popupVisible = False  # Example: Reset any pop-up flags
+            app.state = "browse"
             break
 
     videoCapture.release()
