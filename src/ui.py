@@ -47,16 +47,11 @@ def drawInstructionsScreen(app):
     boxHeight = 310
     boxX = (app.width - boxWidth) // 2
     boxY = 148
-    
     drawRect(boxX, boxY, boxWidth, boxHeight, border='black', 
              borderWidth=3, opacity = 0)
-    contentY = boxY + 20 + app.scrollY
-
     visibleTop = boxY + 5
     visibleBottom = boxY + boxHeight - 5
-    
     currentY = boxY + 20 + app.scrollY
-    
     if visibleTop <= currentY <= visibleBottom - 24:  
         drawLabel("Welcome to King's Closet!", 
                  app.width // 2, currentY, 
@@ -65,7 +60,8 @@ def drawInstructionsScreen(app):
     
     #instruction 1
     if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel(("1. Use the up and down arrows to navigate through the instructions."), 
+        drawLabel(("1. Use the up and down arrows to navigate through the "
+        "instructions."), 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
@@ -121,52 +117,19 @@ def drawInstructionsScreen(app):
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown', italic=True)
     
-
-    #hover 
-    hovered = (app.instructionsButtonX <= app.mouseX <= 
-               app.instructionsButtonX + app.instructionsButtonWidth
-               and app.instructionsButtonY <= app.mouseY <= 
-               app.instructionsButtonY + app.instructionsButtonHeight)
-
-    #choose colors
-    color = 'lightPink' if hovered else 'pink'
-    btnBorder = 'black' if hovered else 'white'
-
-    # draw the button
-    drawRect(app.instructionsButtonX, app.instructionsButtonY, 
+        
+    drawRect(app.instructionsButtonX, app.instructionsButtonY,
              app.instructionsButtonWidth, app.instructionsButtonHeight,
-             fill=color,
-             border=btnBorder,
-             borderWidth=3)
-
+             fill='pink', border='maroon', borderWidth=3)
     
     drawLabel(app.instructionsButtonText,
               app.instructionsButtonX + app.instructionsButtonWidth // 2,
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
 
-# def drawGameScreen(app):
-#     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
-#     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
-
-#     topKey = app.topKeys[app.visibleTopIndex % len(app.topKeys)]
-#     bottomKey = app.bottomKeys[app.visibleBottomIndex % len(app.bottomKeys)]
-
-#     topImgPath = app.outfitManager.tops[topKey]
-#     bottomImgPath = app.outfitManager.bottoms[bottomKey]
-
-#     drawImage(topImgPath, app.width // 2, 150, width=180, height=180, align='center')
-#     drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, align='center')
-
-#     drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
-#     drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, fill='darkmagenta', bold=True)
-
-#     #drawBackButton(app)
-#     drawPopupMenu(app)
-
-
 def drawGameScreen(app):
-    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, 
+              height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
     topIndex = app.visibleTopIndex % len(app.tops)
@@ -175,10 +138,14 @@ def drawGameScreen(app):
     topImgPath = app.tops[topIndex].image
     bottomImgPath = app.bottoms[bottomIndex].image
 
-    drawImage(topImgPath, app.width // 2, 150, width=180, height=180, align='center')
-    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, align='center')
+    drawImage(topImgPath, app.width // 2, 150, width=180, height=180, 
+              align='center')
+    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, 
+              align='center')
 
-    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
-    drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, fill='darkmagenta', bold=True)
+    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, 
+              fill='black')
+    drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, 
+              fill='darkmagenta', bold=True)
 
     drawPopupMenu(app)
