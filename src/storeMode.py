@@ -112,22 +112,24 @@ def addToCloset(app):
                     type.list.pop(imageCount-1)
                     app.closetBottomPrices.append(price)
                     app.closetBottomTypes.append(type.type)
-
-def sellClothes(app):
-    if (266 <= app.mouseX <= 532 and 50 <= app.mouseY <= 250):
-        app.isInstructing = True
-        app.state = 'sellTop'
-        
-        if 150 <= app.mouseX <= 375 and 375 <= app.mouseY <= 425:
+def sellTop(app):
+    if 150 <= app.mouseX <= 375 and 375 <= app.mouseY <= 425:
             app.money += app.closetTopPrices[app.currTopIndex]
             app.tops.pop(app.currTopIndex)
             app.closetTopPrices.pop(app.currTopIndex)
             app.closetTopTypes.pop(app.currTopIndex)
             app.isInstructing = False
             app.state = "browse"
-        if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
+    if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
             app.isInstructing = False
             app.state = "browse"
+
+def sellClothes(app):
+    if (266 <= app.mouseX <= 532 and 50 <= app.mouseY <= 250):
+        app.isInstructing = True
+        app.state = 'sellTop'
+        
+        
             
             
     elif (266 <= app.mouseX <= 532 and 300 <= app.mouseY <= 500):

@@ -179,12 +179,17 @@ def onMousePress(app, mouseX, mouseY):
         pressStoreButton(app)
         if app.state == "browse":
             pressSelectionButtons(app)
-    elif app.state == 'sellTop' or app.state == 'sellBottom':
-        sellClothes(app)
-    elif app.state == "pickType":
-        pressPickType(app)
-    elif app.state == "store":
-        addToCloset(app)
+            sellClothes(app)
+    elif app.state == "sellTop":
+        sellTop(app)
+    
+
+        
+    
+    elif app.state == 'pickType':
+            pressPickType(app)
+    elif app.state == 0 or 1 or 2 or 3:
+            addToCloset(app)
          
 
 def onMouseMove(app, mouseX, mouseY):
@@ -276,7 +281,7 @@ def redrawAll(app):
         drawSellTop(app)
     elif app.state == "sellBottom":
         drawSellBottom(app)
-    elif app.state == "pickType":
+    elif app.state == "pickType" or 0 or 1 or 2 or 3:
         drawStoreMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
