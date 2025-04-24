@@ -2,7 +2,7 @@ from cmu_graphics import *
 import random
 from virtualtryon import tryOnCamera
 import math
-from storeMode import *
+#from storeMode import *
 
 #POPUP MENU
 def drawPopupMenu(app):
@@ -108,7 +108,7 @@ def drawStartStylingButton(app):
 def pressStartStylingButton(app):
      if (app.instructionsButtonX <= app.mouseX <= app.instructionsButtonX + app.instructionsButtonWidth and
                 app.instructionsButtonY <= app.mouseY <= app.instructionsButtonY + app.instructionsButtonHeight):
-            app.state = "gameMode"
+            app.state = "browse"
      
 #GAMEMODE
 def drawModeButtons(app):
@@ -186,11 +186,13 @@ def pressModeButtons(app):
     # Updated coordinates based on the new positioning of buttons
     if ((2 * (app.width / 3) <= app.mouseX <= 2 * (app.width / 3) + app.modeButtonWidth) and
         (app.height // 2 - app.modeButtonHeight // 2 <= app.mouseY <= app.height // 2 + app.modeButtonHeight // 2)):
+            app.state = "dressMe"
             app.isDressingMode = True
             app.isSelectionMode = False
 
     if ((app.width / 3 - app.modeButtonWidth <= app.mouseX <= app.width / 3) and
         (app.height // 2 - app.modeButtonHeight // 2 <= app.mouseY <= app.height // 2 + app.modeButtonHeight // 2)):
+            app.state = "browse"
             app.isDressingMode = False
             app.isSelectionMode = True
     
@@ -234,8 +236,8 @@ def pressStoreButton(app):
                                             app.storeButtonWidth) and
         app.storeButtonY <= app.mouseY <= (app.storeButtonY +
                                             app.storeButtonHeight)):
-        app.state = "storeMode"
-        app.isInstructing = True
+        app.state = "pickType"
+        
         
 
 #TRY ON BUTTON   
@@ -382,17 +384,17 @@ def pressUniversalBackButton(app):
     #go back to previous page
         if app.state == "instructions":
             app.state = "welcome"
-        elif app.state == "gameMode":
+        elif app.state == "browse" or app.state == "dressMe":
             app.state = "instructions"
         elif app.state == "gradeMode":
-            app.state = "gameMode"
+            app.state = "browse"
             app.feedbackText = ""
             app.isGrading = False
-        elif app.state == 'storeMode':
-            if app.storePage == "pickType":
-                app.state = "gameMode"
-            else:
-                app.storePage = "pickType"
+        elif app.state == 'pickType':
+            app.state = "browse"
+        elif app.state == 0 or 1 or 2 or 3:
+            app.state = "pickType"
+            
 
 
  
