@@ -189,9 +189,9 @@ def onMousePress(app, mouseX, mouseY):
     if app.state == 'storeMode':
         pressBackButton(app)
         if app.storePage == "pickType":
-            pressPickType(app, mouseX, mouseY)
+            pressPickType(app)
         else:
-            addToCloset(app, mouseX, mouseY)
+            addToCloset(app)
 
     if app.state != "welcome":
         pressUniversalBackButton(app)
@@ -290,6 +290,7 @@ def redrawAll(app):
     elif app.state == "gameMode":
         drawGameMode(app)
     elif app.state == "sellTop":
+        drawGameMode(app)
         drawSellTop(app)
     elif app.state == "storeMode":
         drawStoreMode(app)
