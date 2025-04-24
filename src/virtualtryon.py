@@ -9,7 +9,11 @@ bottomScale = 2.5   #how much to scale the bottom width
 swipeThreshold = 0.2  #how far your finger must move (fraction of screen width/height)
 swipeCooldown = 1.0   #cooldown in seconds between swipes
 
-#load images from the images folder
+'''I used AI here to help figure out the cooldown 
+ between each png, because I did not 
+ know I could use the time module to get the current 
+ time in seconds load images from the images folder '''
+
 def loadClothingImages():
     folderPath = 'images'
     topImages = [
@@ -49,6 +53,9 @@ def overlayPng(frame, overlayImage, positionX, positionY):
     alphaChannel = foregroundRegion[:, :, 3:] / 255.0
     backgroundRegion = frame[y1:y2, x1:x2]
     
+
+    '''I used AI to help figure out how to blend the images'''
+
     #blend foreground into background using transparency
     for channel in range(3):
         backgroundRegion[:, :, channel] = (
@@ -102,6 +109,8 @@ def tryOnCamera(app):
             rightHip = landmarks[mpPose.PoseLandmark.RIGHT_HIP]
 
             #compute midpoints
+            '''i used AI to help figure out how to compute the midpoint once
+             i did the shoulders i could do the rest'''
             shoulderX = int((leftShoulder.x + 
                              rightShoulder.x) / 2 * frameWidth)
             shoulderY = int((leftShoulder.y + 
@@ -133,6 +142,7 @@ def tryOnCamera(app):
         handResult = handDetector.process(colorFrame)
         currentTime = time.time()
 
+        #check if hand is detected 
         if handResult.multi_hand_landmarks and handResult.multi_handedness:
             for handLm, handness in zip(handResult.multi_hand_landmarks, 
                                         handResult.multi_handedness):
@@ -190,5 +200,10 @@ def tryOnCamera(app):
 
     videoCapture.release()
     cv2.destroyAllWindows()
+class App:
+    def __init__(self):
+        self.state = "virtualTryOn"
+
 if __name__ == "__main__":
+    app = App()
     tryOnCamera(app)
