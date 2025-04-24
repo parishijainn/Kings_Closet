@@ -2,26 +2,9 @@ from cmu_graphics import *
 import random
 from virtualtryon import tryOnCamera
 import math
-from storeMode import *
+#from storeMode import *
 
 #POPUP MENU
-# def drawPopupMenu(app):
-#     if app.isInstructing:
-#         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
-#                 fill='white', border='black',align='center')
-#         drawRect(app.popupX, app.popupY-app.popupHeight/2 + 13, app.popupWidth, 30, fill='lightpink', align='center', border='black')
-#         drawCircle(app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, 10, fill='red')
-#         drawLabel("X", app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, size=15, fill='white')
-        
-#         if app.handTrackingMode:
-#             drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
-#         elif app.state == "gameMode":
-#             drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
-#         elif app.state == 'storeMode':
-#             drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
-#         elif app.state == 'tryOnMode':
-#             drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)
-
 def drawPopupMenu(app):
     if app.isInstructing and app.state != 'storeMode':
         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
@@ -125,7 +108,7 @@ def drawStartStylingButton(app):
 def pressStartStylingButton(app):
      if (app.instructionsButtonX <= app.mouseX <= app.instructionsButtonX + app.instructionsButtonWidth and
                 app.instructionsButtonY <= app.mouseY <= app.instructionsButtonY + app.instructionsButtonHeight):
-            app.state = "gameMode"
+            app.state = "browse"
      
 #GAMEMODE
 def drawModeButtons(app):
@@ -203,11 +186,13 @@ def pressModeButtons(app):
     # Updated coordinates based on the new positioning of buttons
     if ((2 * (app.width / 3) <= app.mouseX <= 2 * (app.width / 3) + app.modeButtonWidth) and
         (app.height // 2 - app.modeButtonHeight // 2 <= app.mouseY <= app.height // 2 + app.modeButtonHeight // 2)):
+            app.state = "dressMe"
             app.isDressingMode = True
             app.isSelectionMode = False
 
     if ((app.width / 3 - app.modeButtonWidth <= app.mouseX <= app.width / 3) and
         (app.height // 2 - app.modeButtonHeight // 2 <= app.mouseY <= app.height // 2 + app.modeButtonHeight // 2)):
+            app.state = "browse"
             app.isDressingMode = False
             app.isSelectionMode = True
     
@@ -223,21 +208,20 @@ def drawGradeButton(app):
               size=15, fill=app.darkBrown, bold=True, align='center')
 
 def pressGradeButton(app):
-    if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + 
-                                            app.gradeButtonWidth) and
-        app.gradeButtonY <= app.mouseY <= (app.gradeButtonY +
-                                            app.gradeButtonHeight)):
+    if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + app.gradeButtonWidth) and
+        app.gradeButtonY <= app.mouseY <= (app.gradeButtonY + app.gradeButtonHeight)):
+        
         topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
         bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
         
-        message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
-        app.feedbackText = f"{message} ({score}%)"
+        # Set the locked-in outfit
+        app.visibleTopIndex = app.currTopIndex
+        app.visibleBottomIndex = app.currBottomIndex
+
+        message, rating = app.outfitManager.gradeOutfit(topKey, bottomKey)
+        app.feedbackText = f"{message}"
         app.outfitRating = rating
-        app.outfitScore = score
         app.isGrading = True
-       
-        app.chosenTopImg    = app.outfitManager.tops[   topKey    ]
-        app.chosenBottomImg = app.outfitManager.bottoms[bottomKey]
         app.state = "gradeMode"
 
 #STORE BUTTONS        
@@ -252,8 +236,8 @@ def pressStoreButton(app):
                                             app.storeButtonWidth) and
         app.storeButtonY <= app.mouseY <= (app.storeButtonY +
                                             app.storeButtonHeight)):
-        app.state = "storeMode"
-        app.isInstructing = True
+        app.state = "pickType"
+        
         
 
 #TRY ON BUTTON   
@@ -400,17 +384,17 @@ def pressUniversalBackButton(app):
     #go back to previous page
         if app.state == "instructions":
             app.state = "welcome"
-        elif app.state == "gameMode":
+        elif app.state == "browse" or app.state == "dressMe":
             app.state = "instructions"
         elif app.state == "gradeMode":
-            app.state = "gameMode"
+            app.state = "browse"
             app.feedbackText = ""
             app.isGrading = False
-        elif app.state == 'storeMode':
-            if app.storePage == "pickType":
-                app.state = "gameMode"
-            else:
-                app.storePage = "pickType"
+        elif app.state == 'pickType':
+            app.state = "browse"
+        elif app.state == 0 or 1 or 2 or 3:
+            app.state = "pickType"
+            
 
 
  

@@ -5,6 +5,7 @@ from cmu_graphics import *
 
 class OutfitManager:
     def __init__(self, app):
+        self.app = app
         self.tops = {
             'shirt1': 'images/shirt1.png',
             'shirt2': 'images/shirt2.png',
@@ -13,118 +14,134 @@ class OutfitManager:
             'shirt5': 'images/shirt5.png',
             'shirt6': 'images/shirt6.png'
         }
-        
+
         self.bottoms = {
-            # 'bottom1': 'images/bottom1.png',
-            # 'bottom2': 'images/bottom2.png',
-            # 'bottom3': 'images/bottom3.png',
             'skirt1': 'images/skirt1.png',
             'skirt2': 'images/skirt2.png',
             'skirt3': 'images/skirt3.png'
         }
-        
-        # Fashion rules- determining which colors go together
-        # '*' means that any color can be worn with that color
-        self.colorRules = {
-            'yellow': ['blue', 'black', 'white', 'gray', 'yellow'],
-            'black': ['*'],  
-            'white': ['*'],
-            'blue': ['white', 'yellow', 'gray', 'black'],
-            'red': ['black', 'white']
-        }
-        
-        self.currentOutfit = {'top': None, 'bottom': None}
-        self.colorCache = {}
 
-    # This function uses KMeans clustering to analyze the colors in the image
-    # It determines the main color in the clothing and the secondary colors
-    # It also extracts the RGB values of the colors
-    # It returns a dictionary with the main color, secondary colors, and whether the outfit is solid
-    # The function also caches the results to avoid reprocessing the same image
+        self.colorRules = {
+            'yellow': ['yellow', 'blue', 'white', 'gray', 'black', 'brown', 'orange'],
+            'black': ['*'],
+            'white': ['*'],
+            'blue': ['blue', 'white', 'yellow', 'gray', 'black'],
+            'red': ['red', 'black', 'white'],
+            'green': ['green', 'white', 'black', 'brown'],
+            'brown': ['brown', 'cream', 'white', 'green'],
+            'pink': ['pink', 'white', 'blue', 'gray'],
+            'purple': ['purple', 'white', 'black', 'gray'],
+            'orange': ['orange', 'yellow', 'white', 'black', 'blue'],
+            'gray': ['*'],
+            'beige': ['white', 'brown', 'black'],
+            'cream': ['*']
+        }
+
+        self.colorCache = {}
+        self.currentOutfit = {'top': None, 'bottom': None}
+
     def analyzeColors(self, imagePath):
         if imagePath in self.colorCache:
             return self.colorCache[imagePath]
-        
-        try:
-            img = cv2.imread(imagePath)
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            pixels = img.reshape(-1, 3)
 
-            # Identify the 3 main color clusters
-            kmeans = KMeans(n_clusters=3)
-            kmeans.fit(pixels)
-            colors = kmeans.cluster_centers_
+        img = cv2.imread(imagePath)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        pixels = img.reshape(-1, 3)
 
-            colorNames = [self.rgbToColorName(color) for color in colors]
+        kmeans = KMeans(n_clusters=3)
+        labels = kmeans.fit_predict(pixels)
+        colors = kmeans.cluster_centers_
 
-            result = {
-                'mainColor': colorNames[0],
-                'secondaryColors': colorNames[1:],
-                'isSolid': len(set(colorNames)) == 1
-            }
+        counts = np.bincount(labels)
+        total = len(labels)
 
-            self.colorCache[imagePath] = result
-            return result
+        sortedIndices = np.argsort(-counts)
+        colorNames = []
+        for i in sortedIndices:
+            color = colors[i]
+            proportion = counts[i] / total
+            name = self.rgbToColorName(color)
+            if name not in colorNames:
+                if proportion >= 0.10 or len(colorNames) == 0:
+                    colorNames.append(name)
 
-        except Exception as e:
-            print(f"Color analysis error: {e}")
-            return {
-                'mainColor': 'unknown',
-                'secondaryColors': [],
-                'isSolid': False
-            }
+        result = {
+            'mainColor': colorNames[0],
+            'secondaryColors': colorNames[1:],
+            'isSolid': len(set(colorNames)) == 1
+        }
+
+        self.colorCache[imagePath] = result
+        return result
 
     def rgbToColorName(self, rgb):
         r, g, b = rgb
         colorThresholds = {
-            'yellow': ((200, 150, 0), (255, 255, 150)),
-            'black': ((0, 0, 0), (50, 50, 50)),
-            'white': ((200, 200, 200), (255, 255, 255)),
-            'blue': ((0, 0, 150), (100, 100, 255)),
-            'red': ((150, 0, 0), (255, 100, 100))
+            'yellow': ((200, 170, 0), (255, 255, 150)),
+            'black': ((0, 0, 0), (40, 40, 40)),
+            'white': ((220, 220, 220), (255, 255, 255)),
+            'blue': ((0, 0, 100), (80, 150, 255)),
+            'red': ((130, 0, 0), (255, 100, 100)),
+            'green': ((0, 80, 0), (120, 255, 120)),
+            'brown': ((100, 50, 0), (160, 120, 90)),
+            'pink': ((200, 100, 120), (255, 180, 200)),
+            'purple': ((80, 0, 80), (180, 100, 200)),
+            'orange': ((200, 80, 0), (255, 180, 100)),
+            'gray': ((100, 100, 100), (180, 180, 180)),
+            'beige': ((180, 150, 100), (230, 210, 170)),
+            'cream': ((240, 220, 190), (255, 250, 230))
         }
 
         for name, ((rMin, gMin, bMin), (rMax, gMax, bMax)) in colorThresholds.items():
             if rMin <= r <= rMax and gMin <= g <= gMax and bMin <= b <= bMax:
                 return name
-        return 'unknown'
 
-    # Grades based on the AI color analysis
+        minDist = float('inf')
+        bestMatch = 'unknown'
+        for name, ((rMin, gMin, bMin), (rMax, gMax, bMax)) in colorThresholds.items():
+            avgColor = ((rMin + rMax) / 2, (gMin + gMax) / 2, (bMin + bMax) / 2)
+            dist = np.linalg.norm(np.array([r, g, b]) - np.array(avgColor))
+            if dist < minDist:
+                minDist = dist
+                bestMatch = name
+
+        return bestMatch
+
     def gradeOutfit(self, topId, bottomId):
         topPath = self.tops.get(topId)
         bottomPath = self.bottoms.get(bottomId)
 
         if not topPath or not bottomPath:
-            return ("Missing items!", "fail", 0)
+            return ("Missing items!", "fail")
 
         topInfo = self.analyzeColors(topPath)
         bottomInfo = self.analyzeColors(bottomPath)
         score = self.calculateMatchScore(topInfo, bottomInfo)
 
-        if score >= 90:
-            return ("Perfect match! As if!", "perfect", score)
-        elif score >= 70:
-            return ("Looking cute!", "good", score)
-        elif score >= 50:
-            return ("Not terrible...", "okay", score)
+        if score > 50:
+            self.app.money += 20
+            return ("Perfect match!", "perfect")
         else:
-            return ("Fashion disaster!", "fail", score)
+            return ("Mismatch! Try again!", "fail")
 
-    def calculateMatchScore(self, top, bottom):
+
+    def calculateMatchScore(self, topInfo, bottomInfo):
         score = 0
+        topColor = topInfo['mainColor']
+        bottomColor = bottomInfo['mainColor']
 
-        if bottom['mainColor'] in self.colorRules.get(top['mainColor'], []):
-            score += 60
-        elif '*' in self.colorRules.get(top['mainColor'], []):
+        if topColor == bottomColor:
+            score += 90
+        elif '*' in self.colorRules.get(topColor, []):
+            score += 90
+        elif bottomColor in self.colorRules.get(topColor, []):
             score += 50
-        elif top['mainColor'] == bottom['mainColor']:
-            score += 40
 
-        if top['isSolid'] and bottom['isSolid']:
+        if topInfo['isSolid'] and bottomInfo['isSolid']:
             score += 20
 
-        commonSecondaries = set(top['secondaryColors']) & set(bottom['secondaryColors'])
-        if commonSecondaries:
-            score += min(10, len(commonSecondaries) * 5)
+        sharedSecondaries = set(topInfo['secondaryColors']) & set(bottomInfo['secondaryColors'])
+        if sharedSecondaries:
+            score += min(10, len(sharedSecondaries) * 5)
 
         return min(100, score)
