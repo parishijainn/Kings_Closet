@@ -57,8 +57,7 @@ def onAppStart(app):
                 Tops("images/shirt3.png"), Tops("images/shirt4.png"), 
                 Tops("images/shirt5.png"), Tops("images/shirt6.png")]
     app.bottoms = [Bottoms("images/skirt1.png"), Bottoms("images/skirt2.png"), 
-                   Bottoms("images/skirt3.png"), Bottoms("images/bottom1.png"), 
-                   Bottoms("images/bottom2.png"), Bottoms("images/bottom3.png")]
+                   Bottoms("images/skirt3.png")]
     
     app.visibleTopIndex = app.currTopIndex
     app.visibleBottomIndex = app.currBottomIndex
@@ -197,17 +196,6 @@ def onMousePress(app, mouseX, mouseY):
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
     app.mouseY = mouseY
-
-    # Evaluate outfit
-    if app.isSelectionMode:
-        playButtonX = app.width / 2 - 50
-        playButtonY = app.height - app.blackBarHeight - 60
-        if (playButtonX <= mouseX <= playButtonX + 100 and playButtonY <= 
-                mouseY <= playButtonY + 40):
-            topKey= app.topKeys[app.currTopIndex % len(app.topKeys)]
-            bottomKey= app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
-            message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
-            app.feedbackText = f"{message} ({score}%)"
 
 def onKeyPress(app, key):
     if app.state == "welcome":

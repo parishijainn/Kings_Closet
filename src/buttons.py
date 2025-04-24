@@ -5,23 +5,6 @@ import math
 from storeMode import *
 
 #POPUP MENU
-# def drawPopupMenu(app):
-#     if app.isInstructing:
-#         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
-#                 fill='white', border='black',align='center')
-#         drawRect(app.popupX, app.popupY-app.popupHeight/2 + 13, app.popupWidth, 30, fill='lightpink', align='center', border='black')
-#         drawCircle(app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, 10, fill='red')
-#         drawLabel("X", app.popupX-app.popupWidth/2+15, app.popupY-app.popupHeight/2+13, size=15, fill='white')
-        
-#         if app.handTrackingMode:
-#             drawLabel("handTrackingMode instructions", app.popupX, app.popupY+60, size=20)
-#         elif app.state == "gameMode":
-#             drawLabel("gameMode instructions", app.popupX, app.popupY, size=20)
-#         elif app.state == 'storeMode':
-#             drawLabel("storeMode instructions", app.popupX, app.popupY, size=20)
-#         elif app.state == 'tryOnMode':
-#             drawLabel("tryOnMode instructions", app.popupX, app.popupY, size=20)
-
 def drawPopupMenu(app):
     if app.isInstructing and app.state != 'storeMode':
         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
@@ -223,21 +206,20 @@ def drawGradeButton(app):
               size=15, fill=app.darkBrown, bold=True, align='center')
 
 def pressGradeButton(app):
-    if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + 
-                                            app.gradeButtonWidth) and
-        app.gradeButtonY <= app.mouseY <= (app.gradeButtonY +
-                                            app.gradeButtonHeight)):
+    if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + app.gradeButtonWidth) and
+        app.gradeButtonY <= app.mouseY <= (app.gradeButtonY + app.gradeButtonHeight)):
+        
         topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
         bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
         
-        message, rating, score = app.outfitManager.gradeOutfit(topKey, bottomKey)
-        app.feedbackText = f"{message} ({score}%)"
+        # Set the locked-in outfit
+        app.visibleTopIndex = app.currTopIndex
+        app.visibleBottomIndex = app.currBottomIndex
+
+        message, rating = app.outfitManager.gradeOutfit(topKey, bottomKey)
+        app.feedbackText = f"{message}"
         app.outfitRating = rating
-        app.outfitScore = score
         app.isGrading = True
-       
-        app.chosenTopImg    = app.outfitManager.tops[   topKey    ]
-        app.chosenBottomImg = app.outfitManager.bottoms[bottomKey]
         app.state = "gradeMode"
 
 #STORE BUTTONS        
