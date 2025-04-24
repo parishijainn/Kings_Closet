@@ -121,10 +121,24 @@ def drawInstructionsScreen(app):
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown', italic=True)
     
-        
-    drawRect(app.instructionsButtonX, app.instructionsButtonY,
+
+    #hover 
+    hovered = (app.instructionsButtonX <= app.mouseX <= 
+               app.instructionsButtonX + app.instructionsButtonWidth
+               and app.instructionsButtonY <= app.mouseY <= 
+               app.instructionsButtonY + app.instructionsButtonHeight)
+
+    #choose colors
+    color = 'lightPink' if hovered else 'pink'
+    btnBorder = 'black' if hovered else 'white'
+
+    # draw the button
+    drawRect(app.instructionsButtonX, app.instructionsButtonY, 
              app.instructionsButtonWidth, app.instructionsButtonHeight,
-             fill='pink', border='maroon', borderWidth=3)
+             fill=color,
+             border=btnBorder,
+             borderWidth=3)
+
     
     drawLabel(app.instructionsButtonText,
               app.instructionsButtonX + app.instructionsButtonWidth // 2,
