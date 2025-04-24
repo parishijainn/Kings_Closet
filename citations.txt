@@ -27,3 +27,36 @@ I used AI to derive the formula for computing
 the midpoint between two pose landmarks 
 (shoulders, hips) so that the 
 overlays would center correctly on the body.
+
+
+
+
+
+
+
+
+
+
+for the function def putImgagesIntoLists(app), I asked chatGpt the prompt ,
+ "if I have png files in a folder in my vs code, is there a way to loop through 
+ all the images in the folder to add them to a list or do I need to do it 
+ manually?," to which it responded, 
+ "Yes — if you already have .png files in a folder (like images/), you can 
+ automatically loop through them and add them to a list, no need to manually 
+ list each one!
+
+Here’s how to do it in Python:
+
+import os
+
+def loadImagesFromFolder(folderPath):
+    imageList = []
+    for filename in os.listdir(folderPath):
+        if filename.lower().endswith('.png'):
+            fullPath = os.path.join(folderPath, filename)
+            imageList.append(fullPath)
+    return imageList
+
+# Example usage:
+app.tops = loadImagesFromFolder('images/tops')
+app.bottoms = loadImagesFromFolder('images/bottoms')
