@@ -146,28 +146,9 @@ def drawInstructionsScreen(app):
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
 
-# def drawGameScreen(app):
-#     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
-#     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
-
-#     topKey = app.topKeys[app.visibleTopIndex % len(app.topKeys)]
-#     bottomKey = app.bottomKeys[app.visibleBottomIndex % len(app.bottomKeys)]
-
-#     topImgPath = app.outfitManager.tops[topKey]
-#     bottomImgPath = app.outfitManager.bottoms[bottomKey]
-
-#     drawImage(topImgPath, app.width // 2, 150, width=180, height=180, align='center')
-#     drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, align='center')
-
-#     drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
-#     drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, fill='darkmagenta', bold=True)
-
-#     #drawBackButton(app)
-#     drawPopupMenu(app)
-
-
 def drawGameScreen(app):
-    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, 
+              height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
     topIndex = app.visibleTopIndex % len(app.tops)
@@ -176,10 +157,14 @@ def drawGameScreen(app):
     topImgPath = app.tops[topIndex].image
     bottomImgPath = app.bottoms[bottomIndex].image
 
-    drawImage(topImgPath, app.width // 2, 150, width=180, height=180, align='center')
-    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, align='center')
+    drawImage(topImgPath, app.width // 2, 150, width=180, height=180, 
+              align='center')
+    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180,
+               align='center')
 
-    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
-    drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, fill='darkmagenta', bold=True)
+    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, 
+              fill='black')
+    drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, 
+              fill='darkmagenta', bold=True)
 
     drawPopupMenu(app)
