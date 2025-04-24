@@ -1,7 +1,7 @@
 from cmu_graphics import *
 from ui import * 
 from buttons import *
-from gameMode import drawGameMode
+from gameMode import *
 from clothesClasses import *
 from outfitgrader import OutfitManager
 from handtracking import processCameraFeed, getFingerPosition
@@ -254,26 +254,26 @@ def onStep(app):
             app.fingerCooldown -= 1
 
 def redrawAll(app):
-    
     if app.state == "welcome":
         drawWelcomeScreen(app)
     elif app.state == "instructions":
         drawInstructionsScreen(app)
     elif app.state == 'browse' or app.state == 'dressMe':
         drawGameMode(app)
+    elif app.state == "gradeMode":
+        drawGameScreen(app)
     elif app.state == "sellTop":
         drawSellTop(app)
     elif app.state == "sellBottom":
         drawSellBottom(app)
     elif app.state == "pickType" or 0 or 1 or 2 or 3:
         drawStoreMode(app)
-    elif app.state == "gradeMode":
-        drawGameScreen(app)
-    drawSoundButton(app)
     if app.isInstructing:
         drawPopupMenu(app)
     if app.state != "welcome":
         drawUniversalBackButton(app)
+    drawSoundButton(app)
+
 
 
 def main():    
