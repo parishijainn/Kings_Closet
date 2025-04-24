@@ -183,9 +183,9 @@ def tryOnCamera(app):
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             app.isGrading = False
-            app.isInstructing = False
-            app.popupVisible = False  # Example: Reset any pop-up flags
+            app.popupVisible = False
             app.state = "browse"
+            app.isInstructing = False
             break
 
     videoCapture.release()
