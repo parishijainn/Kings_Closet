@@ -1,7 +1,7 @@
 from cmu_graphics import *
 from ui import * 
 from buttons import *
-from gameMode import drawGameMode
+from gameMode import *
 from clothesClasses import *
 from outfitgrader import OutfitManager
 from handtracking import processCameraFeed, getFingerPosition
@@ -181,14 +181,10 @@ def onMousePress(app, mouseX, mouseY):
             sellClothes(app)
     elif app.state == "sellTop":
         sellTop(app)
-    
-
-        
-    
     elif app.state == 'pickType':
-            pressPickType(app)
+        pressPickType(app)
     elif app.state == 0 or 1 or 2 or 3:
-            addToCloset(app)
+        addToCloset(app)
          
 
 def onMouseMove(app, mouseX, mouseY):
@@ -258,28 +254,26 @@ def onStep(app):
             app.fingerCooldown -= 1
 
 def redrawAll(app):
-    
     if app.state == "welcome":
         drawWelcomeScreen(app)
     elif app.state == "instructions":
         drawInstructionsScreen(app)
     elif app.state == 'browse' or app.state == 'dressMe':
         drawGameMode(app)
+    elif app.state == "gradeMode":
+        drawGameScreen(app)
     elif app.state == "sellTop":
         drawSellTop(app)
     elif app.state == "sellBottom":
         drawSellBottom(app)
     elif app.state == "pickType" or 0 or 1 or 2 or 3:
         drawStoreMode(app)
-    elif app.state == "gradeMode":
-        drawGameScreen(app)
-
-    drawSoundButton(app)
-    
     if app.isInstructing:
         drawPopupMenu(app)
     if app.state != "welcome":
         drawUniversalBackButton(app)
+    drawSoundButton(app)
+
 
 
 def main():    

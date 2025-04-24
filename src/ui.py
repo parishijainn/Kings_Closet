@@ -4,10 +4,13 @@ from buttons import *
 def drawWelcomeScreen(app):
     #draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, app.usernameBoxHeight,
-             fill=app.lightPink, border=app.redBrown, borderWidth=5)
-    drawLabel(app.username or 'Enter your name', app.usernameBoxX + app.usernameBoxWidth // 2,
-              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill=app.redBrown, bold=True)
+    drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, 
+             app.usernameBoxHeight, fill=app.lightPink, border=app.redBrown, 
+             borderWidth=5)
+    drawLabel(app.username or 'Enter your name', 
+              app.usernameBoxX + app.usernameBoxWidth // 2,
+              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, 
+              fill=app.redBrown, bold=True)
     
     if app.enteredUsername:
         drawStartButton(app)
@@ -33,7 +36,8 @@ def drawStartButton(app):
 
 def drawMainGame(app):
     #draw background image
-    drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, 
+              height=app.height)
 
 def drawInstructionsScreen(app):
     drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
@@ -44,9 +48,10 @@ def drawInstructionsScreen(app):
     boxX = (app.width - boxWidth) // 2
     boxY = 148
     
-    drawRect(boxX, boxY, boxWidth, boxHeight, border='black', borderWidth=3, opacity = 0)
+    drawRect(boxX, boxY, boxWidth, boxHeight, border='black', 
+             borderWidth=3, opacity = 0)
+    contentY = boxY + 20 + app.scrollY
 
-    #draw instructions text and make scrolling
     visibleTop = boxY + 5
     visibleBottom = boxY + boxHeight - 5
     
@@ -60,7 +65,7 @@ def drawInstructionsScreen(app):
     
     #instruction 1
     if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("1. Use the up and down arrows to navigate through the instructions.", 
+        drawLabel(("1. Use the up and down arrows to navigate through the instructions."), 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
@@ -116,42 +121,31 @@ def drawInstructionsScreen(app):
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown', italic=True)
     
-    # hover test
-    hovered = (app.instructionsButtonX <= app.mouseX <= app.instructionsButtonX + app.instructionsButtonWidth
-               and app.instructionsButtonY <= app.mouseY <= app.instructionsButtonY + app.instructionsButtonHeight)
-
-    # choose colors
-    color   = 'lightPink' if hovered else 'pink'
-    btnBorder = 'black'   if hovered else 'white'
-
-    # draw the button
-    drawRect(app.instructionsButtonX, app.instructionsButtonY, app.instructionsButtonWidth, app.instructionsButtonHeight,
-             fill=color,
-             border=btnBorder,
-             borderWidth=3)
+        
+    drawRect(app.instructionsButtonX, app.instructionsButtonY,
+             app.instructionsButtonWidth, app.instructionsButtonHeight,
+             fill='pink', border='maroon', borderWidth=3)
     
     drawLabel(app.instructionsButtonText,
               app.instructionsButtonX + app.instructionsButtonWidth // 2,
               app.instructionsButtonY + app.instructionsButtonHeight // 2,
               size=24, bold=True, fill='maroon')
-    
+
 def drawGameScreen(app):
     drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
-    #use visibleTopIndex and visibleBottomIndex to fetch the correct outfit
-    topImg = app.outfitManager.tops[app.topKeys[app.visibleTopIndex 
-                                                % len(app.topKeys)]]
-    bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.visibleBottomIndex 
-                                                         % len(app.bottomKeys)]]
+    topKey = app.topKeys[app.visibleTopIndex % len(app.topKeys)]
+    bottomKey = app.bottomKeys[app.visibleBottomIndex % len(app.bottomKeys)]
 
-    drawImage(topImg, app.width // 2, 150, width=180, height=180, align='center')
-    drawImage(bottomImg, app.width // 2, 340, width=180, height=180, align='center')
+    topImgPath = app.outfitManager.tops[topKey]
+    bottomImgPath = app.outfitManager.bottoms[bottomKey]
 
-    # More vivid result text
+    drawImage(topImgPath, app.width // 2, 150, width=180, height=180, align='center')
+    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, align='center')
+
     drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
-    drawLabel(app.feedbackText, app.width // 2, app.height - 110,
-              size=26, fill='darkmagenta', bold=True)
+    drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, fill='darkmagenta', bold=True)
 
-    drawBackButton(app)
+    #drawBackButton(app)
     drawPopupMenu(app)
