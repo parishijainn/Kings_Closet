@@ -129,9 +129,9 @@ def onAppStart(app):
     app.universalBackButtonY = app.height - app.universalBackButtonHeight - 5
 
     app.outfitManager = OutfitManager(app)
-    app.topKeys = list(app.outfitManager.tops.keys())
-    app.bottomKeys = list(app.outfitManager.bottoms.keys())
-    
+    app.topKeys = list(range(len(app.tops)))
+    app.bottomKeys = list(range(len(app.bottoms)))
+
     app.mouseX = None
     app.mouseY = None
     app.isGrading = False
@@ -227,7 +227,7 @@ def onStep(app):
                 dx = fx - app.lastFingerX
                 dy = fy - app.lastFingerY
 
-                # Swipe horizontally → change top
+                # Swipe horizontally to change tops
                 if abs(dx) > 0.07:
                     if dx > 0:
                         app.currTopIndex = ((app.currTopIndex + 1) % 
@@ -237,7 +237,7 @@ def onStep(app):
                                             len(app.tops))
                     app.fingerCooldown = 10
 
-                # Swipe vertically → change bottom
+                # Swipe vertically to change bottoms
                 elif abs(dy) > 0.07:
                     if dy > 0:
                         app.currBottomIndex= ((app.currBottomIndex + 1) % 
@@ -262,10 +262,6 @@ def redrawAll(app):
         drawGameMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
-    # elif app.state == "sellTop":
-    #     drawSellTop(app)
-    # elif app.state == "sellBottom":
-    #     drawSellBottom(app)
     elif app.state == "pickType" or 0 or 1 or 2 or 3:
         drawStoreMode(app)
     if app.isInstructing:
@@ -273,8 +269,6 @@ def redrawAll(app):
     if app.state != "welcome":
         drawUniversalBackButton(app)
     drawSoundButton(app)
-
-
 
 def main():    
     runApp()
