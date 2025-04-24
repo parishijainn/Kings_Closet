@@ -273,7 +273,9 @@ def redrawAll(app):
         drawStoreMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
+
     drawSoundButton(app)
+    
     if app.isInstructing:
         drawPopupMenu(app)
     if app.state != "welcome":
