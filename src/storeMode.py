@@ -116,19 +116,19 @@ def drawStoreMode(app):
     drawRect(0, 0, app.width, app.height, fill='lightBlue')
 
     if app.state == "pickType":
-        drawLabel("Welcome to the Store!", app.width/2, 120)
-        drawLabel("What are you shopping for?", app.width/2, 140)
+        drawLabel("Welcome to the Store!", app.width/2, 100, size=40)
+        drawLabel("What are you shopping for?", app.width/2, 150, size=30)
         drawRect(20, 220, 175, 140, fill='white')
-        drawLabel('Tanks - $15', 107, 290)
+        drawLabel('Tanks - $15', 107, 290, size=20)
         drawRect(215, 220, 175, 140, fill='white')
-        drawLabel('Tees - $25', 302, 290)
+        drawLabel('Tees - $25', 302, 290, size=20)
         drawRect(410, 220, 175, 140, fill='white')
-        drawLabel('Shorts - $40', 497, 290)
+        drawLabel('Shorts - $40', 497, 290, size=20)
         drawRect(605, 220, 175, 140, fill='white')
-        drawLabel('Skirts - $50', 692, 290)
+        drawLabel('Skirts - $50', 692, 290, size=20)
     elif isinstance(app.state, int) and app.state in range(len(storeClothes)):
         type = storeClothes[app.state]
-        drawLabel(f'{type.type} - ${prices[app.state]}', 50, 30)
+        drawLabel(f'{type.type} - ${prices[app.state]}', 50, 30, size=20)
 
         imageCount = 0
         x = 20

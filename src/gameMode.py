@@ -50,6 +50,8 @@ def drawGameMode(app):
                 drawImage("images/mannequinCropped.png", app.width/2, app.height/2, width=app.width/3 - 60, height=app.height - 60, align='center')
                 drawImage(app.tops[app.currTopIndex].image, app.width//2, topY, width=imgWidthTop, height=imgHeightTop, align='center')
                 drawImage(app.bottoms[app.currBottomIndex].image, app.width//2, bottomY, width=imgWidthBottom, height=imgHeightBottom, align='center')
+                drawStoreButton(app)
+                drawTryOnButton(app)
 
         if app.handTrackingMode and app.cameraFrame:
                 drawImage(app.cameraFrame, 20, 100, width=200, height=150)
