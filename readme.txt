@@ -13,9 +13,11 @@ outfit on a mannequin. The user can press the
 "grade" button and the outfit will be graded
 on how well it matches.
 
-numpy
-opencv-python
-scikit-learn
+pip3 install numpy
+pip3 install opencv-python
+pip3 install scikit-learn
+pip3 install mediapipe
+pip3 install pillow
 
 run main.py
 =======
