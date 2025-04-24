@@ -26,7 +26,7 @@ def onAppStart(app):
     app.popupY = app.height//2
     app.popupWidth = 600
     app.popupHeight = 300
-    app.isInstructing = True
+    app.isInstructing = False
 
     #WELCOMEMODE
     app.backgroundImage = "images/kingclosetbackgrounds.png"
@@ -164,38 +164,28 @@ def onAppStart(app):
 
 def onMousePress(app, mouseX, mouseY):
     pressSoundButton(app)
-    if app.state == "welcome":
-        pressStartPlayingButton(app)
-    
-    elif app.state == "instructions":
-        pressStartStylingButton(app)
-
-    elif app.state == 'gameMode':
-        pressGradeButton(app)
-        pressModeButtons(app)
-        pressSelectionButtons(app)
-        pressTryOnButton(app)
-        pressStoreButton(app)
+    if app.isInstructing:
         pressX(app)
-        sellClothes(app)
-        
-    elif app.state == "gradeMode":
-        pressBackButton(app)
-        pressX(app)
-
-    elif app.state == 'sellTop' or app.state == 'sellBottom':
-        sellClothes(app)
-
-    if app.state == 'storeMode':
-        pressBackButton(app)
-        if app.storePage == "pickType":
-            pressPickType(app)
-        else:
-            addToCloset(app)
-
     if app.state != "welcome":
         pressUniversalBackButton(app)
-        pressX(app)
+    if app.state == "welcome":
+        pressStartPlayingButton(app)
+    elif app.state == "instructions":
+        pressStartStylingButton(app)
+    elif app.state == "browse" or app.state == "dressMe":
+        pressGradeButton(app)
+        pressModeButtons(app)
+        pressTryOnButton(app)
+        pressStoreButton(app)
+        if app.state == "browse":
+            pressSelectionButtons(app)
+    elif app.state == 'sellTop' or app.state == 'sellBottom':
+        sellClothes(app)
+    elif app.state == "pickType":
+        pressPickType(app)
+    elif app.state == "store":
+        addToCloset(app)
+         
 
 def onMouseMove(app, mouseX, mouseY):
     app.mouseX = mouseX
@@ -275,33 +265,27 @@ def onStep(app):
             app.fingerCooldown -= 1
 
 def redrawAll(app):
+    
     if app.state == "welcome":
         drawWelcomeScreen(app)
-    #if app.storePage == 'sellTop' and app.isInstructing:
-        #drawGameMode(app)
-        #drawPopupMenu(app)
-        #drawSellTop(app)
-    elif app.storePage == 'sellBottom' and app.isInstructing:
-        drawGameMode(app)
-        drawPopupMenu(app)
-        drawSellBottom(app)
     elif app.state == "instructions":
         drawInstructionsScreen(app)
-    elif app.state == "gameMode":
+    elif app.state == 'browse' or app.state == 'dressMe':
         drawGameMode(app)
     elif app.state == "sellTop":
-        drawGameMode(app)
         drawSellTop(app)
-    elif app.state == "storeMode":
+    elif app.state == "sellBottom":
+        drawSellBottom(app)
+    elif app.state == "pickType":
         drawStoreMode(app)
     elif app.state == "gradeMode":
         drawGameScreen(app)
-    elif app.state == 'storeMode':
-        drawStoreMode(app)
     drawSoundButton(app)
-   
-    if app.state != "welcome" and app.state != "gradeMode":
+    if app.isInstructing:
+        drawPopupMenu(app)
+    if app.state != "welcome":
         drawUniversalBackButton(app)
+
 
 def main():    
     runApp()

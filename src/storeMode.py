@@ -38,7 +38,7 @@ def drawStoreMode(app):
     whiteHeight = 160
     drawRect(0, 0, app.width, app.height, fill='lightBlue')
 
-    if app.storePage == "pickType":
+    if app.state == "pickType":
         drawLabel("Welcome to the Store!", app.width/2, 120)
         drawLabel("What are you shopping for?", app.width/2, 140)
         drawRect(20, 220, 175, 140, fill='white')
@@ -51,9 +51,9 @@ def drawStoreMode(app):
         drawLabel('Skirts - $50',692, 290)
         
     else:
-        type = storeClothes[app.storePage]
+        type = storeClothes[app.state]
         imageCount = 0
-        drawLabel(f'{type.type} - ${prices[app.storePage]}', 50, 30)
+        drawLabel(f'{type.type} - ${prices[app.state]}', 50, 30)
         x = 20
         y = 70
         for image in type.list:
@@ -68,17 +68,17 @@ def drawStoreMode(app):
             
 def pressPickType(app):
     if 20 <= app.mouseX <= 195 and 220 <= app.mouseY <= 360:
-        app.storePage = 0
+        app.state = 0
     elif 215 <= app.mouseX <= 390 and 220 <= app.mouseY <= 360:
-        app.storePage = 1
+        app.state = 1
     elif 410 <= app.mouseX <= 585 and 220 <= app.mouseY <= 360:
-        app.storePage = 2
+        app.state = 2
     elif 605 <= app.mouseX <= 780 and 220 <= app.mouseY <= 360:
-        app.storePage = 3
+        app.state = 3
 
 def addToCloset(app):
-    type = storeClothes[app.storePage]
-    price = prices[app.storePage]
+    type = storeClothes[app.state]
+    price = prices[app.state]
     imageCount = 0
     width = 136
     height = 160
@@ -124,10 +124,10 @@ def sellClothes(app):
             app.closetTopPrices.pop(app.currTopIndex)
             app.closetTopTypes.pop(app.currTopIndex)
             app.isInstructing = False
-            app.state = "gameMode"
+            app.state = "browse"
         if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
             app.isInstructing = False
-            app.state = "gameMode"
+            app.state = "browse"
             
             
     elif (266 <= app.mouseX <= 532 and 300 <= app.mouseY <= 500):
