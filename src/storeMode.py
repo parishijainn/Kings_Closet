@@ -223,26 +223,26 @@ def sellClothes(app):
         if 425 <= app.mouseX <= 650 and 375 <= app.mouseY <= 425:
             app.isInstructing = False
 
-def drawSellTop(app):
-    if app.isInstructing:
-        drawImage(app.tops[app.currTopIndex].image,550, 200, width=125, height=150)
-        drawLabel('Would you like',350, 200)
-        drawLabel('to sell this', 350, 300)
-        drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)
-        drawRect(150, 375, 225, 50, fill='lightPink')
-        drawLabel('Yes', 267, 400)
-        drawRect(425, 375, 225, 50, fill='lightPink')
-        drawLabel('No', 537, 400)
+# def drawSellTop(app):
+#     if app.isInstructing:
+#         drawImage(app.tops[app.currTopIndex].image,550, 200, width=125, height=150)
+#         drawLabel('Would you like',350, 200)
+#         drawLabel('to sell this', 350, 300)
+#         drawLabel(f'{app.closetTopTypes[app.currTopIndex]} for {app.closetTopPrices[app.currTopIndex]}?', 350, 400)
+#         drawRect(150, 375, 225, 50, fill='lightPink')
+#         drawLabel('Yes', 267, 400)
+#         drawRect(425, 375, 225, 50, fill='lightPink')
+#         drawLabel('No', 537, 400)
 
-def drawSellBottom(app):
-    drawImage(app.bottoms[app.currBottomIndex].image,600, 200, width=250, height=300)
-    drawLabel('Would you like',350, 200)
-    drawLabel('to sell this', 350, 300)
-    drawLabel(f'{app.closetBottomTypes[app.currBottomIndex]} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
-    drawRect(150, 375, 225, 50, fill='lightPink')
-    drawLabel('Yes', 267, 400)
-    drawRect(425, 375, 225, 50, fill='lightPink')
-    drawLabel('No', 537, 400)
+# def drawSellBottom(app):
+#     drawImage(app.bottoms[app.currBottomIndex].image,600, 200, width=250, height=300)
+#     drawLabel('Would you like',350, 200)
+#     drawLabel('to sell this', 350, 300)
+#     drawLabel(f'{app.closetBottomTypes[app.currBottomIndex]} for {app.closetBottomPrices[app.currBottomIndex]}?',350, 400)
+#     drawRect(150, 375, 225, 50, fill='lightPink')
+#     drawLabel('Yes', 267, 400)
+#     drawRect(425, 375, 225, 50, fill='lightPink')
+#     drawLabel('No', 537, 400)
 
 
 
