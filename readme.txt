@@ -22,7 +22,6 @@ pip3 install pillow
 run main.py
 =======
 =======
->>>>>>> Stashed changes
 https://drive.google.com/file/d/1QHowY41zm2z9rqtrDFrxMiHR9JETHR3U/view?usp=sharing
 
 This project is recreation of Cher's closet from 

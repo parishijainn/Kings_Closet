@@ -61,6 +61,7 @@ def drawInstructionsScreen(app):
     #instruction 1
     if visibleTop <= currentY <= visibleBottom - 20:
         drawLabel(("1. Use the up and down arrows to navigate through the "
+        ""
         "instructions."), 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
@@ -140,8 +141,8 @@ def drawGameScreen(app):
 
     drawImage(topImgPath, app.width // 2, 150, width=180, height=180, 
               align='center')
-    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180, 
-              align='center')
+    drawImage(bottomImgPath, app.width // 2, 340, width=180, height=180,
+               align='center')
 
     drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, 
               fill='black')

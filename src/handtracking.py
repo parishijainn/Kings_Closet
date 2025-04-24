@@ -27,7 +27,8 @@ def countFingers(handLandmarks):
     tipIds = [8, 12, 16, 20]  # Index, Middle, Ring, Pinky
     count = 0
     for tipId in tipIds:
-        if handLandmarks.landmark[tipId].y < handLandmarks.landmark[tipId - 2].y:
+        if handLandmarks.landmark[tipId].y < \
+        handLandmarks.landmark[tipId - 2].y:
             count += 1
 
     thumbOpen = handLandmarks.landmark[4].x > handLandmarks.landmark[3].x

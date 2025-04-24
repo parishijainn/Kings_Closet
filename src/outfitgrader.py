@@ -48,7 +48,8 @@ class OutfitManager:
         self.bottoms = app.bottoms
 
         self.colorRules = {
-            'yellow': ['yellow', 'blue', 'white', 'gray', 'black', 'brown', 'orange'],
+            'yellow': ['yellow', 'blue', 'white', 'gray', 'black', 'brown', 
+                       'orange'],
             'black': ['*'],
             'white': ['*'],
             'blue': ['blue', 'white', 'yellow', 'gray', 'black'],
@@ -117,13 +118,15 @@ class OutfitManager:
             'cream': ((240, 220, 190), (255, 250, 230))
         }
 
-        for name, ((rMin, gMin, bMin), (rMax, gMax, bMax)) in colorThresholds.items():
+        for name, ((rMin, gMin, bMin), 
+                   (rMax, gMax, bMax)) in colorThresholds.items():
             if rMin <= r <= rMax and gMin <= g <= gMax and bMin <= b <= bMax:
                 return name
 
         minDist = float('inf')
         bestMatch = 'unknown'
-        for name, ((rMin, gMin, bMin), (rMax, gMax, bMax)) in colorThresholds.items():
+        for name, ((rMin, gMin, bMin), 
+                   (rMax, gMax, bMax)) in colorThresholds.items():
             avgColor = ((rMin + rMax) / 2, (gMin + gMax) / 2, (bMin + bMax) / 2)
             dist = np.linalg.norm(np.array([r, g, b]) - np.array(avgColor))
             if dist < minDist:
@@ -164,7 +167,8 @@ class OutfitManager:
         if topInfo['isSolid'] and bottomInfo['isSolid']:
             score += 20
 
-        sharedSecondaries = set(topInfo['secondaryColors']) & set(bottomInfo['secondaryColors'])
+        sharedSecondaries = set(topInfo['secondaryColors']) & \
+        set(bottomInfo['secondaryColors'])
         if sharedSecondaries:
             score += min(10, len(sharedSecondaries) * 5)
 
