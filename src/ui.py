@@ -65,7 +65,8 @@ def drawInstructionsScreen(app):
     
     #instruction 1
     if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel(("1. Use the up and down arrows to navigate through the instructions."), 
+        drawLabel(("1. Use the up and down arrows to navigate through the "
+        "instructions."), 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
