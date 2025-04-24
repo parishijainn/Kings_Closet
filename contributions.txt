@@ -7,22 +7,26 @@ Example:
 
 pnihalan
  - Home page 
- - Music
+ - Music for each bage
  -Instructons page
  - Virtual try on camera that allows you to try on clothes in real time
  - button that goes back on each page
+ - Handtracking on the virtual try on
  - The randomized clothes generator and the buttons
 
 Contributions by Parishi Jain: (Andrew ID: parishij)
 - Designed the custom backgrounds used across the game modes.
+- Designed the enter username so user can have customized experience
 - Developed the Outfit Grader system by integrating KMeans Clustering to analyze 
 dominant clothing colors and assess outfit compatibility based on defined color 
 rules.
 - Built the Hand Tracking Mode using MediaPipe, allowing users to browse through 
 outfits using finger gestures — swiping left/right to switch tops and up/down to
  switch bottoms.
-- Refined and cleaned up UI animations and transitions to enhance the user 
+- Refined and cleaned up UI animations to enhance the user 
 experience and make outfit selection smoother and more engaging.
+
+
 
 lsponhou
 - user importing new clothes
