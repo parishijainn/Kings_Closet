@@ -26,4 +26,4 @@ lsponhou
 - money system
 - the gamemode of users cycling through the different tops and bottoms
 -visualizing the clothes on a mannequin
-- created buttons.py and organized/wrote most button mechanics
+- created buttons.py and organized/wrote most button mechanics.
