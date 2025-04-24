@@ -1,13 +1,15 @@
 import cv2
 import mediapipe as mp
 import os
+import time
 
-#constants
-topScale = 1.25      #how much to scale the shirt width
-bottomScale = 2.5    #how much to scale the bottom width
-swipeThreshold = 0.2 #how far the finger must move for swipe
+# Constants
+topScale = 1.25 #how much to scale the shirt width
+bottomScale = 2.5   #how much to scale the bottom width
+swipeThreshold = 0.2  #how far your finger must move (fraction of screen width/height)
+swipeCooldown = 1.0   #cooldown in seconds between swipes
 
-
+#load images from the images folder
 def loadClothingImages():
     folderPath = 'images'
     topImages = [
@@ -27,7 +29,6 @@ def overlayPng(frame, overlayImage, positionX, positionY):
     overlayHeight, overlayWidth = overlayImage.shape[:2]
     frameHeight, frameWidth = frame.shape[:2]
 
-    #clip overlay region
     if positionX + overlayWidth < 0 or positionX > frameWidth or \
        positionY + overlayHeight < 0 or positionY > frameHeight:
         return frame
@@ -42,11 +43,12 @@ def overlayPng(frame, overlayImage, positionX, positionY):
     intersectionWidth = x2 - x1
     intersectionHeight = y2 - y1
 
+    #clip overlay region
     foregroundRegion = overlayImage[offsetY:offsetY + intersectionHeight,
                                     offsetX:offsetX + intersectionWidth]
     alphaChannel = foregroundRegion[:, :, 3:] / 255.0
     backgroundRegion = frame[y1:y2, x1:x2]
-
+    
     #blend foreground into background using transparency
     for channel in range(3):
         backgroundRegion[:, :, channel] = (
@@ -57,29 +59,30 @@ def overlayPng(frame, overlayImage, positionX, positionY):
     frame[y1:y2, x1:x2] = backgroundRegion
     return frame
 
-
+#function to handle the virtual try-on camera
 def tryOnCamera(app):
     topImages, bottomImages = loadClothingImages()
     currentTopIndex = 0
     currentBottomIndex = 0
 
-    #mediapipe solutions
-    poseSolution = mp.solutions.pose
-    handSolution = mp.solutions.hands
-    poseDetector = poseSolution.Pose(
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5
-    )
-    handDetector = handSolution.Hands(
-        max_num_hands=2,
-        min_detection_confidence=0.5,
-        min_tracking_confidence=0.5
-    )
+    lastTopSwipeTime = 0
+    lastBottomSwipeTime = 0
 
+    #mediapipe solutions
+    mpPose = mp.solutions.pose
+    mpHands = mp.solutions.hands
+    poseDetector = mpPose.Pose(min_detection_confidence=0.5, 
+                               min_tracking_confidence=0.5)
+    handDetector = mpHands.Hands(max_num_hands=1, 
+                                 min_detection_confidence=0.5, 
+                                 min_tracking_confidence=0.5)
+
+    #initialize video capture
     videoCapture = cv2.VideoCapture(0)
     previousRightX = None
-    previousLeftY = None
+    previousRightY = None
 
+    #initialize clothing images
     while True:
         success, frame = videoCapture.read()
         if not success:
@@ -89,86 +92,93 @@ def tryOnCamera(app):
         frameHeight, frameWidth = frame.shape[:2]
         colorFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        #pose detection for clothing placement
+        #pose detection for overlay placement
         poseResult = poseDetector.process(colorFrame)
         if poseResult.pose_landmarks:
             landmarks = poseResult.pose_landmarks.landmark
-            leftShoulder = landmarks[poseSolution.PoseLandmark.LEFT_SHOULDER]
-            rightShoulder = landmarks[poseSolution.PoseLandmark.RIGHT_SHOULDER]
-            leftHip = landmarks[poseSolution.PoseLandmark.LEFT_HIP]
-            rightHip = landmarks[poseSolution.PoseLandmark.RIGHT_HIP]
+            leftShoulder = landmarks[mpPose.PoseLandmark.LEFT_SHOULDER]
+            rightShoulder = landmarks[mpPose.PoseLandmark.RIGHT_SHOULDER]
+            leftHip = landmarks[mpPose.PoseLandmark.LEFT_HIP]
+            rightHip = landmarks[mpPose.PoseLandmark.RIGHT_HIP]
 
             #compute midpoints
-            shoulderX = int((leftShoulder.x + rightShoulder.x) / 2 * frameWidth)
-            shoulderY = int((leftShoulder.y + rightShoulder.y) / 2 * frameHeight)
+            shoulderX = int((leftShoulder.x + 
+                             rightShoulder.x) / 2 * frameWidth)
+            shoulderY = int((leftShoulder.y + 
+                             rightShoulder.y) / 2 * frameHeight)
             hipX = int((leftHip.x + rightHip.x) / 2 * frameWidth)
             hipY = int((leftHip.y + rightHip.y) / 2 * frameHeight)
 
-            #compute widths and scale
-            rawShoulderWidth = abs(rightShoulder.x - leftShoulder.x) * frameWidth
-            rawHipWidth = abs(rightHip.x - leftHip.x) * frameWidth
-            scaledShoulderWidth = max(50, min(int(rawShoulderWidth * topScale),
-                                              frameWidth))
-            scaledHipWidth = max(50, min(int(rawHipWidth * bottomScale), 
+            shoulderWidth = abs(rightShoulder.x - 
+                                leftShoulder.x) * frameWidth
+            hipWidth = abs(rightHip.x - leftHip.x) * frameWidth
+            scaledTopWidth = max(50, min(int(shoulderWidth * topScale), 
                                          frameWidth))
+            scaledBottomWidth = max(50, min(int(hipWidth * bottomScale), 
+                                            frameWidth))
 
-            #overlay top
-            resizedTop = cv2.resize(
-                topImages[currentTopIndex],
-                (scaledShoulderWidth, scaledShoulderWidth)
-            )
-            frame = overlayPng(
-                frame,
-                resizedTop,
-                shoulderX - scaledShoulderWidth // 2,
-                shoulderY - scaledShoulderWidth // 4
-            )
+            resizedTop = cv2.resize(topImages[currentTopIndex], 
+                                    (scaledTopWidth, scaledTopWidth))
+            resizedBottom = cv2.resize(bottomImages[currentBottomIndex], 
+                                       (scaledBottomWidth, scaledBottomWidth))
 
-            #overlay bottom
-            resizedBottom = cv2.resize(
-                bottomImages[currentBottomIndex],
-                (scaledHipWidth, scaledHipWidth)
-            )
-            frame = overlayPng(
-                frame,
-                resizedBottom,
-                hipX - scaledHipWidth // 2,
-                hipY - scaledHipWidth // 4
-            )
+            frame = overlayPng(frame, resizedTop, shoulderX - 
+                               scaledTopWidth // 2, shoulderY - 
+                               scaledTopWidth // 4)
+            frame = overlayPng(frame, resizedBottom, hipX - 
+                               scaledBottomWidth // 2, hipY - 
+                               scaledBottomWidth // 4)
 
-        #hand tracking for swipe gestures
+        #one hand gesture detection (right hand only now)
         handResult = handDetector.process(colorFrame)
+        currentTime = time.time()
+
         if handResult.multi_hand_landmarks and handResult.multi_handedness:
-            for handLm, handedness in zip(
-                    handResult.multi_hand_landmarks,
-                    handResult.multi_handedness
-                ):
-                handLabel = handedness.classification[0].label  # 'Left' or 'Right'
-                indexTip = handLm.landmark[handSolution.HandLandmark.INDEX_FINGER_TIP]
-                xPos, yPos = indexTip.x, indexTip.y
+            for handLm, handness in zip(handResult.multi_hand_landmarks, 
+                                        handResult.multi_handedness):
+                if handness.classification[0].label != 'Right':
+                    continue  #only respond to right hand
 
-                if handLabel == 'Right' and previousRightX is not None:
+                indexTip = handLm.landmark[mpHands.HandLandmark.INDEX_FINGER_TIP]
+                xPos = indexTip.x
+                yPos = indexTip.y
+
+                if previousRightX is not None and previousRightY is not None:
                     deltaX = xPos - previousRightX
-                    if deltaX > swipeThreshold:
-                        currentTopIndex = (currentTopIndex + 1) % len(topImages)
-                    elif deltaX < -swipeThreshold:
-                        currentTopIndex = (currentTopIndex - 1) % len(topImages)
-                    previousRightX = xPos
+                    deltaY = yPos - previousRightY
 
-                elif handLabel == 'Left' and previousLeftY is not None:
-                    deltaY = yPos - previousLeftY
-                    if deltaY > swipeThreshold:
-                        currentBottomIndex = (currentBottomIndex + 1) % len(bottomImages)
-                    elif deltaY < -swipeThreshold:
-                        currentBottomIndex = (currentBottomIndex - 1) % len(bottomImages)
-                    previousLeftY = yPos
+                    #horizontal swipe for tops
+                    if abs(deltaX) > abs(deltaY) \
+                    and abs(deltaX) > swipeThreshold:
+                        if deltaX > 0 and currentTime - \
+                        lastTopSwipeTime > swipeCooldown:
+                            currentTopIndex = (currentTopIndex + 1)% \
+                            len(topImages)
+                            lastTopSwipeTime = currentTime
+                        elif deltaX < 0 and currentTime - lastTopSwipeTime > \
+                        swipeCooldown:
+                            currentTopIndex = (currentTopIndex - 1) % \
+                            len(topImages)
+                            lastTopSwipeTime = currentTime
 
+                    #vertical swipe for bottoms
+                    elif abs(deltaY) > abs(deltaX) and abs(deltaY) > \
+                    swipeThreshold:
+                        if deltaY > 0 and currentTime - lastBottomSwipeTime > \
+                        swipeCooldown:
+                            currentBottomIndex = (currentBottomIndex + 1) % \
+                            len(bottomImages)
+                            lastBottomSwipeTime = currentTime
+                        elif deltaY < 0 and currentTime - \
+                        lastBottomSwipeTime > swipeCooldown:
+                            currentBottomIndex = (currentBottomIndex - 1) % \
+                            len(bottomImages)
+                            lastBottomSwipeTime = currentTime
                 #initialize previous positions
-                if handLabel == 'Right' and previousRightX is None:
-                    previousRightX = xPos
-                if handLabel == 'Left' and previousLeftY is None:
-                    previousLeftY = yPos
+                previousRightX = xPos
+                previousRightY = yPos
 
+        #display the frame
         cv2.imshow("Virtual Try-On", frame)
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
@@ -177,6 +187,5 @@ def tryOnCamera(app):
 
     videoCapture.release()
     cv2.destroyAllWindows()
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     tryOnCamera(app)
