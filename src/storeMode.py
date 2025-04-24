@@ -76,6 +76,40 @@ prices = [15, 25, 40, 50]
 #     elif 605 <= app.mouseX <= 780 and 220 <= app.mouseY <= 360:
 #         app.state = 3
 
+# def drawStoreMode(app):
+#     whiteWidth = 136
+#     whiteHeight = 160
+#     drawRect(0, 0, app.width, app.height, fill='lightBlue')
+
+#     if app.state == "pickType":
+#         drawLabel("Welcome to the Store!", app.width/2, 120)
+#         drawLabel("What are you shopping for?", app.width/2, 140)
+#         drawRect(20, 220, 175, 140, fill='white')
+#         drawLabel('Tanks - $15', 107, 290)
+#         drawRect(215, 220, 175, 140, fill='white')
+#         drawLabel('Tees - $25', 302, 290)
+#         drawRect(410, 220, 175, 140, fill='white')
+#         drawLabel('Shorts - $40', 497, 290)
+#         drawRect(605, 220, 175, 140, fill='white')
+#         drawLabel('Skirts - $50', 692, 290)
+#     else:
+#         # Ensure app.state is an integer
+#         if isinstance(app.state, int):
+#             type = storeClothes[app.state]
+#             imageCount = 0
+#             drawLabel(f'{type.type} - ${prices[app.state]}', 50, 30)
+#             x = 20
+#             y = 70
+#             for image in type.list:
+#                 imageCount += 1
+#                 if imageCount > 1:
+#                     x += 156
+#                 if imageCount % 5 == 1 and imageCount != 1:
+#                     x = 20
+#                     y += 180  
+#                 drawRect(x, y, whiteWidth, whiteHeight, fill='white')
+#                 drawImage(image, x, y, width=whiteWidth, height=whiteHeight)
+
 def drawStoreMode(app):
     whiteWidth = 136
     whiteHeight = 160
@@ -92,23 +126,23 @@ def drawStoreMode(app):
         drawLabel('Shorts - $40', 497, 290)
         drawRect(605, 220, 175, 140, fill='white')
         drawLabel('Skirts - $50', 692, 290)
-    else:
-        # Ensure app.state is an integer
-        if isinstance(app.state, int):
-            type = storeClothes[app.state]
-            imageCount = 0
-            drawLabel(f'{type.type} - ${prices[app.state]}', 50, 30)
-            x = 20
-            y = 70
-            for image in type.list:
-                imageCount += 1
-                if imageCount > 1:
-                    x += 156
-                if imageCount % 5 == 1 and imageCount != 1:
-                    x = 20
-                    y += 180  
-                drawRect(x, y, whiteWidth, whiteHeight, fill='white')
-                drawImage(image, x, y, width=whiteWidth, height=whiteHeight)
+    elif isinstance(app.state, int) and app.state in range(len(storeClothes)):
+        type = storeClothes[app.state]
+        drawLabel(f'{type.type} - ${prices[app.state]}', 50, 30)
+
+        imageCount = 0
+        x = 20
+        y = 70
+        for image in type.list:
+            imageCount += 1
+            if imageCount > 1:
+                x += 156
+            if imageCount % 5 == 1 and imageCount != 1:
+                x = 20
+                y += 180  
+            drawRect(x, y, whiteWidth, whiteHeight, fill='white')
+            drawImage(image, x, y, width=whiteWidth, height=whiteHeight)
+
 
 def pressPickType(app):
     if 20 <= app.mouseX <= 195 and 220 <= app.mouseY <= 360:
