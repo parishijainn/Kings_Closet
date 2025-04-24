@@ -147,5 +147,5 @@ def drawGameScreen(app):
     drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
     drawLabel(app.feedbackText, app.width // 2, app.height - 110, size=26, fill='darkmagenta', bold=True)
 
-    drawBackButton(app)
+    #drawBackButton(app)
     drawPopupMenu(app)

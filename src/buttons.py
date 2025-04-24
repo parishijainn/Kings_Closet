@@ -360,16 +360,16 @@ def pressSelectionButtons(app):
 
 
 #BACK BUTTONS
-def drawBackButton(app):
-    drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill=app.lightPink, border='black')
-    drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
+# def drawBackButton(app):
+#     drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill=app.lightPink, border='black')
+#     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
 
-def pressBackButton(app):
-     if ((app.backButtonX <= app.mouseX <= app.backButtonX + app.backButtonWidth) and
-            (app.backButtonY <= app.mouseY <= app.backButtonY + app.backButtonHeight)):
-            app.state = "gameMode"
-            app.feedbackText = ""
-            app.isGrading = False 
+# def pressBackButton(app):
+#      if ((app.backButtonX <= app.mouseX <= app.backButtonX + app.backButtonWidth) and
+#             (app.backButtonY <= app.mouseY <= app.backButtonY + app.backButtonHeight)):
+#             app.state = "gameMode"
+#             app.feedbackText = ""
+#             app.isGrading = False 
 
 def drawUniversalBackButton(app):
     drawRect(app.universalBackButtonX, app.universalBackButtonY,
