@@ -182,9 +182,9 @@ def onMousePress(app, mouseX, mouseY):
     elif app.state == "sellTop":
         sellTop(app)
     elif app.state == 'pickType':
-            pressPickType(app)
+        pressPickType(app)
     elif app.state == 0 or 1 or 2 or 3:
-            addToCloset(app)
+        addToCloset(app)
          
 
 def onMouseMove(app, mouseX, mouseY):
