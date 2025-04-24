@@ -308,8 +308,7 @@ def drawSelectionButtons(app):
         drawRect(app.forwardButtonX, app.backwardButtonY,  
                  #swapped X coordinates for backwardButton
                 app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
-        drawRect(app.forwardButtonX, app.backwardButtonY + 
-                 app.whiteBoxHeight / 2,
+        drawRect(app.forwardButtonX, app.backwardButtonY + app.whiteBoxHeight / 2,
                 app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
         drawRect(app.backwardButtonX, app.backwardButtonY,  
                  #swapped X coordinates for forwardButton
