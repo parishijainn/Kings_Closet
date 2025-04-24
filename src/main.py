@@ -181,10 +181,6 @@ def onMousePress(app, mouseX, mouseY):
             sellClothes(app)
     elif app.state == "sellTop":
         sellTop(app)
-    
-
-        
-    
     elif app.state == 'pickType':
             pressPickType(app)
     elif app.state == 0 or 1 or 2 or 3:

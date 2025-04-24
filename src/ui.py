@@ -4,10 +4,13 @@ from buttons import *
 def drawWelcomeScreen(app):
     #draw background image
     drawImage(app.backgroundImage, 0, 0, width=app.width, height=app.height)
-    drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, app.usernameBoxHeight,
-             fill=app.lightPink, border=app.redBrown, borderWidth=5)
-    drawLabel(app.username or 'Enter your name', app.usernameBoxX + app.usernameBoxWidth // 2,
-              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, fill=app.redBrown, bold=True)
+    drawRect(app.usernameBoxX, app.usernameBoxY,app.usernameBoxWidth, 
+             app.usernameBoxHeight, fill=app.lightPink, border=app.redBrown, 
+             borderWidth=5)
+    drawLabel(app.username or 'Enter your name', 
+              app.usernameBoxX + app.usernameBoxWidth // 2,
+              app.usernameBoxY + app.usernameBoxHeight // 2, size=20, 
+              fill=app.redBrown, bold=True)
     
     if app.enteredUsername:
         drawStartButton(app)
@@ -33,7 +36,8 @@ def drawStartButton(app):
 
 def drawMainGame(app):
     #draw background image
-    drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.instructionsBackgroundImage, 0, 0, width=app.width, 
+              height=app.height)
 
 def drawInstructionsScreen(app):
     drawImage(app.instructionsBackgroundImage, 0, 0, width = app.width, 
@@ -44,7 +48,8 @@ def drawInstructionsScreen(app):
     boxX = (app.width - boxWidth) // 2
     boxY = 148
     
-    drawRect(boxX, boxY, boxWidth, boxHeight, border='black', borderWidth=3, opacity = 0)
+    drawRect(boxX, boxY, boxWidth, boxHeight, border='black', 
+             borderWidth=3, opacity = 0)
     contentY = boxY + 20 + app.scrollY
 
     visibleTop = boxY + 5
@@ -60,7 +65,7 @@ def drawInstructionsScreen(app):
     
     #instruction 1
     if visibleTop <= currentY <= visibleBottom - 20:
-        drawLabel("1. Use the up and down arrows to navigate through the instructions.", 
+        drawLabel(("1. Use the up and down arrows to navigate through the instructions."), 
                  app.width // 2, currentY, 
                  size=20, fill='rosyBrown')
     currentY += 40
@@ -127,7 +132,8 @@ def drawInstructionsScreen(app):
               size=24, bold=True, fill='maroon')
     
 def drawGameScreen(app):
-    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, height=app.height)
+    drawImage(app.gameScreenBackgroundImage, 0, 0, width=app.width, 
+              height=app.height)
     drawLabel("Outfit Match Results", app.width // 2, 40, size=30, bold=True)
 
     #use visibleTopIndex and visibleBottomIndex to fetch the correct outfit
@@ -136,11 +142,14 @@ def drawGameScreen(app):
     bottomImg = app.outfitManager.bottoms[app.bottomKeys[app.visibleBottomIndex 
                                                          % len(app.bottomKeys)]]
 
-    drawImage(topImg, app.width // 2, 150, width=180, height=180, align='center')
-    drawImage(bottomImg, app.width // 2, 340, width=180, height=180, align='center')
+    drawImage(topImg, app.width // 2, 150, width=180, height=180, 
+              align='center')
+    drawImage(bottomImg, app.width // 2, 340, width=180, height=180, 
+              align='center')
 
     # More vivid result text
-    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, fill='black')
+    drawLabel("Match Result:", app.width // 2, app.height - 140, size=22, 
+              fill='black')
     drawLabel(app.feedbackText, app.width // 2, app.height - 110,
               size=26, fill='darkmagenta', bold=True)
 
