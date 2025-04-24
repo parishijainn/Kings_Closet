@@ -112,14 +112,6 @@ shoulderX = int((leftShoulder.x +
             hipX = int((leftHip.x + rightHip.x) / 2 * frameWidth)
             hipY = int((leftHip.y + rightHip.y) / 2 * frameHeight)
 
-
-
-
-
-
-
-
-
 -lsponhou:
 
 for the function def putImgagesIntoLists(app), I asked chatGpt the prompt ,

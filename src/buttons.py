@@ -10,9 +10,10 @@ def drawPopupMenu(app):
         drawRect(app.popupX, app.popupY, app.popupWidth, app.popupHeight,
                  fill='white', border='black', align='center')
         drawRect(app.popupX, app.popupY - app.popupHeight/2 + 13, 
-                 app.popupWidth, 30, fill='lightpink', align='center', 
-                 border='black')
-        drawCircle(app.popupX - app.popupWidth/2 + 15, app.popupY - app.popupHeight/2 + 13,
+                 app.popupWidth, 30,
+                 fill='lightpink', align='center', border='black')
+        drawCircle(app.popupX - app.popupWidth/2 + 15, app.popupY - 
+                   app.popupHeight/2 + 13,
                    10, fill='red')
         drawLabel("X", app.popupX - app.popupWidth/2 + 15, app.popupY - 
                   app.popupHeight/2 + 13,
@@ -46,7 +47,7 @@ def drawPopupMenu(app):
             drawLabel("• Click grade to get feedback on your outfit", 
                       app.popupX, app.popupY + 70, size=16)
 
-        # Try On Mode Instructions
+        #try on mode instructions
         elif app.state == 'tryOnMode':
             drawLabel("Try-On Mode", app.popupX, app.popupY - 40, 
                       size=20, bold=True)
@@ -246,7 +247,8 @@ def drawGradeButton(app):
 def pressGradeButton(app):
     if (app.gradeButtonX <= app.mouseX <= (app.gradeButtonX + 
                                            app.gradeButtonWidth) and
-        app.gradeButtonY <= app.mouseY <= (app.gradeButtonY + app.gradeButtonHeight)):
+        app.gradeButtonY <= app.mouseY <= (app.gradeButtonY + 
+                                           app.gradeButtonHeight)):
         
         topKey = app.topKeys[app.currTopIndex % len(app.topKeys)]
         bottomKey = app.bottomKeys[app.currBottomIndex % len(app.bottomKeys)]
@@ -283,8 +285,8 @@ def drawTryOnButton(app):
     drawRect(app.tryOnButtonX, app.tryOnButtonY, app.tryOnButtonWidth, 
              app.tryOnButtonHeight, fill=app.lightPink, border='black')
     drawLabel("Try On", app.tryOnButtonX + app.tryOnButtonWidth//2,
-              app.tryOnButtonY + app.tryOnButtonHeight//2, size=15, bold=True, 
-              fill=app.darkBrown)
+              app.tryOnButtonY + app.tryOnButtonHeight//2, size=15,
+              bold=True, fill=app.darkBrown)
 
 def pressTryOnButton(app):
      if (app.tryOnButtonX <= app.mouseX <= (app.tryOnButtonX + 
@@ -306,7 +308,8 @@ def drawSelectionButtons(app):
         drawRect(app.forwardButtonX, app.backwardButtonY,  
                  #swapped X coordinates for backwardButton
                 app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
-        drawRect(app.forwardButtonX, app.backwardButtonY + app.whiteBoxHeight / 2,
+        drawRect(app.forwardButtonX, app.backwardButtonY + 
+                 app.whiteBoxHeight / 2,
                 app.backwardButtonWidth, app.backwardButtonHeight, fill='gray')
         drawRect(app.backwardButtonX, app.backwardButtonY,  
                  #swapped X coordinates for forwardButton
@@ -439,12 +442,15 @@ def pressSelectionButtons(app):
 
 #BACK BUTTONS
 def drawBackButton(app):
-    drawRect(app.width//2 - 60, app.height - 60, 120, 40, fill=app.lightPink, border='black')
+    drawRect(app.width//2 - 60, app.height - 60, 120, 40, 
+             fill=app.lightPink, border='black')
     drawLabel("Back", app.width//2, app.height - 40, size=18, bold=True)
 
 def pressBackButton(app):
-     if ((app.backButtonX <= app.mouseX <= app.backButtonX + app.backButtonWidth) and
-            (app.backButtonY <= app.mouseY <= app.backButtonY + app.backButtonHeight)):
+     if ((app.backButtonX <= app.mouseX <= 
+          app.backButtonX + app.backButtonWidth) and
+            (app.backButtonY <= app.mouseY <= 
+             app.backButtonY + app.backButtonHeight)):
             app.state = "gameMode"
             app.feedbackText = ""
             app.isGrading = False 
@@ -472,11 +478,6 @@ def pressUniversalBackButton(app):
             app.state = "browse"
             app.feedbackText = ""
             app.isGrading = False
-        elif app.state == "tryOnMode":
-            app.state = "browse"
-            app.isInstructing = False
-            app.isDressingMode = False
-            app.isSelectionMode = True
         elif app.state == 'pickType':
             app.state = "browse"
         elif app.state == 0 or 1 or 2 or 3:

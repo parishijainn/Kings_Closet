@@ -81,16 +81,20 @@ def onStep(app):
 
                 if abs(dx) > 0.07:
                     if dx > 0:
-                        app.currTopIndex = (app.currTopIndex + 1) % len(app.tops)
+                        app.currTopIndex = (app.currTopIndex + 1) % \
+                            len(app.tops)
                     else:
-                        app.currTopIndex = (app.currTopIndex - 1) % len(app.tops)
+                        app.currTopIndex = (app.currTopIndex - 1) % \
+                            len(app.tops)
                     app.fingerCooldown = 10
 
                 elif abs(dy) > 0.07:
                     if dy > 0:
-                        app.currBottomIndex = (app.currBottomIndex + 1) % len(app.bottoms)
+                        app.currBottomIndex = (app.currBottomIndex + 1) % \
+                        len(app.bottoms)
                     else:
-                        app.currBottomIndex = (app.currBottomIndex - 1) % len(app.bottoms)
+                        app.currBottomIndex = (app.currBottomIndex - 1) % \
+                        len(app.bottoms)
                     app.fingerCooldown = 10
 
             app.lastFingerX, app.lastFingerY = fx, fy
