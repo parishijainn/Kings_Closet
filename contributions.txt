@@ -29,6 +29,8 @@ experience and make outfit selection smoother and more engaging.
 
 
 lsponhou
-- user importing new clothes
+- create store UI and function, including adding clothes from store to closet
+- money system
 - the gamemode of users cycling through the different tops and bottoms
 -visualizing the clothes on a mannequin
+- created buttons.py and organized/wrote most button mechanics

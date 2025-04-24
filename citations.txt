@@ -54,11 +54,14 @@ for clothing changes.
 
 
 
+andrewID: pnihalan
 -- Virtual Try On --
 -  I used this video to help me figure out how to 
 navigate openCV, https://www.youtube.com/watch?v=6C7R24-Ze10
 this video was my main source of help for the writing of the virtual try
 on function
+I also used this video to teach me how to use handtracking and mediapipe
+https://www.youtube.com/watch?v=RRBXVu5UE-U
 
 - Swipe-cooldown logic : I used AI help to discover how to 
 leverage Python’s time module to enforce a cooldown 
@@ -117,7 +120,7 @@ shoulderX = int((leftShoulder.x +
 
 
 
-
+-lsponhou:
 
 for the function def putImgagesIntoLists(app), I asked chatGpt the prompt ,
  "if I have png files in a folder in my vs code, is there a way to loop through 
