@@ -72,7 +72,7 @@ shoulderX = int((leftShoulder.x +
 
 
 
-
+-lsponhou:
 
 for the function def putImgagesIntoLists(app), I asked chatGpt the prompt ,
  "if I have png files in a folder in my vs code, is there a way to loop through 
