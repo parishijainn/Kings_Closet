@@ -1,67 +1,153 @@
-King's Closet: A Clueless-Inspired Fashion Game:
+# 👗 King's Closet: A Clueless-Inspired Fashion Game
 
-King’s Closet is a CMU Graphics-based recreation of Cher Horowitz’s virtual 
-closet from the movie Clueless. This interactive game allows users to browse, 
-try on, and grade outfits using a combination of tops and bottoms. Features 
-include an outfit grader powered by KMeans clustering and a hand-tracking mode 
-that enables touchless outfit navigation.
+King’s Closet is an interactive fashion game inspired by Cher Horowitz’s iconic virtual closet from *Clueless*. Built using CMU Graphics, the game allows users to browse, try on, and evaluate outfits made from different tops and bottoms. It integrates computer vision, machine learning, and gesture-based interaction to create a fun and immersive digital closet experience.
 
-King's Closet Youtube Demo: https://youtu.be/AO7PUn8GqX4
+🎥 Demo Video: https://youtu.be/AO7PUn8GqX4
 
-How To Run:
-1. Download or clone the repository.
-2. Install the required dependencies (see below).
-3. From the command line, run: python main.py
-Make sure your webcam is connected to use hand-tracking features.
+---
 
-Dependencies:
-Install the following packages:
-numpy  
-opencv-python  
-scikit-learn  
-pillow  
-cmu-graphics
-You can install them with: pip install numpy opencv-python scikit-learn pillow cmu-graphics
+## ✨ Features
 
-Game Controls:
-Navigate Instructions:	Up / Down Arrow Keys
-Change Tops:	Left / Right Arrow Keys
-Change Bottoms:	Up / Down Arrow Keys
-Toggle Hand-Tracking Mode:	Enabled automatically if webcam is active
-Swipe Left / Right (Hand):	Change Tops
-Swipe Up / Down (Hand):	Change Bottoms
-Generate Random Outfit (Hand):	Show 5 fingers
-Grade Outfit:	Click "Grade" Button
-Dress Mannequin:	Click "Dress Me" Button
-Open Store:	Click "Store" Button
-Play/Pause Music:	Click music icon
+- Browse and mix different tops and bottoms to create outfits
+- Outfit grading system powered by KMeans clustering
+- Hand-tracking mode for touchless navigation using your webcam
+- Dress a mannequin to visualize your outfit
+- Virtual store with coins to purchase new clothing items
+- Random outfit generator
+- Try-On mode to visualize outfits on yourself using your webcam
+- Background music with play/pause controls
+- Personalized closet experience using your name
 
-Modes:
-Welcome Screen: Enter your name to personalize your closet
-Instructions Mode: Learn how to play the game
-Browse Mode: Try on different tops and bottoms
-Dress Me Mode: See your outfit on a mannequin
-Grade Mode: Get feedback on outfit match quality
-Store Mode: Buy new clothing using virtual currency
-Hand-Tracking Mode: Navigate the closet with finger gestures
-Try-On Mode: Visualize the closet on yourself
+---
 
-Created By: Parishi Jain, Palomi Nihalani, Lilyana Sponhouse
+## 🛠️ Installation and Setup
 
-In depth description: 
+### 1. Clone the repository
 
-This project is recreation of Cher's closet from 
-the movie Clueless. There are tops and bottoms
-preloaded into the program and the user can browse
-throw the tops and bottoms to make outfits. There
-is also the option for the program to randomly 
-select a top and/or bottom for the user. There is an option for a store that
-gives you tanks, tees, skirts, and shorts. You have a preloaded amount of coins 
-which is 500 and each time you buy a new piece of clothing the money goes down. 
-The user can press the "Dress Me" button to visualize the 
-outfit on a mannequin. The user can press the 
-"grade" button and the outfit will be graded
-on how well it matches. If it is a perfect match, coins get added back. There is
-a handtracking feature that allows for you to go through the clothes with your
-fingers. There is also a try on feature that allows you to try your clothes on
-and use handtracking to change the clothes.
+```bash
+git clone https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
+cd YOUR-REPO-NAME
+```
+
+### 2. Install dependencies
+
+```bash
+pip install numpy opencv-python scikit-learn pillow cmu-graphics
+```
+
+### 3. Run the game
+
+```bash
+python main.py
+```
+
+Make sure your webcam is connected if you want to use hand-tracking or Try-On features.
+
+---
+
+## 🎮 Controls
+
+### Keyboard Controls
+
+| Action | Key |
+|------|-----|
+| Navigate instructions | Up / Down Arrow Keys |
+| Change tops | Left / Right Arrow Keys |
+| Change bottoms | Up / Down Arrow Keys |
+
+### Mouse Controls
+
+| Action | Button |
+|------|--------|
+| Grade outfit | Click "Grade" |
+| Dress mannequin | Click "Dress Me" |
+| Open store | Click "Store" |
+| Play/Pause music | Click music icon |
+
+### Hand-Tracking Controls (Webcam Required)
+
+| Gesture | Action |
+|--------|--------|
+| Swipe left/right | Change tops |
+| Swipe up/down | Change bottoms |
+| Show 5 fingers | Generate random outfit |
+
+---
+
+## 🧩 Game Modes
+
+- **Welcome Screen**  
+  Enter your name to personalize your closet.
+
+- **Instructions Mode**  
+  Learn how to play and navigate the game.
+
+- **Browse Mode**  
+  Mix and match tops and bottoms to create outfits.
+
+- **Dress Me Mode**  
+  View your outfit on a mannequin.
+
+- **Grade Mode**  
+  Receive feedback on how well your outfit matches.
+
+- **Store Mode**  
+  Purchase new clothing items using virtual coins.
+
+- **Hand-Tracking Mode**  
+  Navigate the closet using hand gestures.
+
+- **Try-On Mode**  
+  Visualize clothing on yourself using your webcam.
+
+---
+
+## 🧠 Machine Learning Component
+
+The outfit grading system uses **KMeans clustering**, a machine learning algorithm, to evaluate how well clothing items match based on learned groupings. Outfits that fall into stronger matching clusters receive higher scores and reward coins, encouraging users to experiment with combinations.
+
+---
+
+## 🪙 Currency System
+
+- Players start with **500 coins**
+- Purchasing clothing decreases coins
+- High-scoring outfits reward additional coins
+- Encourages experimentation and strategic outfit creation
+
+---
+
+## 🧱 Technologies Used
+
+- Python
+- CMU Graphics
+- OpenCV (Computer Vision)
+- Scikit-Learn (Machine Learning)
+- NumPy
+- Pillow
+
+---
+
+## 🎯 Inspiration
+
+This project recreates Cher Horowitz’s virtual closet from *Clueless*, bringing the concept into an interactive, modern experience using computer vision and machine learning.
+
+---
+
+## 👩‍💻 Authors
+
+- Parishi Jain  
+- Palomi Nihalani  
+- Lilyana Sponhouse  
+
+Carnegie Mellon University
+
+---
+
+## 🚀 Future Improvements
+
+- Add more clothing categories (jackets, shoes, accessories)
+- Improve grading accuracy using color theory and similarity metrics
+- Save user outfits and profiles
+- Expand gesture recognition capabilities
+- Add more Try-On realism and alignment
