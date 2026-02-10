@@ -138,10 +138,4 @@ King’s Closet recreates Cher Horowitz’s iconic digital closet from *Clueless
 **Palomi Nihalani**  
 **Lilyana Sponhouse**  
 
-Carnegie Mellon University
-
 ---
-
-## License
-
-MIT (or your preferred license)
