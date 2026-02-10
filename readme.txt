@@ -1,115 +1,141 @@
 # King's Closet (Clueless-Inspired Fashion Game)
 
-King’s Closet is an interactive fashion game inspired by Cher Horowitz’s virtual closet from *Clueless*. Built using Python, CMU Graphics, computer vision, and machine learning, the game allows users to browse, try on, and evaluate outfits. It includes gesture-based navigation using hand tracking and an outfit grading system powered by clustering.
+King’s Closet is a modern interactive fashion game inspired by Cher Horowitz’s virtual closet from *Clueless*. It combines computer vision, machine learning, and gesture-based interaction to let users browse, try on, and evaluate outfits in a digital closet environment.
 
-Demo video: https://youtu.be/AO7PUn8GqX4
+**Demo video:** https://youtu.be/AO7PUn8GqX4
+
+---
 
 ## What’s included
 
-- Browse and mix tops and bottoms to create outfits
-- Outfit grading system using KMeans clustering
-- Hand-tracking navigation using webcam gestures
-- Mannequin visualization mode ("Dress Me")
-- Virtual store with in-game currency
-- Random outfit generator
-- Try-On mode using webcam visualization
-- Personalized closet experience
+- **Outfit browser:** mix and match tops and bottoms  
+- **Outfit grading:** KMeans clustering evaluates outfit compatibility  
+- **Hand-tracking navigation:** control the closet using webcam gestures  
+- **Mannequin visualization:** preview outfits using the "Dress Me" feature  
+- **Virtual store:** purchase new clothing using in-game currency  
+- **Random outfit generator:** generate outfits automatically  
+- **Try-On mode:** visualize clothing using webcam integration  
+- **Personalized closet:** customized experience using player name  
+
+---
 
 ## Tech stack
 
-- Python
-- CMU Graphics
-- OpenCV (computer vision)
-- Scikit-learn (machine learning)
-- NumPy
-- Pillow
+**Core:** Python, CMU Graphics  
+**Computer vision:** OpenCV  
+**Machine learning:** Scikit-learn (KMeans clustering)  
+**Image processing:** Pillow  
+**Data processing:** NumPy  
+
+---
 
 ## Repo structure
 
 ```
 KingsCloset/
-├── main.py
-├── assets/
+├── main.py              # main game loop and UI logic
+├── assets/              # clothing, UI elements, and music
 │   ├── tops/
 │   ├── bottoms/
 │   ├── ui/
 │   └── music/
-├── handtracking.py
-├── grading.py
+├── handtracking.py     # gesture detection and webcam logic
+├── grading.py          # outfit grading (KMeans clustering)
 └── README.md
 ```
 
+---
+
 ## Getting started
 
-### 1) Clone the repository
+### Backend / game setup
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
 cd YOUR-REPO-NAME
 ```
 
-### 2) Install dependencies
+Install dependencies:
 
 ```bash
 pip install numpy opencv-python scikit-learn pillow cmu-graphics
 ```
 
-### 3) Run the game
+Run the game:
 
 ```bash
 python main.py
 ```
 
-The webcam is required for hand-tracking and Try-On features.
+**Note:** Webcam access is required for hand-tracking and Try-On features.
+
+---
 
 ## Controls
 
-### Keyboard
+**Keyboard**
 
-- Left / Right arrows: change tops  
-- Up / Down arrows: change bottoms  
-- Up / Down arrows: navigate instructions  
+- Left / Right arrows → change tops  
+- Up / Down arrows → change bottoms  
+- Up / Down arrows → navigate instructions  
 
-### Mouse
+**Mouse**
 
-- Click "Grade": grade the current outfit  
-- Click "Dress Me": visualize outfit on mannequin  
-- Click "Store": open clothing store  
-- Click music icon: play or pause music  
+- Click **Grade** → grade outfit  
+- Click **Dress Me** → view outfit on mannequin  
+- Click **Store** → open clothing store  
+- Click music icon → play or pause music  
 
-### Hand tracking (webcam)
+**Hand tracking (webcam)**
 
-- Swipe left/right: change tops  
-- Swipe up/down: change bottoms  
-- Show five fingers: generate random outfit  
+- Swipe left / right → change tops  
+- Swipe up / down → change bottoms  
+- Show five fingers → generate random outfit  
+
+---
 
 ## Game modes
 
-- Welcome: enter your name to personalize your closet
-- Instructions: learn controls and features
-- Browse: select and preview outfits
-- Dress Me: view outfit on mannequin
-- Grade: evaluate outfit match quality
-- Store: purchase new clothing items
-- Try-On: visualize clothing on yourself
-- Hand-tracking: navigate using gestures
+- **Welcome:** enter your name and initialize your closet  
+- **Instructions:** view controls and game information  
+- **Browse:** explore clothing combinations  
+- **Dress Me:** preview outfits on mannequin  
+- **Grade:** evaluate outfit compatibility  
+- **Store:** purchase new clothing using coins  
+- **Try-On:** visualize clothing using webcam overlay  
+- **Hand-tracking:** gesture-based navigation  
+
+---
 
 ## Machine learning component
 
-The outfit grading system uses KMeans clustering to evaluate how well clothing items match. Clothing combinations that fall into stronger matching clusters receive higher scores and reward coins.
+King’s Closet uses **KMeans clustering** to evaluate outfit compatibility. Clothing items are grouped into clusters based on similarity, and outfits that fall into stronger matching clusters receive higher scores and reward coins.
+
+This creates a dynamic feedback system that encourages experimentation and exploration.
+
+---
 
 ## Currency system
 
-- Players start with 500 coins
-- Purchasing clothing decreases coins
-- High-scoring outfits reward additional coins
+- Players start with **500 coins**
+- Purchasing clothing decreases coin balance
+- Higher-scoring outfits reward additional coins
+- Encourages strategic outfit selection
+
+---
 
 ## Inspiration
 
-This project recreates Cher Horowitz’s digital closet from *Clueless*, bringing the concept into an interactive experience using modern computer vision and machine learning tools.
+King’s Closet recreates Cher Horowitz’s iconic digital closet from *Clueless*, bringing the concept into a modern interactive experience using computer vision, gesture tracking, and machine learning.
+
+---
 
 ## Authors
 
-Parishi Jain  
-Palomi Nihalani  
-Lilyana Sponhouse  
+**Parishi Jain**  
+**Palomi Nihalani**  
+**Lilyana Sponhouse**  
+
+---
